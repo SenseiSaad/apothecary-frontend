@@ -36,6 +36,7 @@ function AssistantSetupForm() {
     const token = searchParams.get('token') || '';
 
     const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -59,6 +60,7 @@ function AssistantSetupForm() {
                     body: JSON.stringify({ token }),
                 });
                 setEmail(response.data?.email || '');
+                setRole(response.data?.role || '');
             } catch (error) {
                 setNotice({
                     type: 'error',
@@ -139,7 +141,7 @@ function AssistantSetupForm() {
                 </Link>
 
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-[#4a3428]">Set Up Assistant Access</h1>
+                    <h1 className="text-3xl font-bold text-[#4a3428]">Set Up {role === 'doctor' ? 'Doctor' : 'Assistant'} Access</h1>
                     <p className="mt-2 text-gray-600">
                         Verify your invite and create your password.
                     </p>
