@@ -21,7 +21,8 @@ import {
     ChevronRight,
     ChevronDown,
     KeyRound,
-    UserRoundCheck
+    UserRoundCheck,
+    Stethoscope
 } from 'lucide-react';
 import Image from 'next/image';
 import { clearSession, getSession } from '@/lib/auth';
@@ -104,8 +105,9 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
 
     const AssistantMenuItems = [
         { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard/doctor' },
+        { name: 'Care Requests', icon: Stethoscope, path: '/dashboard/doctor/care-requests' },
         { name: 'Assigned Patients', icon: Users, path: '/dashboard/doctor/patients' },
-        { name: 'Bookings', icon: ClipboardList, path: '/dashboard/doctor/appointments' },
+        { name: 'Bookings', icon: Calendar, path: '/dashboard/doctor/appointments' },
         { name: 'Messages', icon: MessageSquare, path: '/dashboard/doctor/chat' },
         { name: 'Notifications', icon: Bell, path: '/dashboard/doctor/notifications' },
     ];
