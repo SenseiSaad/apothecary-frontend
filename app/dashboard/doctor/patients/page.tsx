@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MailPlus, RefreshCcw, Search } from 'lucide-react';
+import { MailPlus, RefreshCcw, Search, Stethoscope, UserCheck } from 'lucide-react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Avatar, Badge, Button, Modal } from '@/components/ui';
 import { apiRequest } from '@/lib/api';
@@ -19,6 +19,9 @@ type PatientInvite = {
     declined_at?: string;
     created_at: string;
     is_expired: boolean;
+    care_status?: string;
+    illness_description?: string;
+    doctor_assigned_at?: string;
 };
 
 type PatientInviteResponse = {
@@ -35,8 +38,29 @@ type AssistantPatientResponse = {
         tier: string;
         created_at: string;
         updated_at: string;
+        care_status?: string;
+        illness_description?: string;
+        doctor_assigned_at?: string;
     }>;
     total: number;
+};
+
+type AssistantDoctor = {
+    doctor_id: string;
+    email: string;
+    status: string;
+    specialty?: string;
+};
+
+type AssistantMeResponse = {
+    Assistant: {
+        permissions: {
+            can_view_assigned_patients: boolean;
+            can_assign_patients: boolean;
+            can_manage_bookings: boolean;
+            can_send_communications: boolean;
+        };
+    };
 };
 
 const inviteStatusStyles: Record<string, string> = {
@@ -70,6 +94,12 @@ export default function DoctorPatients() {
         note: '',
     });
     const [isAssistantAccount, setIsAssistantAccount] = useState(false);
+    const [canAssignPatients, setCanAssignPatients] = useState(false);
+    const [assistantDoctors, setAssistantDoctors] = useState<AssistantDoctor[]>([]);
+    const [assignTarget, setAssignTarget] = useState<PatientInvite | null>(null);
+    const [selectedDoctorId, setSelectedDoctorId] = useState('');
+    const [forceReassign, setForceReassign] = useState(false);
+    const [isAssigning, setIsAssigning] = useState(false);
 
     useEffect(() => {
         if (!hasRole('doctor')) {
@@ -94,9 +124,14 @@ export default function DoctorPatients() {
         try {
             if (session.user.role === 'assistant') {
                 setIsAssistantAccount(true);
-                const response = await apiRequest<AssistantPatientResponse>('/assistant/patients', {
-                    token: session.access_token,
-                });
+                const [profileResponse, doctorsResponse, response] = await Promise.all([
+                    apiRequest<AssistantMeResponse>('/assistant/me', { token: session.access_token }),
+                    apiRequest<{ Doctors: AssistantDoctor[] }>('/assistant/doctors', { token: session.access_token }),
+                    apiRequest<AssistantPatientResponse>('/assistant/patients', { token: session.access_token }),
+                ]);
+
+                setCanAssignPatients(Boolean(profileResponse.data?.Assistant.permissions.can_assign_patients));
+                setAssistantDoctors((doctorsResponse.data?.Doctors || []).filter(doctor => doctor.status === 'active'));
                 setInvites((response.data?.patients || []).map((patient) => ({
                     invite_id: patient.patient_id,
                     email: patient.email,
@@ -105,6 +140,9 @@ export default function DoctorPatients() {
                     expires_at: patient.updated_at || patient.created_at,
                     created_at: patient.created_at,
                     is_expired: false,
+                    care_status: patient.care_status,
+                    illness_description: patient.illness_description,
+                    doctor_assigned_at: patient.doctor_assigned_at,
                 })));
                 return;
             }
@@ -176,6 +214,48 @@ export default function DoctorPatients() {
         }
     };
 
+    const openAssign = (patient: PatientInvite) => {
+        setAssignTarget(patient);
+        setSelectedDoctorId(patient.doctor_id || '');
+        setForceReassign(Boolean(patient.doctor_id));
+    };
+
+    const assignPatient = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const session = getSession();
+        if (!session || !assignTarget?.patient_id || !selectedDoctorId) {
+            return;
+        }
+
+        setIsAssigning(true);
+        setNotice(null);
+
+        try {
+            const response = await apiRequest<{ message: string }>(`/assistant/patients/${assignTarget.patient_id}/assign-doctor`, {
+                method: 'POST',
+                token: session.access_token,
+                body: JSON.stringify({
+                    doctor_id: selectedDoctorId,
+                    force: forceReassign,
+                }),
+            });
+
+            setNotice({
+                type: 'success',
+                message: response.data?.message || 'Patient assigned successfully.',
+            });
+            setAssignTarget(null);
+            await loadInvites();
+        } catch (error) {
+            setNotice({
+                type: 'error',
+                message: error instanceof Error ? error.message : 'Unable to assign patient.',
+            });
+        } finally {
+            setIsAssigning(false);
+        }
+    };
+
     return (
         <DashboardLayout role="doctor">
             <div className="space-y-6">
@@ -193,6 +273,11 @@ export default function DoctorPatients() {
                             leftIcon={<MailPlus className="h-5 w-5" />}
                         >
                             Invite Patient
+                        </Button>
+                    )}
+                    {isAssistantAccount && canAssignPatients && (
+                        <Button variant="outline" onClick={loadInvites} leftIcon={<UserCheck className="h-5 w-5" />}>
+                            Assignment Enabled
                         </Button>
                     )}
                 </div>
@@ -249,12 +334,15 @@ export default function DoctorPatients() {
                                     <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Sent</th>
                                     <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Expires</th>
                                     <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Completed</th>
+                                    {isAssistantAccount && canAssignPatients && (
+                                        <th className="px-4 py-3 text-left text-sm font-semibold text-gray-600">Actions</th>
+                                    )}
                                 </tr>
                             </thead>
                             <tbody>
                                 {isLoading && (
                                     <tr>
-                                        <td colSpan={5} className="px-4 py-8 text-center text-gray-500">
+                                        <td colSpan={isAssistantAccount && canAssignPatients ? 6 : 5} className="px-4 py-8 text-center text-gray-500">
                                             Loading patients...
                                         </td>
                                     </tr>
@@ -262,7 +350,7 @@ export default function DoctorPatients() {
 
                                 {!isLoading && filteredInvites.length === 0 && (
                                     <tr>
-                                        <td colSpan={5} className="px-4 py-8 text-center text-gray-500">
+                                        <td colSpan={isAssistantAccount && canAssignPatients ? 6 : 5} className="px-4 py-8 text-center text-gray-500">
                                             No patients found.
                                         </td>
                                     </tr>
@@ -276,6 +364,9 @@ export default function DoctorPatients() {
                                                 <div>
                                                     <p className="font-medium text-[#4a3428]">{formatNameFromEmail(invite.email)}</p>
                                                     <p className="text-sm text-gray-600">{invite.email}</p>
+                                                    {isAssistantAccount && invite.illness_description && (
+                                                        <p className="mt-1 max-w-sm text-xs text-gray-500">{invite.illness_description}</p>
+                                                    )}
                                                 </div>
                                             </div>
                                         </td>
@@ -289,6 +380,13 @@ export default function DoctorPatients() {
                                         <td className="px-4 py-4 text-gray-600">
                                             {invite.used_at ? new Date(invite.used_at).toLocaleDateString() : invite.declined_at ? new Date(invite.declined_at).toLocaleDateString() : '-'}
                                         </td>
+                                        {isAssistantAccount && canAssignPatients && (
+                                            <td className="px-4 py-4">
+                                                <Button size="sm" variant="outline" onClick={() => openAssign(invite)} leftIcon={<UserCheck className="h-4 w-4" />}>
+                                                    Assign
+                                                </Button>
+                                            </td>
+                                        )}
                                     </tr>
                                 ))}
                             </tbody>
@@ -337,6 +435,63 @@ export default function DoctorPatients() {
                         </div>
                     </form>
                 </Modal>}
+
+                {isAssistantAccount && (
+                    <Modal isOpen={Boolean(assignTarget)} onClose={() => setAssignTarget(null)} title="Assign Patient" size="lg">
+                        {assignTarget && (
+                            <form onSubmit={assignPatient} className="space-y-5 p-6">
+                                <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+                                    <p className="font-semibold text-[#4a3428]">{formatNameFromEmail(assignTarget.email)}</p>
+                                    <p className="text-sm text-gray-600">{assignTarget.email}</p>
+                                    <p className="mt-2 text-sm text-gray-600">{assignTarget.illness_description || 'No illness details provided.'}</p>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="assistant_doctor_id" className="mb-2 block text-sm font-medium text-gray-700">Doctor</label>
+                                    <select
+                                        id="assistant_doctor_id"
+                                        required
+                                        value={selectedDoctorId}
+                                        onChange={(event) => setSelectedDoctorId(event.target.value)}
+                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                    >
+                                        <option value="">Select Doctor</option>
+                                        {assistantDoctors.map((doctor) => (
+                                            <option key={doctor.doctor_id} value={doctor.doctor_id}>
+                                                {formatNameFromEmail(doctor.email)} - {doctor.specialty || 'General'}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {assignTarget.doctor_id && (
+                                    <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
+                                        <input
+                                            type="checkbox"
+                                            checked={forceReassign}
+                                            onChange={(event) => setForceReassign(event.target.checked)}
+                                            className="h-4 w-4 rounded accent-[#E67E3C]"
+                                        />
+                                        <span className="text-sm text-amber-800">Confirm reassignment from the current Doctor</span>
+                                    </label>
+                                )}
+
+                                {assistantDoctors.length === 0 && (
+                                    <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                                        No active Doctors are assigned to your assistant account.
+                                    </div>
+                                )}
+
+                                <div className="flex flex-col-reverse gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:justify-end">
+                                    <Button type="button" variant="secondary" onClick={() => setAssignTarget(null)} disabled={isAssigning}>Cancel</Button>
+                                    <Button type="submit" isLoading={isAssigning} disabled={!selectedDoctorId || assistantDoctors.length === 0} leftIcon={<Stethoscope className="h-5 w-5" />}>
+                                        Save Assignment
+                                    </Button>
+                                </div>
+                            </form>
+                        )}
+                    </Modal>
+                )}
             </div>
         </DashboardLayout>
     );

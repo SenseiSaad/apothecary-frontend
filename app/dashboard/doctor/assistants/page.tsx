@@ -27,6 +27,7 @@ type AssistantUser = {
 
 type AssistantPermissions = {
     can_view_assigned_patients: boolean;
+    can_assign_patients: boolean;
     can_manage_bookings: boolean;
     can_send_communications: boolean;
 };
@@ -53,12 +54,14 @@ type InviteForm = {
     email: string;
     otp_required: boolean;
     can_view_assigned_patients: boolean;
+    can_assign_patients: boolean;
     can_manage_bookings: boolean;
     can_send_communications: boolean;
 };
 
 type EditForm = {
     can_view_assigned_patients: boolean;
+    can_assign_patients: boolean;
     can_manage_bookings: boolean;
     can_send_communications: boolean;
     status: string;
@@ -92,6 +95,7 @@ const DEFAULT_INVITE: InviteForm = {
     email: '',
     otp_required: false,
     can_view_assigned_patients: true,
+    can_assign_patients: false,
     can_manage_bookings: true,
     can_send_communications: true,
 };
@@ -113,6 +117,7 @@ export default function DoctorAssistants() {
     const [editTarget, setEditTarget] = useState<Assistant | null>(null);
     const [editForm, setEditForm] = useState<EditForm>({
         can_view_assigned_patients: true,
+        can_assign_patients: false,
         can_manage_bookings: true,
         can_send_communications: true,
         status: 'active',
@@ -165,6 +170,7 @@ export default function DoctorAssistants() {
                 otp_required: inviteForm.otp_required,
                 permissions: {
                     can_view_assigned_patients: inviteForm.can_view_assigned_patients,
+                    can_assign_patients: inviteForm.can_assign_patients,
                     can_manage_bookings: inviteForm.can_manage_bookings,
                     can_send_communications: inviteForm.can_send_communications,
                 },
@@ -191,6 +197,7 @@ export default function DoctorAssistants() {
         setEditTarget(c);
         setEditForm({
             can_view_assigned_patients: c.permissions.can_view_assigned_patients,
+            can_assign_patients: c.permissions.can_assign_patients,
             can_manage_bookings: c.permissions.can_manage_bookings,
             can_send_communications: c.permissions.can_send_communications,
             status: c.user.status,
@@ -211,6 +218,7 @@ export default function DoctorAssistants() {
                 body: JSON.stringify({
                     permissions: {
                         can_view_assigned_patients: editForm.can_view_assigned_patients,
+                        can_assign_patients: editForm.can_assign_patients,
                         can_manage_bookings: editForm.can_manage_bookings,
                         can_send_communications: editForm.can_send_communications,
                     },
@@ -350,6 +358,7 @@ export default function DoctorAssistants() {
                                         <td className="px-4 py-4">
                                             <div className="flex flex-wrap gap-1">
                                                 <PermBadge enabled={c.permissions.can_view_assigned_patients} label="View Patients" />
+                                                <PermBadge enabled={c.permissions.can_assign_patients} label="Assign Patients" />
                                                 <PermBadge enabled={c.permissions.can_manage_bookings} label="Bookings" />
                                                 <PermBadge enabled={c.permissions.can_send_communications} label="Messaging" />
                                             </div>
@@ -409,6 +418,7 @@ export default function DoctorAssistants() {
                         <div className="space-y-2">
                             {([
                                 ['can_view_assigned_patients', 'View assigned patients'],
+                                ['can_assign_patients', 'Assign patients to Doctors'],
                                 ['can_manage_bookings', 'Manage bookings'],
                                 ['can_send_communications', 'Send communications'],
                             ] as const).map(([key, label]) => (
@@ -474,6 +484,7 @@ export default function DoctorAssistants() {
                             <div className="space-y-2">
                                 {([
                                     ['can_view_assigned_patients', 'View assigned patients'],
+                                    ['can_assign_patients', 'Assign patients to Doctors'],
                                     ['can_manage_bookings', 'Manage bookings'],
                                     ['can_send_communications', 'Send communications'],
                                 ] as const).map(([key, label]) => (

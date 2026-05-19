@@ -20,6 +20,8 @@ export default function PatientProfile() {
         date_of_birth: '',
         phone_number: '',
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+        illness_description: '',
+        care_status: 'needs_care' as 'needs_care' | 'assigned' | 'in_treatment' | 'treated' | 'inactive',
         gender: '' as 'girl' | 'boy' | '',
         preferences: {
             notifications_enabled: true,
@@ -52,6 +54,8 @@ export default function PatientProfile() {
                         date_of_birth: p.date_of_birth || '',
                         phone_number: p.phone_number || '',
                         timezone: p.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+                        illness_description: p.illness_description || '',
+                        care_status: p.care_status || 'needs_care',
                         gender: gender,
                         preferences: {
                             notifications_enabled: p.preferences?.notifications_enabled ?? true,
@@ -70,7 +74,7 @@ export default function PatientProfile() {
             });
     }, [router]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         
         if (name.startsWith('pref_')) {
@@ -106,6 +110,7 @@ export default function PatientProfile() {
                     date_of_birth: formData.date_of_birth,
                     phone_number: formData.phone_number,
                     timezone: formData.timezone,
+                    illness_description: formData.illness_description,
                     preferences: formData.preferences
                 }),
                 token: session?.access_token
@@ -124,6 +129,31 @@ export default function PatientProfile() {
             setTimeout(() => router.push('/dashboard/patient'), 1500);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to update profile.');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const updateCareStatus = async (care_status: 'needs_care' | 'treated') => {
+        setSuccess('');
+        setError('');
+        setIsSaving(true);
+
+        const session = getSession();
+        try {
+            await apiRequest('/patient/care-status', {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    care_status,
+                    ...(formData.illness_description.trim() ? { illness_description: formData.illness_description.trim() } : {}),
+                }),
+                token: session?.access_token
+            });
+
+            setFormData(prev => ({ ...prev, care_status }));
+            setSuccess(care_status === 'treated' ? 'You are marked as no longer needing treatment.' : 'You are marked as needing treatment again.');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to update care status.');
         } finally {
             setIsSaving(false);
         }
@@ -203,6 +233,19 @@ export default function PatientProfile() {
                                 placeholder="America/New_York"
                             />
 
+                            <div className="md:col-span-2 flex flex-col gap-2">
+                                <label htmlFor="illness_description" className="text-sm font-medium text-gray-700">Illness or Reason for Care</label>
+                                <textarea
+                                    id="illness_description"
+                                    name="illness_description"
+                                    rows={4}
+                                    value={formData.illness_description}
+                                    onChange={handleChange}
+                                    placeholder="Briefly describe what you need treatment for."
+                                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                />
+                            </div>
+
                             {/* Gender Selection */}
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-gray-700">Avatar Gender</label>
@@ -225,6 +268,21 @@ export default function PatientProfile() {
                         </div>
 
                         <div className="border-t border-gray-100 pt-6">
+                            <h3 className="text-lg font-bold text-[#4a3428] mb-4">Care Status</h3>
+                            <div className="mb-6 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+                                <p className="text-sm text-gray-600">
+                                    Current status: <span className="font-semibold capitalize text-[#4a3428]">{formData.care_status.replace(/_/g, ' ')}</span>
+                                </p>
+                                <div className="mt-3 flex flex-wrap gap-3">
+                                    <Button type="button" size="sm" variant="outline" disabled={isSaving || formData.care_status === 'needs_care'} onClick={() => void updateCareStatus('needs_care')}>
+                                        Need Treatment
+                                    </Button>
+                                    <Button type="button" size="sm" variant="secondary" disabled={isSaving || formData.care_status === 'treated'} onClick={() => void updateCareStatus('treated')}>
+                                        No Longer Need Treatment
+                                    </Button>
+                                </div>
+                            </div>
+
                             <h3 className="text-lg font-bold text-[#4a3428] mb-4">Preferences</h3>
                             
                             <div className="space-y-3">

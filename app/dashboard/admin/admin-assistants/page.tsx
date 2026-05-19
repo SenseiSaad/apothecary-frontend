@@ -25,6 +25,7 @@ type AdminAssistant = {
     assigned_doctor_ids: string[];
     permissions: {
         can_view_assigned_patients: boolean;
+        can_assign_patients: boolean;
         can_manage_bookings: boolean;
         can_send_communications: boolean;
     };
@@ -72,7 +73,7 @@ function PermBadge({ on, label }: { on: boolean; label: string }) {
 
 const BLANK_INVITE = {
     email: '', otp_required: false,
-    can_view: true, can_bookings: true, can_comms: true,
+    can_view: true, can_assign: false, can_bookings: true, can_comms: true,
     doctor_ids: [] as string[],
 };
 
@@ -93,7 +94,7 @@ export default function AdminAssistantManagement() {
 
     // manage modal
     const [selected, setSelected] = useState<AdminAssistant | null>(null);
-    const [editPerms, setEditPerms] = useState({ can_view: true, can_bookings: true, can_comms: true });
+    const [editPerms, setEditPerms] = useState({ can_view: true, can_assign: false, can_bookings: true, can_comms: true });
     const [editStatus, setEditStatus] = useState('active');
     const [assignIds, setAssignIds] = useState<string[]>([]);
     const [isSaving, setIsSaving] = useState(false);
@@ -131,6 +132,7 @@ export default function AdminAssistantManagement() {
                 otp_required: inviteForm.otp_required,
                 permissions: {
                     can_view_assigned_patients: inviteForm.can_view,
+                    can_assign_patients: inviteForm.can_assign,
                     can_manage_bookings: inviteForm.can_bookings,
                     can_send_communications: inviteForm.can_comms,
                 },
@@ -148,7 +150,12 @@ export default function AdminAssistantManagement() {
     /* open manage */
     const openManage = (c: AdminAssistant) => {
         setSelected(c);
-        setEditPerms({ can_view: c.permissions.can_view_assigned_patients, can_bookings: c.permissions.can_manage_bookings, can_comms: c.permissions.can_send_communications });
+        setEditPerms({
+            can_view: c.permissions.can_view_assigned_patients,
+            can_assign: c.permissions.can_assign_patients,
+            can_bookings: c.permissions.can_manage_bookings,
+            can_comms: c.permissions.can_send_communications
+        });
         setEditStatus(c.status);
         setAssignIds([...c.assigned_doctor_ids]);
     };
@@ -164,7 +171,12 @@ export default function AdminAssistantManagement() {
                 apiRequest(`/admin/assistants/${selected.assistant_id}`, {
                     method: 'PATCH', token: s.access_token,
                     body: JSON.stringify({
-                        permissions: { can_view_assigned_patients: editPerms.can_view, can_manage_bookings: editPerms.can_bookings, can_send_communications: editPerms.can_comms },
+                        permissions: {
+                            can_view_assigned_patients: editPerms.can_view,
+                            can_assign_patients: editPerms.can_assign,
+                            can_manage_bookings: editPerms.can_bookings,
+                            can_send_communications: editPerms.can_comms
+                        },
                         status: editStatus,
                     }),
                 }),
@@ -269,6 +281,7 @@ export default function AdminAssistantManagement() {
                                         <td className="px-4 py-4">
                                             <div className="flex flex-wrap gap-1">
                                                 <PermBadge on={c.permissions.can_view_assigned_patients} label="View" />
+                                                <PermBadge on={c.permissions.can_assign_patients} label="Assign" />
                                                 <PermBadge on={c.permissions.can_manage_bookings} label="Bookings" />
                                                 <PermBadge on={c.permissions.can_send_communications} label="Msgs" />
                                             </div>
@@ -309,7 +322,7 @@ export default function AdminAssistantManagement() {
                     <div>
                         <p className="mb-2 text-sm font-semibold text-gray-700">Permissions</p>
                         <div className="space-y-2">
-                            {([['can_view', 'View assigned patients'], ['can_bookings', 'Manage bookings'], ['can_comms', 'Send communications']] as const).map(([k, lbl]) => (
+                            {([['can_view', 'View assigned patients'], ['can_assign', 'Assign patients to Doctors'], ['can_bookings', 'Manage bookings'], ['can_comms', 'Send communications']] as const).map(([k, lbl]) => (
                                 <label key={k} className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50">
                                     <input type="checkbox" checked={inviteForm[k]} onChange={e => setInviteForm(f => ({ ...f, [k]: e.target.checked }))} className="h-4 w-4 rounded accent-[#E67E3C]" />
                                     <span className="text-sm text-gray-700">{lbl}</span>
@@ -373,7 +386,7 @@ export default function AdminAssistantManagement() {
                         <div>
                             <p className="mb-2 text-sm font-semibold text-gray-700">Permissions</p>
                             <div className="space-y-2">
-                                {([['can_view', 'View assigned patients'], ['can_bookings', 'Manage bookings'], ['can_comms', 'Send communications']] as const).map(([k, lbl]) => (
+                                {([['can_view', 'View assigned patients'], ['can_assign', 'Assign patients to Doctors'], ['can_bookings', 'Manage bookings'], ['can_comms', 'Send communications']] as const).map(([k, lbl]) => (
                                     <label key={k} className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50">
                                         <input type="checkbox" checked={editPerms[k]} onChange={e => setEditPerms(p => ({ ...p, [k]: e.target.checked }))} className="h-4 w-4 rounded accent-[#E67E3C]" />
                                         <span className="text-sm text-gray-700">{lbl}</span>

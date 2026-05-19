@@ -13,6 +13,7 @@ export default function Signup() {
         email: '',
         password: '',
         confirmPassword: '',
+        illness_description: '',
         terms: false,
     });
     const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +60,7 @@ export default function Signup() {
                     email: formData.email.trim().toLowerCase(),
                     password: formData.password,
                     role: 'patient',
+                    ...(formData.illness_description.trim() ? { illness_description: formData.illness_description.trim() } : {}),
                 }),
             });
 
@@ -115,7 +117,7 @@ export default function Signup() {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
         setFormData({
             ...formData,
@@ -226,6 +228,19 @@ export default function Signup() {
                                 onChange={handleChange}
                                 placeholder="••••••••"
                             />
+
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="illness_description" className="text-sm font-medium text-gray-700">What do you need help with?</label>
+                                <textarea
+                                    id="illness_description"
+                                    name="illness_description"
+                                    rows={4}
+                                    value={formData.illness_description}
+                                    onChange={handleChange}
+                                    placeholder="Briefly describe your illness, symptoms, or reason for treatment."
+                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                />
+                            </div>
 
                             <Checkbox
                                 id="terms"

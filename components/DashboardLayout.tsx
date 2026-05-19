@@ -84,6 +84,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
         { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard/admin' },
         { name: 'Doctors', icon: Users, path: '/dashboard/admin/doctors' },
         { name: 'Assistants', icon: UserRoundCheck, path: '/dashboard/admin/admin-assistants' },
+        { name: 'Patient Assignment', icon: Hospital, path: '/dashboard/admin/patient-assignments' },
         { name: 'Analytics', icon: TrendingUp, path: '/dashboard/admin/analytics' },
         { name: 'Notifications', icon: Bell, path: '/dashboard/admin/notifications' },
         { name: 'Settings', icon: Settings, path: '/dashboard/admin/settings' },
