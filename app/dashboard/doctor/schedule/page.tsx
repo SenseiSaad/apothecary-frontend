@@ -42,7 +42,7 @@ export default function DoctorSchedule() {
             setLoading(true);
             const data = await apiRequest<SessionBooking[]>('/doctor/slots');
             if (data.success) {
-                setSlots(data.data);
+                setSlots(data.data || []);
             }
         } catch (error) {
             console.error('Failed to fetch slots', error);
