@@ -183,7 +183,9 @@ export default function AssistantCareRequestsPage() {
             return;
         }
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         loadData(false, 'unclaimed');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router]);
 
     const canAssign = permissions?.can_assign_patients || false;
