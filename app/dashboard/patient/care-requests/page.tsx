@@ -44,6 +44,8 @@ type CareRequest = {
     doctor_id: string | null;
     doctor_name?: string | null;
     doctor_email?: string | null;
+    doctor_specialty?: string | null;
+    doctor_credential_status?: 'pending' | 'verified' | 'rejected' | null;
     reason: string;
     urgency: 'low' | 'normal' | 'high';
     preferred_specialty?: string;
@@ -203,6 +205,7 @@ export default function PatientCareRequestsPage() {
     const [success, setSuccess] = useState('');
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [isClosureOpen, setIsClosureOpen] = useState(false);
+    const [doctorProfileRequest, setDoctorProfileRequest] = useState<CareRequest | null>(null);
     const [selectedRequest, setSelectedRequest] = useState<CareRequest | null>(null);
     const [formData, setFormData] = useState<RequestForm>(initialForm);
 
@@ -419,6 +422,20 @@ export default function PatientCareRequestsPage() {
                             />
                         </div>
 
+                        {activeRequest.doctor_id && (
+                            <div className="mt-4 flex flex-col gap-3 rounded-lg border border-green-100 bg-green-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <p className="font-semibold text-green-900">{activeRequest.doctor_name || 'Your assigned Doctor'}</p>
+                                    <p className="mt-1 text-sm text-green-800">
+                                        {activeRequest.doctor_specialty || 'General care'}{activeRequest.doctor_credential_status === 'verified' ? ' - verified by Apothecary' : ''}
+                                    </p>
+                                </div>
+                                <Button variant="outline" onClick={() => setDoctorProfileRequest(activeRequest)}>
+                                    View Doctor Profile
+                                </Button>
+                            </div>
+                        )}
+
                         {activeRequest.triage_notes && (
                             <div className="mt-4 rounded-lg border border-blue-100 bg-blue-50 p-4">
                                 <p className="text-sm font-semibold text-blue-900">Care team note</p>
@@ -617,6 +634,33 @@ export default function PatientCareRequestsPage() {
                         </Button>
                     </div>
                 </div>
+            </Modal>
+
+            <Modal isOpen={Boolean(doctorProfileRequest)} onClose={() => setDoctorProfileRequest(null)} title="Assigned Doctor Profile" size="md">
+                {doctorProfileRequest && (
+                    <div className="space-y-4 p-6">
+                        <div className="rounded-lg border border-gray-100 bg-gray-50 p-4">
+                            <p className="text-lg font-bold text-[#4a3428]">{doctorProfileRequest.doctor_name || 'Doctor assigned'}</p>
+                            <p className="mt-1 text-sm text-gray-600">{doctorProfileRequest.doctor_email || 'Contact through Apothecary messaging'}</p>
+                        </div>
+                        <div className="grid gap-3 text-sm">
+                            <InfoPanel title="Specialty" value={doctorProfileRequest.doctor_specialty || 'General care'} />
+                            <InfoPanel
+                                title="Credential status"
+                                value={doctorProfileRequest.doctor_credential_status === 'verified' ? 'Verified by Apothecary' : 'Credential status not publicly shown'}
+                            />
+                            <InfoPanel title="Care request" value={doctorProfileRequest.reason} />
+                        </div>
+                        <div className="rounded-lg border border-blue-100 bg-blue-50 p-4 text-sm text-blue-800">
+                            License numbers and sensitive credential documents are not displayed publicly here. Apothecary should show a verification badge and specialty to patients, while keeping raw license identifiers internal unless policy/legal review requires public display.
+                        </div>
+                        <div className="flex justify-end border-t border-gray-200 pt-4">
+                            <Button type="button" variant="secondary" onClick={() => setDoctorProfileRequest(null)}>
+                                Close
+                            </Button>
+                        </div>
+                    </div>
+                )}
             </Modal>
 
             <Modal isOpen={Boolean(selectedRequest)} onClose={() => setSelectedRequest(null)} title="Care Request Details" size="lg">

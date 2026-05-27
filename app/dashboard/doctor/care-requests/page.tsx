@@ -112,6 +112,8 @@ const queueTabs: Array<{ key: QueueView; label: string; icon: ComponentType<{ cl
     { key: 'all', label: 'All Scoped', icon: Users }
 ];
 
+const claimableStatuses: CareRequestStatus[] = ['new_request', 'triage_claimed', 'triage_in_progress', 'pending_assignment'];
+
 function formatStatus(status?: string) {
     return (status || '-').replace(/_/g, ' ');
 }
@@ -198,6 +200,10 @@ export default function AssistantCareRequestsPage() {
             (currentUserId && request.claimed_by_user_id === currentUserId)
         );
     }, [currentUserId]);
+
+    const canClaimRequest = (request: CareRequest) => {
+        return claimableStatuses.includes(request.status) && !request.doctor_id;
+    };
 
     const changeQueue = async (view: QueueView) => {
         setQueueView(view);
@@ -514,7 +520,7 @@ export default function AssistantCareRequestsPage() {
                                         </td>
                                         <td className="px-4 py-4 align-top">
                                             <div className="flex flex-col items-end gap-2">
-                                                {queueView === 'unclaimed' || !request.is_claimed ? (
+                                                {canClaimRequest(request) && (queueView === 'unclaimed' || !request.is_claimed) ? (
                                                     <Button size="sm" onClick={() => claimRequest(request)} disabled={isSaving || !canAssign}>
                                                         Claim
                                                     </Button>
@@ -543,7 +549,7 @@ export default function AssistantCareRequestsPage() {
                                                     </>
                                                 ) : (
                                                     <span className="rounded-lg bg-gray-100 px-3 py-2 text-xs font-semibold text-gray-500">
-                                                        Locked by another assistant
+                                                        {request.doctor_id || request.status === 'assigned' ? 'Assigned to Doctor' : 'Locked by another assistant'}
                                                     </span>
                                                 )}
                                             </div>

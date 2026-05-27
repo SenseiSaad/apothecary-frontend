@@ -176,6 +176,35 @@ function isOwnMessage(message: TriageMessage, role: WorkspaceRole) {
     return message.sender_role === role;
 }
 
+function senderLabel(role: TriageMessage['sender_role'], currentRole: WorkspaceRole) {
+    if (role === currentRole) return 'You';
+    if (role === 'patient') return 'Patient';
+    if (role === 'assistant') return 'Assistant';
+    if (role === 'doctor') return 'Doctor';
+    if (role === 'admin') return 'Admin';
+    return 'System';
+}
+
+function messageTone(message: TriageMessage, currentRole: WorkspaceRole) {
+    if (isOwnMessage(message, currentRole)) {
+        return 'rounded-br-sm bg-[#E67E3C] text-white';
+    }
+
+    if (message.sender_role === 'patient') {
+        return 'rounded-bl-sm border border-blue-100 bg-blue-50 text-blue-950';
+    }
+
+    if (message.sender_role === 'assistant') {
+        return 'rounded-bl-sm border border-amber-100 bg-amber-50 text-amber-950';
+    }
+
+    if (message.sender_role === 'doctor') {
+        return 'rounded-bl-sm border border-emerald-100 bg-emerald-50 text-emerald-950';
+    }
+
+    return 'rounded-bl-sm border border-gray-100 bg-white text-[#4a3428]';
+}
+
 function initials(name?: string) {
     const parts = (name || 'Patient').trim().split(/\s+/);
     return parts.slice(0, 2).map(part => part[0]?.toUpperCase()).join('') || 'P';
@@ -233,6 +262,12 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
 
     const canWriteNotes = role === 'assistant' || role === 'admin';
     const activeConversationId = selectedConversation?.conversation_id || null;
+    const title = role === 'doctor' ? 'Care Team Messaging' : role === 'patient' ? 'Care Team Chat' : 'Triage Messaging';
+    const subtitle = role === 'doctor'
+        ? 'Review patient messages, assistant triage, and handoff notes in one care thread.'
+        : role === 'patient'
+            ? 'Message your care team for your active case.'
+            : 'Chat with claimed triage patients and prepare notes for Doctor handoff.';
 
     const reconcileIncomingMessage = useCallback((incoming: TriageMessage) => {
         setMessages(current => {
@@ -617,6 +652,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                 if (response.data?.conversation) {
                     mergeConversation(response.data.conversation);
                     setSelectedConversation(response.data.conversation);
+                    setSelectedDoctorId(response.data.conversation.doctor_id || selectedDoctorId);
                 }
             }
         } catch (err) {
@@ -641,12 +677,8 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
         <div className="flex h-[calc(100vh-7rem)] min-h-[620px] flex-col overflow-hidden">
             <div className="mb-3 flex flex-none flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <h2 className="text-xl font-bold text-[#4a3428]">Triage Messaging</h2>
-                    <p className="text-sm text-gray-600">
-                        {role === 'patient'
-                            ? 'Message the clinical assistant reviewing your active care request.'
-                            : 'Chat with claimed triage patients and prepare notes for Doctor handoff.'}
-                    </p>
+                    <h2 className="text-xl font-bold text-[#4a3428]">{title}</h2>
+                    <p className="text-sm text-gray-600">{subtitle}</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <span className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold ${isConnected ? 'border-green-200 bg-green-50 text-green-700' : 'border-amber-200 bg-amber-50 text-amber-700'}`}>
@@ -783,7 +815,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                     </div>
                                     <div className="flex items-center gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-xs text-gray-600">
                                         <Lock className="h-4 w-4 text-[#E67E3C]" />
-                                        {role === 'patient' ? 'Your care thread' : 'Triage thread'}
+                                        {selectedConversation.doctor_id ? 'Care team thread' : role === 'patient' ? 'Your care thread' : 'Triage thread'}
                                     </div>
                                 </div>
                             </div>
@@ -808,7 +840,10 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
 
                                         return (
                                             <div key={message.message_id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
-                                                <div className={`max-w-[72%] rounded-lg px-4 py-3 shadow-sm ${mine ? 'rounded-br-sm bg-[#E67E3C] text-white' : 'rounded-bl-sm border border-gray-100 bg-white text-[#4a3428]'}`}>
+                                                <div className={`max-w-[72%] rounded-lg px-4 py-3 shadow-sm ${messageTone(message, role)}`}>
+                                                    <p className={`mb-1 text-[11px] font-semibold uppercase tracking-wide ${mine ? 'text-white/75' : 'text-gray-500'}`}>
+                                                        {senderLabel(message.sender_role, role)}
+                                                    </p>
                                                     <p className="whitespace-pre-wrap text-sm leading-6">{message.body}</p>
                                                     <p className={`mt-2 text-right text-[11px] ${mine ? 'text-white/75' : 'text-gray-400'}`}>
                                                         {message.delivery_status === 'sending' ? 'Sending...' : message.delivery_status === 'failed' ? 'Failed' : formatTime(message.created_at)}
@@ -978,10 +1013,14 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                             fullWidth
                                             onClick={assignDoctorFromChat}
                                             isLoading={isAssigningDoctor}
-                                            disabled={!selectedDoctorId || Boolean(filteredDoctors.find(doctor => doctor.doctor_id === selectedDoctorId && !doctor.is_available_for_assignment))}
+                                            disabled={
+                                                !selectedDoctorId ||
+                                                selectedConversation.doctor_id === selectedDoctorId ||
+                                                Boolean(filteredDoctors.find(doctor => doctor.doctor_id === selectedDoctorId && !doctor.is_available_for_assignment))
+                                            }
                                             leftIcon={<Stethoscope className="h-4 w-4" />}
                                         >
-                                            Save Handoff + Assign Doctor
+                                            {selectedConversation.doctor_id === selectedDoctorId ? 'Doctor Already Assigned' : 'Save Handoff + Assign Doctor'}
                                         </Button>
                                     </div>
                                 )}
