@@ -15,23 +15,23 @@ export default function ForgotPassword() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#fef3e8] via-[#f5e6d3] to-white">
+        <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[var(--accent)] via-[var(--secondary)] to-white">
             <div className="max-w-md w-full">
                 <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
                     <div className="text-center mb-8">
                         <Link href="/" className="inline-block mb-6">
                             <div className="text-3xl font-bold">
-                                <span className="text-[#4a3428]">THINK</span>
-                                <span className="text-[#E67E3C]"> WELL+</span>
+                                <span className="text-foreground">THINK</span>
+                                <span className="text-primary"> WELL+</span>
                             </div>
                         </Link>
 
                         {!submitted ? (
                             <>
-                                <div className="w-20 h-20 bg-[#E67E3C] rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-6">
+                                <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-6">
                                     🔑
                                 </div>
-                                <h2 className="text-3xl font-bold text-[#4a3428] mb-3">
+                                <h2 className="text-3xl font-bold text-foreground mb-3">
                                     Forgot Password?
                                 </h2>
                                 <p className="text-gray-600">
@@ -43,7 +43,7 @@ export default function ForgotPassword() {
                                 <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-6">
                                     ✓
                                 </div>
-                                <h2 className="text-3xl font-bold text-[#4a3428] mb-3">
+                                <h2 className="text-3xl font-bold text-foreground mb-3">
                                     Check Your Email
                                 </h2>
                                 <p className="text-gray-600">
@@ -71,14 +71,14 @@ export default function ForgotPassword() {
                             </Button>
 
                             <div className="text-center">
-                                <Link href="/auth/login" className="text-sm text-[#E67E3C] hover:text-[#d16b2a] font-medium">
+                                <Link href="/auth/login" className="text-sm text-primary hover:text-primary-dark font-medium">
                                     ← Back to Login
                                 </Link>
                             </div>
                         </form>
                     ) : (
                         <div className="space-y-4">
-                            <div className="bg-[#fef3e8] rounded-lg p-4 text-sm text-gray-700">
+                            <div className="bg-accent rounded-lg p-4 text-sm text-gray-700">
                                 <p className="mb-2">Didn't receive the email?</p>
                                 <ul className="list-disc list-inside space-y-1 text-xs">
                                     <li>Check your spam folder</li>
@@ -97,7 +97,7 @@ export default function ForgotPassword() {
                             </Button>
 
                             <div className="text-center">
-                                <Link href="/auth/login" className="text-sm text-[#E67E3C] hover:text-[#d16b2a] font-medium">
+                                <Link href="/auth/login" className="text-sm text-primary hover:text-primary-dark font-medium">
                                     ← Back to Login
                                 </Link>
                             </div>

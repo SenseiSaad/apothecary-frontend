@@ -16,7 +16,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ stats, columns = 3, classN
         <div className={`grid grid-cols-${columns} gap-6 ${className}`}>
             {stats.map((stat, index) => (
                 <div key={index}>
-                    <p className="text-3xl font-bold text-[#E67E3C]">{stat.value}</p>
+                    <p className="text-3xl font-bold text-primary">{stat.value}</p>
                     <p className="text-sm text-gray-400">{stat.label}</p>
                 </div>
             ))}

@@ -128,11 +128,11 @@ export default function Signup() {
     return (
         <div className="min-h-screen flex">
             {/* Left Side - Branding */}
-            <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-[#4a3428] via-[#6b4423] to-[#4a3428] relative overflow-hidden">
+            <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-[var(--foreground)] via-[#6b4423] to-[var(--foreground)] relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-20 left-20 w-64 h-64 bg-[#E67E3C] rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#E67E3C] rounded-full blur-3xl"></div>
+                    <div className="absolute top-20 left-20 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
                     <div className="absolute top-1/2 left-10 w-40 h-40 bg-white rounded-full blur-2xl"></div>
                 </div>
 
@@ -175,7 +175,7 @@ export default function Signup() {
                     </Link>
 
                     <div>
-                        <h2 className="text-3xl font-bold text-[#4a3428]">
+                        <h2 className="text-3xl font-bold text-foreground">
                             {showOtp ? 'Verify Your Email' : 'Create Your Account'}
                         </h2>
                         <p className="mt-2 text-gray-600">
@@ -238,7 +238,7 @@ export default function Signup() {
                                     value={formData.illness_description}
                                     onChange={handleChange}
                                     placeholder="Briefly describe your illness, symptoms, or reason for treatment."
-                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                 />
                             </div>
 
@@ -250,11 +250,11 @@ export default function Signup() {
                                 label={
                                     <>
                                         I agree to the{' '}
-                                        <a href="#" className="text-[#E67E3C] hover:text-[#d16b2a] font-medium">
+                                        <a href="#" className="text-primary hover:text-primary-dark font-medium">
                                             Terms of Service
                                         </a>{' '}
                                         and{' '}
-                                        <a href="#" className="text-[#E67E3C] hover:text-[#d16b2a] font-medium">
+                                        <a href="#" className="text-primary hover:text-primary-dark font-medium">
                                             Privacy Policy
                                         </a>
                                     </>
@@ -267,7 +267,7 @@ export default function Signup() {
 
                             <p className="text-center text-sm text-gray-600 mb-4">
                                 Already have an account?{' '}
-                                <Link href="/auth/login" className="text-[#E67E3C] hover:text-[#d16b2a] font-semibold">
+                                <Link href="/auth/login" className="text-primary hover:text-primary-dark font-semibold">
                                     Sign in
                                 </Link>
                             </p>
@@ -307,7 +307,7 @@ export default function Signup() {
                                     onClick={() => {
                                         setNotice({ type: 'success', message: 'If you didn\'t receive the code, please check your spam folder.' });
                                     }}
-                                    className="text-[#E67E3C] hover:text-[#d16b2a] font-semibold"
+                                    className="text-primary hover:text-primary-dark font-semibold"
                                 >
                                     Resend
                                 </button>
@@ -317,7 +317,7 @@ export default function Signup() {
                                 <button 
                                     type="button"
                                     onClick={() => setShowOtp(false)}
-                                    className="text-gray-600 hover:text-[#4a3428] font-medium"
+                                    className="text-gray-600 hover:text-foreground font-medium"
                                 >
                                     ← Back to Signup
                                 </button>

@@ -371,7 +371,7 @@ export default function AssistantCareRequestsPage() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Clinical Care Triage Queue</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Clinical Care Triage Queue</h2>
                         <p className="text-gray-600">Claim one request, complete triage, then assign the patient to an available Doctor.</p>
                     </div>
                     <Button variant="outline" onClick={() => loadData(true)} leftIcon={<RefreshCcw className="h-4 w-4" />}>
@@ -417,7 +417,7 @@ export default function AssistantCareRequestsPage() {
                                         onClick={() => changeQueue(tab.key)}
                                         className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold transition ${
                                             active
-                                                ? 'border-[#E67E3C] bg-[#fff4ec] text-[#C65F20]'
+                                                ? 'border-primary bg-[#fff4ec] text-[#C65F20]'
                                                 : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
                                         }`}
                                     >
@@ -438,13 +438,13 @@ export default function AssistantCareRequestsPage() {
                                         if (event.key === 'Enter') loadData(true);
                                     }}
                                     placeholder="Search patient or reason"
-                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                             <select
                                 value={urgencyFilter}
                                 onChange={event => setUrgencyFilter(event.target.value)}
-                                className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             >
                                 <option value="all">All urgency</option>
                                 <option value="high">High</option>
@@ -476,7 +476,7 @@ export default function AssistantCareRequestsPage() {
                                 ) : filteredRequests.map(request => (
                                     <tr key={request.care_request_id} className="hover:bg-gray-50/60">
                                         <td className="px-4 py-4">
-                                            <p className="font-semibold text-[#4a3428]">{request.patient_name}</p>
+                                            <p className="font-semibold text-foreground">{request.patient_name}</p>
                                             <p className="text-xs text-gray-500">{request.patient_email}</p>
                                             <p className="mt-2 max-w-md text-gray-700">{request.reason}</p>
                                             {request.patient_notes && (
@@ -497,7 +497,7 @@ export default function AssistantCareRequestsPage() {
                                         <td className="px-4 py-4 align-top">
                                             {request.is_claimed ? (
                                                 <div className="text-xs text-gray-600">
-                                                    <p className="font-semibold text-[#4a3428]">
+                                                    <p className="font-semibold text-foreground">
                                                         {isClaimedByMe(request) ? 'You' : request.claimed_by_email || 'Another assistant'}
                                                     </p>
                                                     <p>Claimed {formatDateTime(request.claimed_at)}</p>
@@ -617,7 +617,7 @@ export default function AssistantCareRequestsPage() {
 
                         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                             <div>
-                                <p className="text-sm font-semibold text-[#4a3428]">Doctor Options</p>
+                                <p className="text-sm font-semibold text-foreground">Doctor Options</p>
                                 <p className="text-xs text-gray-500">Only Doctors in your assistant scope are shown. Full, inactive, or unverified Doctors cannot be selected.</p>
                             </div>
                             <div className="relative w-full md:w-80">
@@ -626,7 +626,7 @@ export default function AssistantCareRequestsPage() {
                                     value={doctorSearch}
                                     onChange={event => setDoctorSearch(event.target.value)}
                                     placeholder="Search Doctors"
-                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                         </div>
@@ -647,13 +647,13 @@ export default function AssistantCareRequestsPage() {
                                         onClick={() => setSelectedDoctorId(doctor.doctor_id)}
                                         className={`rounded-lg border p-4 text-left transition ${
                                             selected
-                                                ? 'border-[#E67E3C] bg-[#fff4ec] ring-2 ring-[#E67E3C]/20'
+                                                ? 'border-primary bg-[#fff4ec] ring-2 ring-primary/20'
                                                 : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
                                         } disabled:cursor-not-allowed disabled:opacity-60`}
                                     >
                                         <div className="flex items-start justify-between gap-3">
                                             <div>
-                                                <p className="font-semibold text-[#4a3428]">{doctor.name}</p>
+                                                <p className="font-semibold text-foreground">{doctor.name}</p>
                                                 <p className="text-xs text-gray-500">{doctor.email}</p>
                                             </div>
                                             {doctor.credential_status === 'verified' ? (
@@ -711,7 +711,7 @@ function StatTile({ label, value, icon, tone = 'orange' }: { label: string; valu
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</p>
                 <span className={`rounded-lg p-2 ${toneClasses[tone]}`}>{icon}</span>
             </div>
-            <p className="mt-3 text-2xl font-bold text-[#4a3428]">{value}</p>
+            <p className="mt-3 text-2xl font-bold text-foreground">{value}</p>
         </div>
     );
 }
@@ -721,7 +721,7 @@ function RequestSummary({ request }: { request: CareRequest }) {
         <div className="rounded-lg border border-gray-100 bg-gray-50 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                    <p className="font-bold text-[#4a3428]">{request.patient_name}</p>
+                    <p className="font-bold text-foreground">{request.patient_name}</p>
                     <p className="text-xs text-gray-500">{request.patient_email}</p>
                 </div>
                 <span className={`inline-flex w-fit rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${urgencyStyles[request.urgency]}`}>

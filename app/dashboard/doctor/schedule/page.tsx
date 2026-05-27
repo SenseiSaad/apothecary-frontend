@@ -208,7 +208,7 @@ export default function DoctorSchedule() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Availability Slots</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Availability Slots</h2>
                         <p className="text-gray-600">Select future dates and publish available session times in advance.</p>
                     </div>
                     <Button variant="outline" size="sm" onClick={fetchSlots} leftIcon={<RefreshCcw className="h-4 w-4" />}>
@@ -229,7 +229,7 @@ export default function DoctorSchedule() {
                                 <select
                                     value={displayMonth}
                                     onChange={event => setDisplayMonth(Number(event.target.value))}
-                                    className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-primary"
                                 >
                                     {monthNames.map((name, index) => (
                                         <option key={name} value={index}>{name}</option>
@@ -241,7 +241,7 @@ export default function DoctorSchedule() {
                                     max={today.getFullYear() + 3}
                                     value={displayYear}
                                     onChange={event => setDisplayYear(Number(event.target.value))}
-                                    className="w-28 rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-28 rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                             <div className="flex flex-wrap gap-2">
@@ -272,11 +272,11 @@ export default function DoctorSchedule() {
                                         type="button"
                                         disabled={isPast}
                                         onClick={() => toggleDate(date)}
-                                        className={`min-h-[112px] rounded-lg border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${isSelected ? 'border-[#E67E3C] bg-[#fef3e8]' : 'border-gray-200 bg-white hover:border-[#E67E3C]'}`}
+                                        className={`min-h-[112px] rounded-lg border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${isSelected ? 'border-primary bg-accent' : 'border-gray-200 bg-white hover:border-primary'}`}
                                     >
                                         <div className="mb-3 flex items-center justify-between">
-                                            <span className={`text-sm font-bold ${isSelected ? 'text-[#E67E3C]' : 'text-gray-700'}`}>{date.getDate()}</span>
-                                            {isSelected && <span className="rounded-full bg-[#E67E3C] px-2 py-0.5 text-xs font-semibold text-white">Selected</span>}
+                                            <span className={`text-sm font-bold ${isSelected ? 'text-primary' : 'text-gray-700'}`}>{date.getDate()}</span>
+                                            {isSelected && <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-white">Selected</span>}
                                         </div>
                                         <div className="space-y-1">
                                             {availableCount > 0 && <p className="rounded bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">{availableCount} available</p>}
@@ -292,8 +292,8 @@ export default function DoctorSchedule() {
                     <div className="space-y-6">
                         <div className="rounded-2xl bg-white p-6 shadow-sm">
                             <div className="mb-4 flex items-center gap-2">
-                                <CalendarDays className="h-5 w-5 text-[#E67E3C]" />
-                                <h3 className="text-lg font-bold text-[#4a3428]">Generate Slots</h3>
+                                <CalendarDays className="h-5 w-5 text-primary" />
+                                <h3 className="text-lg font-bold text-foreground">Generate Slots</h3>
                             </div>
                             <p className="mb-4 text-sm text-gray-600">{selectedDates.length} date{selectedDates.length === 1 ? '' : 's'} selected.</p>
 
@@ -305,7 +305,7 @@ export default function DoctorSchedule() {
                             <select
                                 value={mode}
                                 onChange={event => setMode(event.target.value as 'video' | 'text' | 'either')}
-                                className="mb-4 w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                className="mb-4 w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-primary"
                             >
                                 <option value="video">Video</option>
                                 <option value="text">Text</option>
@@ -316,8 +316,8 @@ export default function DoctorSchedule() {
                                 {timeBlocks.map((block, index) => (
                                     <div key={index} className="rounded-lg border border-gray-200 p-3">
                                         <div className="mb-2 flex items-center justify-between">
-                                            <span className="flex items-center gap-2 text-sm font-semibold text-[#4a3428]">
-                                                <Clock className="h-4 w-4 text-[#E67E3C]" />
+                                            <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                                                <Clock className="h-4 w-4 text-primary" />
                                                 Time Block {index + 1}
                                             </span>
                                             {timeBlocks.length > 1 && (
@@ -338,7 +338,7 @@ export default function DoctorSchedule() {
                                                     type="time"
                                                     value={block.start}
                                                     onChange={event => updateTimeBlock(index, 'start', event.target.value)}
-                                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-primary"
                                                 />
                                             </div>
                                             <div>
@@ -347,7 +347,7 @@ export default function DoctorSchedule() {
                                                     type="time"
                                                     value={block.end}
                                                     onChange={event => updateTimeBlock(index, 'end', event.target.value)}
-                                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-primary"
                                                 />
                                             </div>
                                         </div>
@@ -376,7 +376,7 @@ export default function DoctorSchedule() {
                         </div>
 
                         <div className="rounded-2xl bg-white p-6 shadow-sm">
-                            <h3 className="mb-4 text-lg font-bold text-[#4a3428]">Selected Date Slots</h3>
+                            <h3 className="mb-4 text-lg font-bold text-foreground">Selected Date Slots</h3>
                             {loading ? (
                                 <p className="text-sm text-gray-500">Loading slots...</p>
                             ) : selectedSlots.length === 0 ? (
@@ -387,7 +387,7 @@ export default function DoctorSchedule() {
                                         <div key={slot._id} className="rounded-lg border border-gray-200 p-3">
                                             <div className="flex items-start justify-between gap-3">
                                                 <div>
-                                                    <p className="font-semibold text-[#4a3428]">
+                                                    <p className="font-semibold text-foreground">
                                                         {new Date(slot.scheduled_at).toLocaleString([], {
                                                             month: 'short',
                                                             day: 'numeric',

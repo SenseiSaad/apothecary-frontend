@@ -107,24 +107,24 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#fef3e8] via-[#f5e6d3] to-[#fef3e8] py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[var(--accent)] via-[var(--secondary)] to-[var(--accent)] py-20 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-[#E67E3C] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#E67E3C] rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-10 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block mb-4">
-                <span className="bg-[#E67E3C]/10 text-[#E67E3C] px-4 py-2 rounded-full text-sm font-semibold">
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold">
                   🎯 Your Clinic Partner
                 </span>
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-[#4a3428] mb-6 leading-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 Nurture Your Mind,
-                <span className="text-[#E67E3C]"> Transform Your Life</span>
+                <span className="text-primary"> Transform Your Life</span>
               </h1>
               <p className="text-xl text-[#6b4423] mb-8 leading-relaxed">
                 Connect with certified mental health professionals from the comfort of your home.
@@ -133,14 +133,14 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   href="/auth/signup"
-                  className="bg-gradient-to-r from-[#E67E3C] to-[#d16b2a] text-white px-8 py-4 rounded-full text-lg font-medium hover:shadow-xl transition-all duration-300 text-center group"
+                  className="bg-gradient-to-r from-primary to-primary-dark text-white px-8 py-4 rounded-full text-lg font-medium hover:shadow-xl transition-all duration-300 text-center group"
                 >
                   Get Started Free
                   <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
                 </Link>
                 <Link
                   href="/pricing"
-                  className="border-2 border-[#E67E3C] text-[#E67E3C] px-8 py-4 rounded-full text-lg font-medium hover:bg-[#E67E3C] hover:text-white transition-all duration-300 text-center"
+                  className="border-2 border-primary text-primary px-8 py-4 rounded-full text-lg font-medium hover:bg-primary hover:text-white transition-all duration-300 text-center"
                 >
                   View Pricing
                 </Link>
@@ -172,17 +172,17 @@ export default function Home() {
             <div className="relative">
               <div className="bg-white rounded-3xl shadow-2xl p-8 hover:shadow-3xl transition-shadow duration-300">
                 <div className="flex items-center space-x-4 mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-2xl flex items-center justify-center text-white shadow-lg">
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center text-white shadow-lg">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#4a3428]">AI Wellness Guide</h3>
+                    <h3 className="font-semibold text-foreground">AI Wellness Guide</h3>
                     <p className="text-sm text-gray-500">Let's check in on your peace today</p>
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] rounded-2xl p-6 mb-4 border border-[#E67E3C]/20">
+                <div className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] rounded-2xl p-6 mb-4 border border-primary/20">
                   <p className="text-[#6b4423]">
                     "How are you feeling today? I'm here to help you navigate your thoughts and feelings."
                   </p>
@@ -204,7 +204,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-[#4a3428]">10,000+</p>
+                    <p className="text-2xl font-bold text-foreground">10,000+</p>
                     <p className="text-xs text-gray-600">Happy Clients</p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-[#4a3428]">4.9/5</p>
+                    <p className="text-2xl font-bold text-foreground">4.9/5</p>
                     <p className="text-xs text-gray-600">Rating</p>
                   </div>
                 </div>
@@ -234,7 +234,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center group">
-                <p className="text-4xl lg:text-5xl font-bold text-[#E67E3C] mb-2 group-hover:scale-110 transition-transform duration-300">
+                <p className="text-4xl lg:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
                   {stat.number}
                 </p>
                 <p className="text-gray-600 font-medium">{stat.label}</p>
@@ -245,11 +245,11 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-[#fef3e8]/30">
+      <section className="py-20 bg-gradient-to-b from-white to-[var(--accent)]/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-[#E67E3C] font-semibold text-sm uppercase tracking-wide">Our Features</span>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#4a3428] mb-4 mt-2">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wide">Our Features</span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 mt-2">
               Why Choose Apothecary?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -260,10 +260,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group border border-gray-100">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-[#4a3428] mb-3">
+                <h3 className="text-xl font-semibold text-foreground mb-3">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -279,8 +279,8 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-[#E67E3C] font-semibold text-sm uppercase tracking-wide">Our Expertise</span>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#4a3428] mb-4 mt-2">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wide">Our Expertise</span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 mt-2">
               Areas We Specialize In
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -290,9 +290,9 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {specialties.map((specialty, index) => (
-              <div key={index} className="bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
+              <div key={index} className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
                 <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">{specialty.icon}</div>
-                <p className="font-semibold text-[#4a3428]">{specialty.name}</p>
+                <p className="font-semibold text-foreground">{specialty.name}</p>
               </div>
             ))}
           </div>
@@ -300,11 +300,11 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-gradient-to-br from-[#fef3e8] to-white">
+      <section className="py-20 bg-gradient-to-br from-[var(--accent)] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-[#E67E3C] font-semibold text-sm uppercase tracking-wide">Simple Process</span>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#4a3428] mb-4 mt-2">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wide">Simple Process</span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 mt-2">
               How It Works
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -314,21 +314,21 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* Connection Lines */}
-            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[#E67E3C] to-[#d16b2a] opacity-20"></div>
+            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-primary to-primary-dark opacity-20"></div>
 
             <div className="text-center group">
               <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                <div className="relative w-24 h-24 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                <div className="relative w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                   </svg>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg font-bold text-[#E67E3C]">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg font-bold text-primary">
                   1
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-[#4a3428] mb-3">
+              <h3 className="text-xl font-semibold text-foreground mb-3">
                 Create Your Account
               </h3>
               <p className="text-gray-600 leading-relaxed">
@@ -338,17 +338,17 @@ export default function Home() {
 
             <div className="text-center group">
               <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                <div className="relative w-24 h-24 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                <div className="relative w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg font-bold text-[#E67E3C]">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg font-bold text-primary">
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-[#4a3428] mb-3">
+              <h3 className="text-xl font-semibold text-foreground mb-3">
                 Get Matched
               </h3>
               <p className="text-gray-600 leading-relaxed">
@@ -358,17 +358,17 @@ export default function Home() {
 
             <div className="text-center group">
               <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                <div className="relative w-24 h-24 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-dark rounded-full opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                <div className="relative w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg font-bold text-[#E67E3C]">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg font-bold text-primary">
                   3
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-[#4a3428] mb-3">
+              <h3 className="text-xl font-semibold text-foreground mb-3">
                 Start Your Journey
               </h3>
               <p className="text-gray-600 leading-relaxed">
@@ -383,8 +383,8 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-[#E67E3C] font-semibold text-sm uppercase tracking-wide">Testimonials</span>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#4a3428] mb-4 mt-2">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wide">Testimonials</span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 mt-2">
               What Our Clients Say
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -394,7 +394,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gradient-to-br from-[#fef3e8] to-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-[#E67E3C]/10">
+              <div key={index} className="bg-gradient-to-br from-[var(--accent)] to-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-primary/10">
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
@@ -406,11 +406,11 @@ export default function Home() {
                   "{testimonial.text}"
                 </p>
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-full flex items-center justify-center text-white font-bold mr-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center text-white font-bold mr-4">
                     {testimonial.image}
                   </div>
                   <div>
-                    <p className="font-semibold text-[#4a3428]">{testimonial.name}</p>
+                    <p className="font-semibold text-foreground">{testimonial.name}</p>
                     <p className="text-sm text-gray-600">{testimonial.role}</p>
                   </div>
                 </div>
@@ -421,11 +421,11 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-[#4a3428] to-[#6b4423] text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-[var(--foreground)] to-[#6b4423] text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#E67E3C] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#E67E3C] rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -439,14 +439,14 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Link
               href="/auth/signup"
-              className="inline-block bg-gradient-to-r from-[#E67E3C] to-[#d16b2a] text-white px-10 py-4 rounded-full text-lg font-medium hover:shadow-2xl transition-all duration-300 group"
+              className="inline-block bg-gradient-to-r from-primary to-primary-dark text-white px-10 py-4 rounded-full text-lg font-medium hover:shadow-2xl transition-all duration-300 group"
             >
               Get Started Free
               <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
             <Link
               href="/contact"
-              className="inline-block border-2 border-white text-white px-10 py-4 rounded-full text-lg font-medium hover:bg-white hover:text-[#4a3428] transition-all duration-300"
+              className="inline-block border-2 border-white text-white px-10 py-4 rounded-full text-lg font-medium hover:bg-white hover:text-foreground transition-all duration-300"
             >
               Contact Us
             </Link>

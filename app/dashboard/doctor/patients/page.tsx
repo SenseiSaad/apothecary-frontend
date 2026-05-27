@@ -334,7 +334,7 @@ export default function DoctorPatients() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">{isAssistantAccount ? 'Assigned Patients' : 'My Patients'}</h2>
+                        <h2 className="text-2xl font-bold text-foreground">{isAssistantAccount ? 'Assigned Patients' : 'My Patients'}</h2>
                         <p className="text-gray-600">
                             {isAssistantAccount ? 'Patients visible through assigned Doctor relationships.' : 'Manage assigned patients and invitation status.'}
                         </p>
@@ -377,14 +377,14 @@ export default function DoctorPatients() {
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
                                 placeholder={isAssistantAccount ? 'Search patient email...' : 'Search invite email...'}
-                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
                         <div className="flex gap-3">
                             <select
                                 value={statusFilter}
                                 onChange={(event) => setStatusFilter(event.target.value)}
-                                className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             >
                                 <option value="all">All Status</option>
                                 <option value="pending">Pending</option>
@@ -438,7 +438,7 @@ export default function DoctorPatients() {
                                             <div className="flex items-center gap-3">
                                                 <Avatar name={invite.email} />
                                                 <div>
-                                                    <p className="font-medium text-[#4a3428]">{formatNameFromEmail(invite.email)}</p>
+                                                    <p className="font-medium text-foreground">{formatNameFromEmail(invite.email)}</p>
                                                     <p className="text-sm text-gray-600">{invite.email}</p>
                                                     {isAssistantAccount && invite.illness_description && (
                                                         <p className="mt-1 max-w-sm text-xs text-gray-500">{invite.illness_description}</p>
@@ -485,7 +485,7 @@ export default function DoctorPatients() {
 
                 {!isAssistantAccount && <Modal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} title="Invite Patient" size="lg">
                     <form onSubmit={sendInvite} className="space-y-5 p-6">
-                        <div className="rounded-xl bg-[#fef3e8] px-4 py-3 text-sm text-gray-700">
+                        <div className="rounded-xl bg-accent px-4 py-3 text-sm text-gray-700">
                             The patient will receive a secure one-time invite link by email. New patients can complete registration from the link; existing patients can accept the invite inside the app.
                         </div>
 
@@ -498,7 +498,7 @@ export default function DoctorPatients() {
                                 value={form.email}
                                 onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
                                 placeholder="patient@example.com"
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
 
@@ -510,7 +510,7 @@ export default function DoctorPatients() {
                                 value={form.note}
                                 onChange={(event) => setForm((current) => ({ ...current, note: event.target.value }))}
                                 placeholder="Add a short note for the invitation email."
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
 
@@ -530,7 +530,7 @@ export default function DoctorPatients() {
                         {assignTarget && (
                             <form onSubmit={assignPatient} className="space-y-5 p-6">
                                 <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
-                                    <p className="font-semibold text-[#4a3428]">{formatNameFromEmail(assignTarget.email)}</p>
+                                    <p className="font-semibold text-foreground">{formatNameFromEmail(assignTarget.email)}</p>
                                     <p className="text-sm text-gray-600">{assignTarget.email}</p>
                                     <p className="mt-2 text-sm text-gray-600">{assignTarget.illness_description || 'No illness details provided.'}</p>
                                 </div>
@@ -542,7 +542,7 @@ export default function DoctorPatients() {
                                         required
                                         value={selectedDoctorId}
                                         onChange={(event) => setSelectedDoctorId(event.target.value)}
-                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                     >
                                         <option value="">Select Doctor</option>
                                         {assistantDoctors.map((doctor) => (
@@ -559,7 +559,7 @@ export default function DoctorPatients() {
                                             type="checkbox"
                                             checked={forceReassign}
                                             onChange={(event) => setForceReassign(event.target.checked)}
-                                            className="h-4 w-4 rounded accent-[#E67E3C]"
+                                            className="h-4 w-4 rounded accent-[var(--primary)]"
                                         />
                                         <span className="text-sm text-amber-800">Confirm reassignment from the current Doctor</span>
                                     </label>
@@ -587,7 +587,7 @@ export default function DoctorPatients() {
                         {outcomeTarget && (
                             <form onSubmit={saveOutcome} className="space-y-5 p-6">
                                 <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
-                                    <p className="font-semibold text-[#4a3428]">{formatNameFromEmail(outcomeTarget.email)}</p>
+                                    <p className="font-semibold text-foreground">{formatNameFromEmail(outcomeTarget.email)}</p>
                                     <p className="text-sm text-gray-600">{outcomeTarget.illness_description || 'No illness details provided.'}</p>
                                 </div>
                                 <div>
@@ -596,7 +596,7 @@ export default function DoctorPatients() {
                                         id="outcome"
                                         value={outcome}
                                         onChange={(event) => setOutcome(event.target.value as typeof outcome)}
-                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                     >
                                         <option value="completed">Completed / treated</option>
                                         <option value="follow_up_needed">Further treatment needed</option>
@@ -612,7 +612,7 @@ export default function DoctorPatients() {
                                         value={doctorNotes}
                                         onChange={(event) => setDoctorNotes(event.target.value)}
                                         placeholder="Clinical/admin notes for this outcome."
-                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                     />
                                 </div>
                                 <div className="flex flex-col-reverse gap-3 border-t border-gray-200 pt-5 sm:flex-row sm:justify-end">
@@ -629,7 +629,7 @@ export default function DoctorPatients() {
 }
 
 function Stat({ label, value, tone = 'default' }: { label: string; value: string | number; tone?: 'default' | 'green' | 'yellow' | 'gray' }) {
-    const color = tone === 'green' ? 'text-green-600' : tone === 'yellow' ? 'text-yellow-600' : tone === 'gray' ? 'text-gray-500' : 'text-[#4a3428]';
+    const color = tone === 'green' ? 'text-green-600' : tone === 'yellow' ? 'text-yellow-600' : tone === 'gray' ? 'text-gray-500' : 'text-foreground';
 
     return (
         <div className="rounded-2xl bg-white p-6 shadow-sm">

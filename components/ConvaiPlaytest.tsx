@@ -217,7 +217,7 @@ export default function ConvaiPlaytest() {
                 type="button"
                 onClick={connect}
                 disabled={!hasCredentials || state.isConnecting || state.isConnected}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#e67e3c] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#d16b2a] disabled:cursor-not-allowed disabled:bg-[#d9d2ca]"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-[#d9d2ca]"
               >
                 {state.isConnecting ? <Loader2 className="animate-spin" size={17} /> : <Mic size={17} />}
                 Connect
@@ -302,7 +302,7 @@ export default function ConvaiPlaytest() {
                   type="button"
                   onClick={() => sendMessage(prompt)}
                   disabled={!isReady}
-                  className="min-h-20 rounded-md border border-[#e4d7c9] bg-[#fbf8f5] p-4 text-left text-sm leading-6 text-[#3a2a20] transition hover:border-[#e67e3c] hover:bg-white disabled:cursor-not-allowed disabled:text-[#a99b8f]"
+                  className="min-h-20 rounded-md border border-[#e4d7c9] bg-[#fbf8f5] p-4 text-left text-sm leading-6 text-[#3a2a20] transition hover:border-[var(--primary)] hover:bg-white disabled:cursor-not-allowed disabled:text-[#a99b8f]"
                 >
                   {prompt}
                 </button>
@@ -320,12 +320,12 @@ export default function ConvaiPlaytest() {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Type a message to the Convai character..."
-                className="min-h-12 flex-1 rounded-md border border-[#d5c8bb] bg-white px-4 text-sm outline-none transition focus:border-[#e67e3c] focus:ring-2 focus:ring-[#e67e3c]/20"
+                className="min-h-12 flex-1 rounded-md border border-[#d5c8bb] bg-white px-4 text-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20"
               />
               <button
                 type="submit"
                 disabled={!isReady || !input.trim()}
-                className="inline-flex min-w-28 items-center justify-center gap-2 rounded-md bg-[#e67e3c] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#d16b2a] disabled:cursor-not-allowed disabled:bg-[#d9d2ca]"
+                className="inline-flex min-w-28 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:bg-[#d9d2ca]"
               >
                 <Send size={17} />
                 Send
@@ -341,7 +341,7 @@ export default function ConvaiPlaytest() {
                   const isUser = messageSender(message) === "You";
                   return (
                     <div key={`${message.id || index}`} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-                      <div className={`max-w-[78%] rounded-lg px-4 py-3 text-sm leading-6 ${isUser ? "bg-[#e67e3c] text-white" : "bg-white text-[#3a2a20] shadow-sm ring-1 ring-[#eadfd4]"}`}>
+                      <div className={`max-w-[78%] rounded-lg px-4 py-3 text-sm leading-6 ${isUser ? "bg-[var(--primary)] text-white" : "bg-white text-[#3a2a20] shadow-sm ring-1 ring-[#eadfd4]"}`}>
                         <p className={`mb-1 text-xs font-semibold ${isUser ? "text-white/80" : "text-[#907b68]"}`}>{messageSender(message)}</p>
                         <p className="whitespace-pre-wrap">{messageText(message)}</p>
                       </div>

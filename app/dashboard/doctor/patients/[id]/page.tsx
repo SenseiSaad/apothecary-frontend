@@ -98,16 +98,16 @@ export default function PatientDetails() {
                 {/* Back Button */}
                 <Link
                     href="/dashboard/doctor/patients"
-                    className="inline-flex items-center text-[#E67E3C] hover:text-[#d16b2a] font-medium"
+                    className="inline-flex items-center text-primary hover:text-primary-dark font-medium"
                 >
                     ← Back to Patients
                 </Link>
 
                 {/* Patient Header */}
-                <div className="bg-gradient-to-r from-[#E67E3C] to-[#d16b2a] rounded-3xl p-8 text-white">
+                <div className="bg-gradient-to-r from-primary to-primary-dark rounded-3xl p-8 text-white">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-6">
-                            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-[#E67E3C] text-4xl font-bold">
+                            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-primary text-4xl font-bold">
                                 {patient.name.charAt(0)}
                             </div>
                             <div>
@@ -126,7 +126,7 @@ export default function PatientDetails() {
                             </div>
                             <Link
                                 href="/dashboard/doctor/chat"
-                                className="inline-block bg-white text-[#E67E3C] px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors"
+                                className="inline-block bg-white text-primary px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors"
                             >
                                 💬 Message
                             </Link>
@@ -138,7 +138,7 @@ export default function PatientDetails() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <p className="text-gray-600 text-sm mb-1">Total Sessions</p>
-                        <p className="text-3xl font-bold text-[#4a3428]">{patient.totalSessions}</p>
+                        <p className="text-3xl font-bold text-foreground">{patient.totalSessions}</p>
                     </div>
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <p className="text-gray-600 text-sm mb-1">Completed</p>
@@ -150,7 +150,7 @@ export default function PatientDetails() {
                     </div>
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <p className="text-gray-600 text-sm mb-1">Last Session</p>
-                        <p className="text-lg font-bold text-[#E67E3C]">{patient.lastSession}</p>
+                        <p className="text-lg font-bold text-primary">{patient.lastSession}</p>
                     </div>
                 </div>
 
@@ -168,7 +168,7 @@ export default function PatientDetails() {
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as any)}
                                     className={`py-4 px-2 border-b-2 font-medium transition-colors ${activeTab === tab.id
-                                            ? 'border-[#E67E3C] text-[#E67E3C]'
+                                            ? 'border-primary text-primary'
                                             : 'border-transparent text-gray-500 hover:text-gray-700'
                                         }`}
                                 >
@@ -185,8 +185,8 @@ export default function PatientDetails() {
                             <div className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {/* Contact Information */}
-                                    <div className="bg-[#fef3e8] rounded-2xl p-6">
-                                        <h3 className="font-semibold text-[#4a3428] mb-4">Contact Information</h3>
+                                    <div className="bg-accent rounded-2xl p-6">
+                                        <h3 className="font-semibold text-foreground mb-4">Contact Information</h3>
                                         <div className="space-y-3">
                                             <div>
                                                 <p className="text-xs text-gray-500">Email</p>
@@ -204,8 +204,8 @@ export default function PatientDetails() {
                                     </div>
 
                                     {/* Emergency Contact */}
-                                    <div className="bg-[#fef3e8] rounded-2xl p-6">
-                                        <h3 className="font-semibold text-[#4a3428] mb-4">Emergency Contact</h3>
+                                    <div className="bg-accent rounded-2xl p-6">
+                                        <h3 className="font-semibold text-foreground mb-4">Emergency Contact</h3>
                                         <div className="space-y-3">
                                             <div>
                                                 <p className="text-xs text-gray-500">Name</p>
@@ -225,12 +225,12 @@ export default function PatientDetails() {
 
                                 {/* Primary Concerns */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Primary Concerns</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Primary Concerns</h3>
                                     <div className="flex flex-wrap gap-2">
                                         {patient.concerns.map((concern, index) => (
                                             <span
                                                 key={index}
-                                                className="px-4 py-2 bg-[#E67E3C] text-white rounded-full text-sm font-medium"
+                                                className="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium"
                                             >
                                                 {concern}
                                             </span>
@@ -240,13 +240,13 @@ export default function PatientDetails() {
 
                                 {/* Medical History */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Medical History</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Medical History</h3>
                                     <p className="text-sm text-gray-700">{patient.medicalHistory}</p>
                                 </div>
 
                                 {/* Treatment Plan Summary */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Current Treatment Plan</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Current Treatment Plan</h3>
                                     <div className="space-y-4">
                                         <div>
                                             <p className="text-xs text-gray-500 mb-1">Diagnosis</p>
@@ -265,10 +265,10 @@ export default function PatientDetails() {
 
                                 {/* Next Appointment */}
                                 {patient.nextAppointment && (
-                                    <div className="bg-[#E67E3C] text-white rounded-2xl p-6">
+                                    <div className="bg-primary text-white rounded-2xl p-6">
                                         <h3 className="font-semibold mb-2">Next Appointment</h3>
                                         <p className="text-2xl font-bold">{patient.nextAppointment}</p>
-                                        <button className="mt-4 bg-white text-[#E67E3C] px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">
+                                        <button className="mt-4 bg-white text-primary px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">
                                             View Details
                                         </button>
                                     </div>
@@ -280,8 +280,8 @@ export default function PatientDetails() {
                         {activeTab === 'sessions' && (
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-bold text-[#4a3428]">All Sessions</h3>
-                                    <button className="bg-[#E67E3C] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#d16b2a]">
+                                    <h3 className="text-xl font-bold text-foreground">All Sessions</h3>
+                                    <button className="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-dark">
                                         Schedule New Session
                                     </button>
                                 </div>
@@ -290,7 +290,7 @@ export default function PatientDetails() {
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center space-x-4">
                                                 <div className="text-center min-w-[80px]">
-                                                    <p className="text-sm font-bold text-[#E67E3C]">{formatTime(session.startTime)}</p>
+                                                    <p className="text-sm font-bold text-primary">{formatTime(session.startTime)}</p>
                                                     <p className="text-xs text-gray-600">{formatDisplayDate(session.date)}</p>
                                                 </div>
                                                 <div>
@@ -315,8 +315,8 @@ export default function PatientDetails() {
                         {activeTab === 'notes' && (
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-bold text-[#4a3428]">Clinical Notes</h3>
-                                    <button className="bg-[#E67E3C] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#d16b2a]">
+                                    <h3 className="text-xl font-bold text-foreground">Clinical Notes</h3>
+                                    <button className="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-dark">
                                         + Add Note
                                     </button>
                                 </div>
@@ -327,7 +327,7 @@ export default function PatientDetails() {
                                                 <p className="font-semibold text-gray-700">{note.type}</p>
                                                 <p className="text-sm text-gray-500">{formatDisplayDate(note.date)} • {note.duration} minutes</p>
                                             </div>
-                                            <span className="px-3 py-1 bg-[#fef3e8] text-[#E67E3C] rounded-full text-xs font-medium">
+                                            <span className="px-3 py-1 bg-accent text-primary rounded-full text-xs font-medium">
                                                 Mood: {note.mood}
                                             </span>
                                         </div>
@@ -342,7 +342,7 @@ export default function PatientDetails() {
                                             </div>
                                         </div>
                                         <div className="mt-4 flex gap-2">
-                                            <button className="text-[#E67E3C] hover:text-[#d16b2a] text-sm font-medium">
+                                            <button className="text-primary hover:text-primary-dark text-sm font-medium">
                                                 Edit
                                             </button>
                                             <button className="text-gray-600 hover:text-gray-700 text-sm font-medium">
@@ -359,15 +359,15 @@ export default function PatientDetails() {
                             <div className="space-y-6">
                                 {/* Progress Chart */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Overall Progress</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Overall Progress</h3>
                                     <div className="mb-4">
                                         <div className="flex items-center justify-between mb-2">
                                             <span className="text-sm text-gray-600">Treatment Progress</span>
-                                            <span className="text-2xl font-bold text-[#E67E3C]">{patient.progress}%</span>
+                                            <span className="text-2xl font-bold text-primary">{patient.progress}%</span>
                                         </div>
                                         <div className="w-full bg-gray-200 rounded-full h-4">
                                             <div
-                                                className="bg-[#E67E3C] h-4 rounded-full transition-all"
+                                                className="bg-primary h-4 rounded-full transition-all"
                                                 style={{ width: `${patient.progress}%` }}
                                             ></div>
                                         </div>
@@ -377,14 +377,14 @@ export default function PatientDetails() {
 
                                 {/* Treatment Goals */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Treatment Goals</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Treatment Goals</h3>
                                     <div className="space-y-3">
                                         {treatmentPlan.goals.map((goal, index) => (
                                             <div key={index} className="flex items-start space-x-3">
                                                 <input
                                                     type="checkbox"
                                                     checked={index < 2}
-                                                    className="mt-1 w-5 h-5 text-[#E67E3C] rounded"
+                                                    className="mt-1 w-5 h-5 text-primary rounded"
                                                     readOnly
                                                 />
                                                 <span className={`text-sm ${index < 2 ? 'text-gray-500 line-through' : 'text-gray-700'}`}>
@@ -397,12 +397,12 @@ export default function PatientDetails() {
 
                                 {/* Interventions */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Current Interventions</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Current Interventions</h3>
                                     <div className="flex flex-wrap gap-2">
                                         {treatmentPlan.interventions.map((intervention, index) => (
                                             <span
                                                 key={index}
-                                                className="px-4 py-2 bg-[#fef3e8] text-[#6b4423] rounded-full text-sm font-medium"
+                                                className="px-4 py-2 bg-accent text-[#6b4423] rounded-full text-sm font-medium"
                                             >
                                                 {intervention}
                                             </span>
@@ -412,14 +412,14 @@ export default function PatientDetails() {
 
                                 {/* Mood Tracking (Mock Chart) */}
                                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                                    <h3 className="font-semibold text-[#4a3428] mb-4">Mood Tracking (Last 7 Days)</h3>
+                                    <h3 className="font-semibold text-foreground mb-4">Mood Tracking (Last 7 Days)</h3>
                                     <div className="h-48 flex items-end justify-between space-x-2">
                                         {[7.2, 6.8, 7.5, 7.0, 7.8, 7.3, 7.6].map((mood, index) => {
                                             const height = (mood / 10) * 100;
                                             return (
                                                 <div key={index} className="flex-1 flex flex-col items-center">
                                                     <div
-                                                        className="w-full bg-[#E67E3C] rounded-t-lg"
+                                                        className="w-full bg-primary rounded-t-lg"
                                                         style={{ height: `${height}%` }}
                                                         title={`Mood: ${mood}/10`}
                                                     ></div>

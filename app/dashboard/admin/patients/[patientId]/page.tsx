@@ -246,7 +246,7 @@ export default function AdminPatientCaseDetailPage() {
                             Back
                         </Button>
                         <div className="min-w-0">
-                            <h2 className="text-2xl font-bold text-[#4a3428]">Patient Case Detail</h2>
+                            <h2 className="text-2xl font-bold text-foreground">Patient Case Detail</h2>
                             <p className="text-gray-600">Full patient record, case history, care team, handoff notes, and on-demand chat audit.</p>
                         </div>
                     </div>
@@ -266,7 +266,7 @@ export default function AdminPatientCaseDetailPage() {
                                     <div className="flex min-w-0 items-start gap-4">
                                         <Avatar name={details.patient.name} />
                                         <div className="min-w-0">
-                                            <h3 className="truncate text-xl font-bold text-[#4a3428]">{details.patient.name}</h3>
+                                            <h3 className="truncate text-xl font-bold text-foreground">{details.patient.name}</h3>
                                             <p className="truncate text-sm text-gray-600">{details.patient.email}</p>
                                             <div className="mt-3 flex flex-wrap gap-2">
                                                 <Badge>{label(details.patient.care_status)}</Badge>
@@ -294,7 +294,7 @@ export default function AdminPatientCaseDetailPage() {
                             </section>
 
                             <section className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-                                <h3 className="font-bold text-[#4a3428]">Current Doctor</h3>
+                                <h3 className="font-bold text-foreground">Current Doctor</h3>
                                 {details.patient.doctor ? (
                                     <div className="mt-4 space-y-3">
                                         <p className="font-semibold text-gray-800">{details.patient.doctor.name}</p>
@@ -314,7 +314,7 @@ export default function AdminPatientCaseDetailPage() {
                         <div className="grid min-w-0 gap-4 xl:grid-cols-[300px_minmax(0,1fr)]">
                             <aside className="rounded-lg border border-gray-100 bg-white p-4 shadow-sm">
                                 <div className="mb-3">
-                                    <h3 className="font-bold text-[#4a3428]">Case History</h3>
+                                    <h3 className="font-bold text-foreground">Case History</h3>
                                     <p className="text-sm text-gray-500">Latest case is selected by default.</p>
                                 </div>
                                 <div className="space-y-2">
@@ -326,10 +326,10 @@ export default function AdminPatientCaseDetailPage() {
                                                 setSelectedCaseId(careCase.care_request_id);
                                                 setMessages(null);
                                             }}
-                                            className={`w-full rounded-lg border p-3 text-left transition ${careCase.care_request_id === selectedCase?.care_request_id ? 'border-[#E67E3C] bg-orange-50' : 'border-gray-100 bg-white hover:bg-gray-50'}`}
+                                            className={`w-full rounded-lg border p-3 text-left transition ${careCase.care_request_id === selectedCase?.care_request_id ? 'border-primary bg-orange-50' : 'border-gray-100 bg-white hover:bg-gray-50'}`}
                                         >
                                             <div className="flex items-center justify-between gap-2">
-                                                <span className="text-sm font-semibold text-[#4a3428]">Case {details.cases.length - index}</span>
+                                                <span className="text-sm font-semibold text-foreground">Case {details.cases.length - index}</span>
                                                 <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold capitalize ${requestStyles[careCase.status]}`}>{label(careCase.status)}</span>
                                             </div>
                                             <p className="mt-2 line-clamp-2 text-sm text-gray-600">{careCase.reason}</p>
@@ -345,8 +345,8 @@ export default function AdminPatientCaseDetailPage() {
                                         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                                             <div className="min-w-0">
                                                 <div className="flex flex-wrap items-center gap-2">
-                                                    <ClipboardList className="h-4 w-4 text-[#E67E3C]" />
-                                                    <h3 className="font-bold text-[#4a3428]">Selected Case</h3>
+                                                    <ClipboardList className="h-4 w-4 text-primary" />
+                                                    <h3 className="font-bold text-foreground">Selected Case</h3>
                                                     <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${requestStyles[selectedCase.status]}`}>{label(selectedCase.status)}</span>
                                                     <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${urgencyStyles[selectedCase.urgency]}`}>{selectedCase.urgency}</span>
                                                 </div>
@@ -389,7 +389,7 @@ export default function AdminPatientCaseDetailPage() {
                                     </div>
 
                                     <section className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-                                        <h3 className="font-bold text-[#4a3428]">Clinical Notes and Handoff</h3>
+                                        <h3 className="font-bold text-foreground">Clinical Notes and Handoff</h3>
                                         <div className="mt-4 grid gap-4 lg:grid-cols-2">
                                             <InfoPanel title="Patient Notes" value={selectedCase.patient_notes || '-'} />
                                             <InfoPanel title="Triage Notes" value={selectedCase.triage_notes || '-'} />
@@ -401,7 +401,7 @@ export default function AdminPatientCaseDetailPage() {
                                     <section className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
                                         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                                             <div>
-                                                <h3 className="font-bold text-[#4a3428]">Care Thread Chat</h3>
+                                                <h3 className="font-bold text-foreground">Care Thread Chat</h3>
                                                 <p className="text-sm text-gray-500">Messages are loaded only when needed for audit/review.</p>
                                             </div>
                                             <Button
@@ -421,7 +421,7 @@ export default function AdminPatientCaseDetailPage() {
                                                 {messages.map(message => (
                                                     <div key={message.message_id} className="rounded-lg border border-gray-100 bg-white p-3">
                                                         <div className="flex flex-wrap items-center justify-between gap-2">
-                                                            <span className="text-xs font-bold uppercase tracking-wide text-[#E67E3C]">{message.sender_role}</span>
+                                                            <span className="text-xs font-bold uppercase tracking-wide text-primary">{message.sender_role}</span>
                                                             <span className="text-xs text-gray-400">{formatDateTime(message.created_at)}</span>
                                                         </div>
                                                         <p className="mt-2 whitespace-pre-wrap text-sm text-gray-700">{message.body}</p>
@@ -452,7 +452,7 @@ function Badge({ children, tone = 'gray' }: { children: ReactNode; tone?: 'gray'
 function Metric({ label: metricLabel, value }: { label: string; value: number }) {
     return (
         <div className="rounded-lg bg-gray-50 px-4 py-3">
-            <p className="text-2xl font-bold text-[#4a3428]">{value}</p>
+            <p className="text-2xl font-bold text-foreground">{value}</p>
             <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{metricLabel}</p>
         </div>
     );
@@ -482,7 +482,7 @@ function InfoPanel({ title, value }: { title: string; value: string }) {
 function TeamCard({ title, icon, name, rows }: { title: string; icon: ReactNode; name: string; rows: Array<[string, string]> }) {
     return (
         <section className="min-w-0 rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-            <div className="flex items-center gap-2 text-[#4a3428]">
+            <div className="flex items-center gap-2 text-foreground">
                 {icon}
                 <h3 className="font-bold">{title}</h3>
             </div>

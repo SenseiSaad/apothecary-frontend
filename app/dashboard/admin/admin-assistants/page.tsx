@@ -208,7 +208,7 @@ export default function AdminAssistantManagement() {
                 {/* Header */}
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Assistant Management</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Assistant Management</h2>
                         <p className="text-gray-600">Invite Assistants, set permissions, and assign them to Doctors.</p>
                     </div>
                     <div className="flex gap-3">
@@ -226,7 +226,7 @@ export default function AdminAssistantManagement() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                     {[
-                        { label: 'Total', value: stats.total, cls: 'text-[#4a3428]' },
+                        { label: 'Total', value: stats.total, cls: 'text-foreground' },
                         { label: 'Active', value: stats.active, cls: 'text-green-600' },
                         { label: 'Inactive', value: stats.inactive, cls: 'text-red-500' },
                         { label: 'Unassigned', value: stats.unassigned, cls: 'text-amber-600' },
@@ -244,7 +244,7 @@ export default function AdminAssistantManagement() {
                         <div className="relative w-full md:w-80">
                             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by email…"
-                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent" />
+                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
                         </div>
                         <p className="text-sm text-gray-400">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</p>
                     </div>
@@ -269,7 +269,7 @@ export default function AdminAssistantManagement() {
                                             <div className="flex items-center gap-3">
                                                 <Avatar name={c.email} />
                                                 <div>
-                                                    <p className="font-medium text-[#4a3428]">{nameFromEmail(c.email)}</p>
+                                                    <p className="font-medium text-foreground">{nameFromEmail(c.email)}</p>
                                                     <p className="text-sm text-gray-500">{c.email}</p>
                                                     {c.must_change_password && <p className="text-xs text-amber-500">Temp pwd active</p>}
                                                 </div>
@@ -302,7 +302,7 @@ export default function AdminAssistantManagement() {
             {/* ── Invite Modal ── */}
             <Modal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} title="Invite Assistant" size="lg">
                 <form onSubmit={handleInvite} className="space-y-5 p-6">
-                    <div className="rounded-xl bg-[#fef3e8] px-4 py-3 text-sm text-gray-700">
+                    <div className="rounded-xl bg-accent px-4 py-3 text-sm text-gray-700">
                         Creates an Assistant account and emails a setup link to them to create their password. You can optionally assign Doctors now.
                     </div>
 
@@ -311,11 +311,11 @@ export default function AdminAssistantManagement() {
                         <input id="ic-email" type="email" required value={inviteForm.email}
                             onChange={e => setInviteForm(f => ({ ...f, email: e.target.value }))}
                             placeholder="Assistant@clinic.com"
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent" />
+                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
                     </div>
 
                     <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50">
-                        <input type="checkbox" checked={inviteForm.otp_required} onChange={e => setInviteForm(f => ({ ...f, otp_required: e.target.checked }))} className="h-4 w-4 rounded accent-[#E67E3C]" />
+                        <input type="checkbox" checked={inviteForm.otp_required} onChange={e => setInviteForm(f => ({ ...f, otp_required: e.target.checked }))} className="h-4 w-4 rounded accent-[var(--primary)]" />
                         <span className="text-sm text-gray-700">Require OTP on every login</span>
                     </label>
 
@@ -324,7 +324,7 @@ export default function AdminAssistantManagement() {
                         <div className="space-y-2">
                             {([['can_view', 'View assigned patients'], ['can_assign', 'Assign patients to Doctors'], ['can_bookings', 'Manage bookings'], ['can_comms', 'Send communications']] as const).map(([k, lbl]) => (
                                 <label key={k} className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50">
-                                    <input type="checkbox" checked={inviteForm[k]} onChange={e => setInviteForm(f => ({ ...f, [k]: e.target.checked }))} className="h-4 w-4 rounded accent-[#E67E3C]" />
+                                    <input type="checkbox" checked={inviteForm[k]} onChange={e => setInviteForm(f => ({ ...f, [k]: e.target.checked }))} className="h-4 w-4 rounded accent-[var(--primary)]" />
                                     <span className="text-sm text-gray-700">{lbl}</span>
                                 </label>
                             ))}
@@ -343,7 +343,7 @@ export default function AdminAssistantManagement() {
                                                 ...f,
                                                 doctor_ids: e.target.checked ? [...f.doctor_ids, t.doctor_id] : f.doctor_ids.filter(id => id !== t.doctor_id)
                                             }))}
-                                            className="h-4 w-4 rounded accent-[#E67E3C]" />
+                                            className="h-4 w-4 rounded accent-[var(--primary)]" />
                                         <span className="text-sm text-gray-700">{nameFromEmail(t.email)} <span className="text-gray-400">({t.email})</span></span>
                                     </label>
                                 ))}
@@ -371,7 +371,7 @@ export default function AdminAssistantManagement() {
                         <div>
                             <label className="mb-2 block text-sm font-medium text-gray-700">Account Status</label>
                             <select value={editStatus} onChange={e => setEditStatus(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent">
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
                                 <option value="blocked">Blocked</option>
@@ -388,7 +388,7 @@ export default function AdminAssistantManagement() {
                             <div className="space-y-2">
                                 {([['can_view', 'View assigned patients'], ['can_assign', 'Assign patients to Doctors'], ['can_bookings', 'Manage bookings'], ['can_comms', 'Send communications']] as const).map(([k, lbl]) => (
                                     <label key={k} className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50">
-                                        <input type="checkbox" checked={editPerms[k]} onChange={e => setEditPerms(p => ({ ...p, [k]: e.target.checked }))} className="h-4 w-4 rounded accent-[#E67E3C]" />
+                                        <input type="checkbox" checked={editPerms[k]} onChange={e => setEditPerms(p => ({ ...p, [k]: e.target.checked }))} className="h-4 w-4 rounded accent-[var(--primary)]" />
                                         <span className="text-sm text-gray-700">{lbl}</span>
                                     </label>
                                 ))}
@@ -397,14 +397,14 @@ export default function AdminAssistantManagement() {
 
                         {Doctors.length > 0 && (
                             <div>
-                                <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700"><LinkIcon className="h-4 w-4 text-[#E67E3C]" /> Assigned Doctors</p>
+                                <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700"><LinkIcon className="h-4 w-4 text-primary" /> Assigned Doctors</p>
                                 <div className="max-h-44 overflow-y-auto space-y-1 rounded-lg border border-gray-200 p-2">
                                     {Doctors.filter(t => t.status === 'active').map(t => (
                                         <label key={t.doctor_id} className="flex cursor-pointer items-center gap-3 rounded px-3 py-2 hover:bg-gray-50">
                                             <input type="checkbox"
                                                 checked={assignIds.includes(t.doctor_id)}
                                                 onChange={e => setAssignIds(ids => e.target.checked ? [...ids, t.doctor_id] : ids.filter(id => id !== t.doctor_id))}
-                                                className="h-4 w-4 rounded accent-[#E67E3C]" />
+                                                className="h-4 w-4 rounded accent-[var(--primary)]" />
                                             <span className="text-sm text-gray-700">{nameFromEmail(t.email)} <span className="text-gray-400">({t.email})</span></span>
                                         </label>
                                     ))}

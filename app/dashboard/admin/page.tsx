@@ -88,7 +88,7 @@ export default function AdminDashboard() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
             ),
-            color: 'from-[#E67E3C] to-[#d16b2a]',
+            color: 'from-primary to-primary-dark',
             bgColor: 'bg-orange-50'
         },
         {
@@ -143,12 +143,12 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Sessions Chart */}
                     <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h3 className="text-xl font-bold text-[#4a3428] mb-4">📊 Sessions Overview</h3>
+                        <h3 className="text-xl font-bold text-foreground mb-4">📊 Sessions Overview</h3>
                         <div className="h-64 flex items-end justify-around space-x-2">
                             {[65, 85, 75, 90, 80, 95, 88].map((height, index) => (
                                 <div key={index} className="flex-1 flex flex-col items-center">
                                     <div
-                                        className="w-full bg-gradient-to-t from-[#E67E3C] to-[#f59e6c] rounded-t-lg transition-all hover:from-[#d16b2a] hover:to-[#E67E3C] cursor-pointer shadow-md"
+                                        className="w-full bg-gradient-to-t from-primary to-[#f59e6c] rounded-t-lg transition-all hover:from-primary-dark hover:to-primary cursor-pointer shadow-md"
                                         style={{ height: `${height}%` }}
                                         title={`${height} sessions`}
                                     ></div>
@@ -162,19 +162,19 @@ export default function AdminDashboard() {
 
                     {/* Top Assistants */}
                     <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h3 className="text-xl font-bold text-[#4a3428] mb-4">Top Assistants</h3>
+                        <h3 className="text-xl font-bold text-foreground mb-4">Top Assistants</h3>
                         <div className="space-y-4">
                             {recentAssistants.map((Assistant) => (
-                                <div key={Assistant.id} className="flex items-center justify-between p-3 bg-[#fef3e8] rounded-lg">
+                                <div key={Assistant.id} className="flex items-center justify-between p-3 bg-accent rounded-lg">
                                     <div className="flex items-center space-x-3">
                                         <Avatar name={Assistant.name} />
                                         <div>
-                                            <p className="font-semibold text-[#4a3428]">{Assistant.name}</p>
+                                            <p className="font-semibold text-foreground">{Assistant.name}</p>
                                             <p className="text-xs text-gray-600">{Assistant.specialty}</p>
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-sm font-semibold text-[#4a3428]">{Assistant.patients} patients</p>
+                                        <p className="text-sm font-semibold text-foreground">{Assistant.patients} patients</p>
                                         <p className="text-xs text-gray-600">⭐ {Assistant.rating}</p>
                                     </div>
                                 </div>
@@ -186,8 +186,8 @@ export default function AdminDashboard() {
                 {/* Recent Patients Table */}
                 <div className="bg-white rounded-2xl shadow-sm p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-bold text-[#4a3428]">Recent Patients</h3>
-                        <button className="text-[#E67E3C] hover:text-[#d16b2a] font-medium text-sm">
+                        <h3 className="text-xl font-bold text-foreground">Recent Patients</h3>
+                        <button className="text-primary hover:text-primary-dark font-medium text-sm">
                             View All →
                         </button>
                     </div>
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
                                         <td className="py-3 px-4">
                                             <div className="flex items-center space-x-3">
                                                 <Avatar name={patient.name} size="sm" />
-                                                <span className="font-medium text-[#4a3428]">{patient.name}</span>
+                                                <span className="font-medium text-foreground">{patient.name}</span>
                                             </div>
                                         </td>
                                         <td className="py-3 px-4 text-gray-600">{patient.email}</td>
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                                         </td>
                                         <td className="py-3 px-4 text-gray-600">{new Date(patient.joined).toLocaleDateString()}</td>
                                         <td className="py-3 px-4">
-                                            <button className="text-[#E67E3C] hover:text-[#d16b2a] text-sm font-medium">
+                                            <button className="text-primary hover:text-primary-dark text-sm font-medium">
                                                 View
                                             </button>
                                         </td>

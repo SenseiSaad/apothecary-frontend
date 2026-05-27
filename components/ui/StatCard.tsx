@@ -43,7 +43,7 @@ export const StatCard: React.FC<StatCardProps> = ({
                 </div>
             )}
             <h3 className="text-gray-600 text-sm mb-1">{label}</h3>
-            <p className="text-3xl font-bold text-[#4a3428]">{value}</p>
+            <p className="text-3xl font-bold text-foreground">{value}</p>
             {showProgress && (
                 <div className={`mt-3 h-1 ${bgColor} rounded-full overflow-hidden`}>
                     <div

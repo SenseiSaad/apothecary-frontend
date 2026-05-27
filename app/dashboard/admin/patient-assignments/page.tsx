@@ -201,7 +201,7 @@ export default function AdminPatientAssignments() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Patient Assignment</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Patient Assignment</h2>
                         <p className="text-gray-600">Assign patients who need care to verified available Doctors.</p>
                     </div>
                     <Button variant="outline" size="sm" onClick={loadData} leftIcon={<RefreshCcw className="h-4 w-4" />}>
@@ -236,13 +236,13 @@ export default function AdminPatientAssignments() {
                                     }
                                 }}
                                 placeholder="Search patient, email, or illness..."
-                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
                         <select
                             value={assignedFilter}
                             onChange={event => setAssignedFilter(event.target.value as 'all' | 'unassigned' | 'assigned')}
-                            className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                            className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                         >
                             <option value="unassigned">Unassigned</option>
                             <option value="assigned">Assigned</option>
@@ -251,7 +251,7 @@ export default function AdminPatientAssignments() {
                         <select
                             value={careStatus}
                             onChange={event => setCareStatus(event.target.value as 'active' | CareStatus)}
-                            className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                            className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                         >
                             <option value="active">Active care</option>
                             <option value="needs_care">Needs care</option>
@@ -293,7 +293,7 @@ export default function AdminPatientAssignments() {
                                             <div className="flex items-center gap-3">
                                                 <Avatar name={patient.name || patient.email || 'Patient'} />
                                                 <div>
-                                                    <p className="font-medium text-[#4a3428]">{patient.name || nameFromEmail(patient.email)}</p>
+                                                    <p className="font-medium text-foreground">{patient.name || nameFromEmail(patient.email)}</p>
                                                     <p className="text-sm text-gray-600">{patient.email}</p>
                                                 </div>
                                             </div>
@@ -333,7 +333,7 @@ export default function AdminPatientAssignments() {
                 {selectedPatient && (
                     <form onSubmit={assignPatient} className="space-y-5 p-6">
                         <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
-                            <p className="font-semibold text-[#4a3428]">{selectedPatient.name || nameFromEmail(selectedPatient.email)}</p>
+                            <p className="font-semibold text-foreground">{selectedPatient.name || nameFromEmail(selectedPatient.email)}</p>
                             <p className="text-sm text-gray-600">{selectedPatient.email}</p>
                             <p className="mt-2 text-sm text-gray-600">{selectedPatient.illness_description || 'No illness details provided.'}</p>
                         </div>
@@ -345,7 +345,7 @@ export default function AdminPatientAssignments() {
                                 required
                                 value={selectedDoctorId}
                                 onChange={event => setSelectedDoctorId(event.target.value)}
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             >
                                 <option value="">Select a verified Doctor</option>
                                 {doctors.map(doctor => (
@@ -362,7 +362,7 @@ export default function AdminPatientAssignments() {
                                     type="checkbox"
                                     checked={forceReassign}
                                     onChange={event => setForceReassign(event.target.checked)}
-                                    className="h-4 w-4 rounded accent-[#E67E3C]"
+                                    className="h-4 w-4 rounded accent-[var(--primary)]"
                                 />
                                 <span className="text-sm text-amber-800">Confirm reassignment from the current Doctor</span>
                             </label>
@@ -388,7 +388,7 @@ export default function AdminPatientAssignments() {
 }
 
 function Stat({ label, value, tone = 'default' }: { label: string; value: string | number; tone?: 'default' | 'green' | 'amber' | 'blue' }) {
-    const color = tone === 'green' ? 'text-green-600' : tone === 'amber' ? 'text-amber-600' : tone === 'blue' ? 'text-blue-600' : 'text-[#4a3428]';
+    const color = tone === 'green' ? 'text-green-600' : tone === 'amber' ? 'text-amber-600' : tone === 'blue' ? 'text-blue-600' : 'text-foreground';
 
     return (
         <div className="rounded-2xl bg-white p-6 shadow-sm">

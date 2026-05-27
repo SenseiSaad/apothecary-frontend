@@ -382,14 +382,14 @@ export default function DoctorProfile() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">My Doctor Profile</h2>
+                        <h2 className="text-2xl font-bold text-foreground">My Doctor Profile</h2>
                         <p className="text-gray-600">Manage your professional profile, availability, and portal settings.</p>
                     </div>
 
                     {!isEditing ? (
                         <button
                             onClick={() => setIsEditing(true)}
-                            className="rounded-full bg-[#E67E3C] px-6 py-3 font-medium text-white transition-colors hover:bg-[#d16b2a]"
+                            className="rounded-full bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-dark"
                         >
                             Edit Profile
                         </button>
@@ -404,7 +404,7 @@ export default function DoctorProfile() {
                             <button
                                 onClick={handleSave}
                                 disabled={isSaving}
-                                className="rounded-full bg-[#E67E3C] px-6 py-3 font-medium text-white transition-colors hover:bg-[#d16b2a] disabled:cursor-not-allowed disabled:opacity-60"
+                                className="rounded-full bg-primary px-6 py-3 font-medium text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 {isSaving ? 'Saving...' : 'Save Changes'}
                             </button>
@@ -422,10 +422,10 @@ export default function DoctorProfile() {
                     <div className="rounded-2xl bg-white p-8 text-gray-600 shadow-sm">Loading Doctor profile...</div>
                 ) : (
                     <>
-                        <div className="rounded-2xl bg-gradient-to-r from-[#E67E3C] to-[#d16b2a] p-8 text-white">
+                        <div className="rounded-2xl bg-gradient-to-r from-primary to-primary-dark p-8 text-white">
                             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                                 <div className="flex items-center gap-6">
-                                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white text-3xl font-bold text-[#E67E3C]">
+                                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white text-3xl font-bold text-primary">
                                         {initials}
                                     </div>
                                     <div>
@@ -457,7 +457,7 @@ export default function DoctorProfile() {
                                         <button
                                             key={tab.id}
                                             onClick={() => setActiveTab(tab.id)}
-                                            className={`border-b-2 px-1 py-4 font-medium transition-colors ${activeTab === tab.id ? 'border-[#E67E3C] text-[#E67E3C]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+                                            className={`border-b-2 px-1 py-4 font-medium transition-colors ${activeTab === tab.id ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
                                         >
                                             {tab.label}
                                         </button>
@@ -495,7 +495,7 @@ export default function DoctorProfile() {
                                                     value={draft.Doctor.professional_info?.session_modalities?.[0] || 'video'}
                                                     disabled={!isEditing}
                                                     onChange={(event) => updateProfessional('session_modalities', [event.target.value])}
-                                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100"
+                                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100"
                                                 >
                                                     <option value="video">Video</option>
                                                     <option value="text">Text</option>
@@ -511,7 +511,7 @@ export default function DoctorProfile() {
                                                 disabled={!isEditing}
                                                 onChange={(event) => updateProfessional('bio', event.target.value)}
                                                 rows={5}
-                                                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100"
+                                                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100"
                                             />
                                         </div>
 
@@ -523,7 +523,7 @@ export default function DoctorProfile() {
                                                 disabled={!isEditing}
                                                 onChange={(event) => setCredentialsText(event.target.value)}
                                                 placeholder="LMFT, CBT Certified"
-                                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100"
+                                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100"
                                             />
                                             <p className="mt-2 text-xs text-gray-500">Separate credentials with commas.</p>
                                         </div>
@@ -539,8 +539,8 @@ export default function DoctorProfile() {
 
                                 {activeTab === 'settings' && (
                                     <div className="space-y-6">
-                                        <div className="rounded-2xl bg-[#fef3e8] p-6">
-                                            <h4 className="mb-4 font-semibold text-[#4a3428]">Notification Preferences</h4>
+                                        <div className="rounded-2xl bg-accent p-6">
+                                            <h4 className="mb-4 font-semibold text-foreground">Notification Preferences</h4>
                                             <div className="space-y-4">
                                                 <Toggle label="Email notifications" checked={!!draft.Doctor.portal_settings?.email_notifications} disabled={!isEditing} onChange={(value) => updateSettings('email_notifications', value)} />
                                                 <Toggle label="Push notifications" checked={!!draft.Doctor.portal_settings?.push_notifications} disabled={!isEditing} onChange={(value) => updateSettings('push_notifications', value)} />
@@ -571,7 +571,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
     return (
         <div className="rounded-2xl bg-white p-6 shadow-sm">
             <p className="mb-1 text-sm text-gray-600">{label}</p>
-            <p className="text-3xl font-bold text-[#4a3428]">{value}</p>
+            <p className="text-3xl font-bold text-foreground">{value}</p>
         </div>
     );
 }
@@ -593,7 +593,7 @@ function Field({ label, value, type = 'text', disabled, placeholder, onChange }:
                 disabled={disabled}
                 placeholder={placeholder}
                 onChange={(event) => onChange?.(event.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100"
             />
         </div>
     );
@@ -614,7 +614,7 @@ function SmallField({ label, value, type = 'text', disabled, onChange }: {
                 value={value}
                 disabled={disabled}
                 onChange={(event) => onChange?.(event.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100"
             />
         </div>
     );
@@ -636,7 +636,7 @@ function TimezoneSelect({ label, value, disabled, compact, onChange }: {
                 value={value}
                 disabled={disabled}
                 onChange={(event) => onChange(event.target.value)}
-                className={`w-full rounded-lg border border-gray-300 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100 ${compact ? 'px-3 py-2' : 'px-4 py-3'}`}
+                className={`w-full rounded-lg border border-gray-300 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100 ${compact ? 'px-3 py-2' : 'px-4 py-3'}`}
             >
                 <option value="">Select timezone</option>
                 {options.map((timezone) => (
@@ -713,7 +713,7 @@ function Toggle({ label, checked, disabled, onChange }: {
                     onChange={(event) => onChange(event.target.checked)}
                     className="peer sr-only"
                 />
-                <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-[#E67E3C] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#E67E3C]/20 peer-disabled:cursor-not-allowed peer-disabled:opacity-60"></div>
+                <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 peer-disabled:cursor-not-allowed peer-disabled:opacity-60"></div>
             </label>
         </div>
     );

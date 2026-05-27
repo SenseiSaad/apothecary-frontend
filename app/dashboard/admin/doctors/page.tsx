@@ -420,7 +420,7 @@ export default function AdminAssistants() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Doctor Management</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Doctor Management</h2>
                         <p className="text-gray-600">Invite Doctors and manage their portal access</p>
                     </div>
                     <Button onClick={() => setIsModalOpen(true)} leftIcon={<Plus className="h-5 w-5" />}>
@@ -442,7 +442,7 @@ export default function AdminAssistants() {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
                     <div className="rounded-lg bg-white p-6 shadow-sm">
                         <p className="mb-1 text-sm text-gray-600">Total Doctors</p>
-                        <p className="text-3xl font-bold text-[#4a3428]">{isLoading ? '...' : stats.total}</p>
+                        <p className="text-3xl font-bold text-foreground">{isLoading ? '...' : stats.total}</p>
                     </div>
                     <div className="rounded-lg bg-white p-6 shadow-sm">
                         <p className="mb-1 text-sm text-gray-600">Active</p>
@@ -467,14 +467,14 @@ export default function AdminAssistants() {
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
                                 placeholder="Search Doctors..."
-                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
                         <div className="flex gap-3">
                             <select
                                 value={credentialStatus}
                                 onChange={(event) => setCredentialStatus(event.target.value)}
-                                className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             >
                                 <option value="all">All Credentials</option>
                                 <option value="pending">Pending</option>
@@ -521,11 +521,11 @@ export default function AdminAssistants() {
                                     <tr key={Assistant.doctor_id} className="border-b border-gray-100 hover:bg-gray-50">
                                         <td className="px-4 py-4">
                                             <div className="flex items-center space-x-3">
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E67E3C] font-bold text-white">
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-bold text-white">
                                                     {getInitial(Assistant.email)}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-[#4a3428]">{formatNameFromEmail(Assistant.email)}</p>
+                                                    <p className="font-medium text-foreground">{formatNameFromEmail(Assistant.email)}</p>
                                                     <p className="text-sm text-gray-600">{Assistant.email}</p>
                                                 </div>
                                             </div>
@@ -560,7 +560,7 @@ export default function AdminAssistants() {
                                             <select
                                                 value={Assistant.status}
                                                 onChange={(event) => updateAssistantStatus(Assistant.doctor_id, event.target.value)}
-                                                className="mt-2 block rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                                className="mt-2 block rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                             >
                                                 <option value="pending">Pending</option>
                                                 <option value="active">Active</option>
@@ -625,7 +625,7 @@ export default function AdminAssistants() {
                         )}
 
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <div className="rounded-xl bg-[#fef3e8] px-4 py-3 text-sm text-gray-700 md:col-span-2">
+                            <div className="rounded-xl bg-accent px-4 py-3 text-sm text-gray-700 md:col-span-2">
                                 Invite with email first if license or specialty is not available. The Doctor can complete professional details from their profile, then Super Admin can verify or reject credentials here.
                             </div>
                             <Input
@@ -685,7 +685,7 @@ export default function AdminAssistants() {
                                     name="credential_status"
                                     value={form.credential_status}
                                     onChange={handleFormChange}
-                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                 >
                                     <option value="pending">Pending</option>
                                     <option value="verified">Verified</option>
@@ -704,7 +704,7 @@ export default function AdminAssistants() {
                                 value={form.credential_notes}
                                 onChange={handleFormChange}
                                 placeholder="Internal notes for credential review"
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
 
@@ -751,10 +751,10 @@ export default function AdminAssistants() {
 
                         {!isDetailLoading && selectedDoctor && (
                             <>
-                                <div className="rounded-2xl bg-gradient-to-r from-[#4a3428] to-[#6b4423] p-6 text-white">
+                                <div className="rounded-2xl bg-gradient-to-r from-[var(--foreground)] to-[#6b4423] p-6 text-white">
                                     <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                                         <div className="flex items-center gap-4">
-                                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E67E3C] text-xl font-bold">
+                                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold">
                                                 {getInitial(selectedDoctor.user.email)}
                                             </div>
                                             <div>
@@ -775,8 +775,8 @@ export default function AdminAssistants() {
                                     <DetailCard label="Account Status" value={selectedDoctor.user.status} />
                                 </div>
                                 <section className="rounded-2xl border border-gray-200 p-5">
-                                    <h4 className="mb-4 flex items-center gap-2 font-semibold text-[#4a3428]">
-                                        <ShieldCheck className="h-5 w-5 text-[#E67E3C]" />
+                                    <h4 className="mb-4 flex items-center gap-2 font-semibold text-foreground">
+                                        <ShieldCheck className="h-5 w-5 text-primary" />
                                         Assistant Onboarding Permission
                                     </h4>
                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -820,8 +820,8 @@ export default function AdminAssistants() {
 
                                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                                     <section className="rounded-2xl border border-gray-200 p-5">
-                                        <h4 className="mb-4 flex items-center gap-2 font-semibold text-[#4a3428]">
-                                            <ShieldCheck className="h-5 w-5 text-[#E67E3C]" />
+                                        <h4 className="mb-4 flex items-center gap-2 font-semibold text-foreground">
+                                            <ShieldCheck className="h-5 w-5 text-primary" />
                                             Professional Information
                                         </h4>
                                         <div className="space-y-4 text-sm">
@@ -833,7 +833,7 @@ export default function AdminAssistants() {
                                     </section>
 
                                     <section className="rounded-2xl border border-gray-200 p-5">
-                                        <h4 className="mb-4 font-semibold text-[#4a3428]">Personal & Contact</h4>
+                                        <h4 className="mb-4 font-semibold text-foreground">Personal & Contact</h4>
                                         <div className="space-y-4 text-sm">
                                             <DetailRow label="Full Name" value={selectedDoctor.personal_info?.full_name || 'Not set'} />
                                             <DetailRow label="Phone" value={selectedDoctor.personal_info?.phone_number || 'Not set'} />
@@ -844,12 +844,12 @@ export default function AdminAssistants() {
                                 </div>
 
                                 <section className="rounded-2xl border border-gray-200 p-5">
-                                    <h4 className="mb-4 font-semibold text-[#4a3428]">Availability</h4>
+                                    <h4 className="mb-4 font-semibold text-foreground">Availability</h4>
                                     {selectedDoctor.availability?.length ? (
                                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                                             {selectedDoctor.availability.map((slot, index) => (
                                                 <div key={index} className="rounded-lg bg-gray-50 p-3 text-sm text-gray-700">
-                                                    <span className="font-semibold text-[#4a3428]">{dayNames[slot.day_of_week]}</span>
+                                                    <span className="font-semibold text-foreground">{dayNames[slot.day_of_week]}</span>
                                                     <span className="mx-2">{slot.start_time} - {slot.end_time}</span>
                                                     {slot.timezone && <span className="text-gray-500">({slot.timezone})</span>}
                                                     {slot.is_available === false && <span className="ml-2 text-red-600">inactive</span>}
@@ -861,8 +861,8 @@ export default function AdminAssistants() {
                                     )}
                                 </section>
 
-                                <section className="rounded-2xl bg-[#fef3e8] p-5">
-                                    <label htmlFor="reviewNotes" className="mb-2 block font-semibold text-[#4a3428]">
+                                <section className="rounded-2xl bg-accent p-5">
+                                    <label htmlFor="reviewNotes" className="mb-2 block font-semibold text-foreground">
                                         Admin Review Notes
                                     </label>
                                     <textarea
@@ -871,7 +871,7 @@ export default function AdminAssistants() {
                                         value={reviewNotes}
                                         onChange={(event) => setReviewNotes(event.target.value)}
                                         placeholder="Add verification notes, rejection reason, or license lookup details."
-                                        className="w-full rounded-lg border border-orange-200 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                        className="w-full rounded-lg border border-orange-200 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                     />
                                 </section>
 
@@ -939,7 +939,7 @@ function DetailCard({ label, value }: { label: string; value: string | number })
     return (
         <div className="rounded-xl border border-gray-200 bg-white p-4">
             <p className="mb-1 text-xs font-medium uppercase tracking-wide text-gray-500">{label}</p>
-            <p className="font-semibold text-[#4a3428]">{value}</p>
+            <p className="font-semibold text-foreground">{value}</p>
         </div>
     );
 }

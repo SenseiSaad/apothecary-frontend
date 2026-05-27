@@ -101,7 +101,7 @@ function InviteContent() {
                     <Image src="/logo.webp" height={80} width={280} alt="Apothecary Logo" priority />
                 </Link>
 
-                <h1 className="text-2xl font-bold text-[#4a3428]">Accept Doctor Invite</h1>
+                <h1 className="text-2xl font-bold text-foreground">Accept Doctor Invite</h1>
                 <p className="mt-2 text-sm text-gray-600">Create your patient account using the email your Doctor invited.</p>
 
                 {notice && (
@@ -120,7 +120,7 @@ function InviteContent() {
                     <>
                         <div className="mt-6 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
                             <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Invited email</p>
-                            <p className="mt-1 font-semibold text-[#4a3428]">{invite.email}</p>
+                            <p className="mt-1 font-semibold text-foreground">{invite.email}</p>
                         </div>
 
                         <form onSubmit={completeInvite} className="mt-6 space-y-4">
@@ -151,7 +151,7 @@ function InviteContent() {
                             </Button>
                         </form>
 
-                        <div className="mt-6 rounded-lg bg-[#fef3e8] px-4 py-3 text-sm text-gray-700">
+                        <div className="mt-6 rounded-lg bg-accent px-4 py-3 text-sm text-gray-700">
                             Already have a patient account with this email? Sign in, then open your patient invite list to accept the pending Doctor invite.
                         </div>
                     </>

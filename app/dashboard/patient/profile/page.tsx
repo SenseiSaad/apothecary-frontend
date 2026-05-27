@@ -173,7 +173,7 @@ export default function PatientProfile() {
         <DashboardLayout role="patient">
             <div className="max-w-4xl mx-auto space-y-6">
                 <div>
-                    <h2 className="text-2xl font-bold text-[#4a3428]">My Profile</h2>
+                    <h2 className="text-2xl font-bold text-foreground">My Profile</h2>
                     <p className="text-gray-600 mt-1">Complete your profile details and select your avatar gender.</p>
                 </div>
 
@@ -242,7 +242,7 @@ export default function PatientProfile() {
                                     value={formData.illness_description}
                                     onChange={handleChange}
                                     placeholder="Briefly describe what you need treatment for."
-                                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
                                 />
                             </div>
 
@@ -254,7 +254,7 @@ export default function PatientProfile() {
                                     value={formData.gender}
                                     onChange={handleChange}
                                     disabled={!!originalGender}
-                                    className={`w-full bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#E67E3C] ${!!originalGender ? 'bg-gray-50 text-gray-500' : ''}`}
+                                    className={`w-full bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary ${!!originalGender ? 'bg-gray-50 text-gray-500' : ''}`}
                                     required
                                 >
                                     <option value="">Select Gender</option>
@@ -268,10 +268,10 @@ export default function PatientProfile() {
                         </div>
 
                         <div className="border-t border-gray-100 pt-6">
-                            <h3 className="text-lg font-bold text-[#4a3428] mb-4">Care Status</h3>
+                            <h3 className="text-lg font-bold text-foreground mb-4">Care Status</h3>
                             <div className="mb-6 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
                                 <p className="text-sm text-gray-600">
-                                    Current status: <span className="font-semibold capitalize text-[#4a3428]">{formData.care_status.replace(/_/g, ' ')}</span>
+                                    Current status: <span className="font-semibold capitalize text-foreground">{formData.care_status.replace(/_/g, ' ')}</span>
                                 </p>
                                 <div className="mt-3 flex flex-wrap gap-3">
                                     <Button type="button" size="sm" variant="outline" disabled={isSaving || formData.care_status === 'needs_care'} onClick={() => void updateCareStatus('needs_care')}>
@@ -283,7 +283,7 @@ export default function PatientProfile() {
                                 </div>
                             </div>
 
-                            <h3 className="text-lg font-bold text-[#4a3428] mb-4">Preferences</h3>
+                            <h3 className="text-lg font-bold text-foreground mb-4">Preferences</h3>
                             
                             <div className="space-y-3">
                                 <Checkbox

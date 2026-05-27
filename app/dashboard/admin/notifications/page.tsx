@@ -69,7 +69,7 @@ export default function AdminNotificationsPage() {
                 <div className="bg-white rounded-2xl shadow-sm p-6">
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <h2 className="text-2xl font-bold text-[#4a3428]">Admin Notifications</h2>
+                            <h2 className="text-2xl font-bold text-foreground">Admin Notifications</h2>
                             <p className="text-sm text-gray-600 mt-1">
                                 {unreadCount > 0 ? `You have ${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}` : 'All caught up!'}
                             </p>
@@ -78,7 +78,7 @@ export default function AdminNotificationsPage() {
                             <button
                                 onClick={() => setShowUnreadOnly(!showUnreadOnly)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${showUnreadOnly
-                                        ? 'bg-[#E67E3C] text-white'
+                                        ? 'bg-primary text-white'
                                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                     }`}
                             >
@@ -87,7 +87,7 @@ export default function AdminNotificationsPage() {
                             {unreadCount > 0 && (
                                 <button
                                     onClick={handleMarkAllAsRead}
-                                    className="px-4 py-2 bg-[#E67E3C] text-white rounded-lg text-sm font-medium hover:bg-[#d16b2a] transition-colors"
+                                    className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors"
                                 >
                                     Mark All as Read
                                 </button>
@@ -102,7 +102,7 @@ export default function AdminNotificationsPage() {
                                 key={type.value}
                                 onClick={() => setFilter(type.value)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${filter === type.value
-                                        ? 'bg-[#E67E3C] text-white'
+                                        ? 'bg-primary text-white'
                                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                     }`}
                             >
@@ -117,7 +117,7 @@ export default function AdminNotificationsPage() {
                     {filteredNotifications.length === 0 ? (
                         <div className="bg-white rounded-2xl shadow-sm p-12 text-center">
                             <div className="text-6xl mb-4">🔔</div>
-                            <h3 className="text-xl font-bold text-[#4a3428] mb-2">No Notifications</h3>
+                            <h3 className="text-xl font-bold text-foreground mb-2">No Notifications</h3>
                             <p className="text-gray-600">
                                 {showUnreadOnly
                                     ? 'You have no unread notifications'
@@ -130,7 +130,7 @@ export default function AdminNotificationsPage() {
                         filteredNotifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className={`bg-white rounded-2xl shadow-sm p-6 transition-all hover:shadow-md ${!notification.isRead ? 'border-l-4 border-[#E67E3C]' : ''
+                                className={`bg-white rounded-2xl shadow-sm p-6 transition-all hover:shadow-md ${!notification.isRead ? 'border-l-4 border-primary' : ''
                                     }`}
                             >
                                 <div className="flex items-start space-x-4">
@@ -150,11 +150,11 @@ export default function AdminNotificationsPage() {
                                         <div className="flex items-start justify-between mb-2">
                                             <div className="flex-1">
                                                 <div className="flex items-center space-x-2 mb-1">
-                                                    <h3 className="text-lg font-semibold text-[#4a3428]">
+                                                    <h3 className="text-lg font-semibold text-foreground">
                                                         {notification.title}
                                                     </h3>
                                                     {!notification.isRead && (
-                                                        <span className="w-2 h-2 bg-[#E67E3C] rounded-full"></span>
+                                                        <span className="w-2 h-2 bg-primary rounded-full"></span>
                                                     )}
                                                     {notification.priority === 'high' && (
                                                         <span className={`text-xs font-medium px-2 py-1 rounded-full ${getPriorityColor(notification.priority)} bg-red-50`}>
@@ -177,7 +177,7 @@ export default function AdminNotificationsPage() {
                                             {notification.actionUrl && notification.actionText && (
                                                 <Link
                                                     href={notification.actionUrl}
-                                                    className="px-4 py-2 bg-[#E67E3C] text-white rounded-lg text-sm font-medium hover:bg-[#d16b2a] transition-colors"
+                                                    className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors"
                                                 >
                                                     {notification.actionText}
                                                 </Link>
@@ -209,15 +209,15 @@ export default function AdminNotificationsPage() {
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-[#E67E3C]">{notifications.length}</p>
+                                <p className="text-3xl font-bold text-primary">{notifications.length}</p>
                                 <p className="text-sm text-gray-600 mt-1">Total Notifications</p>
                             </div>
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-[#E67E3C]">{unreadCount}</p>
+                                <p className="text-3xl font-bold text-primary">{unreadCount}</p>
                                 <p className="text-sm text-gray-600 mt-1">Unread</p>
                             </div>
                             <div className="text-center">
-                                <p className="text-3xl font-bold text-[#E67E3C]">
+                                <p className="text-3xl font-bold text-primary">
                                     {notifications.filter(n => n.priority === 'high').length}
                                 </p>
                                 <p className="text-sm text-gray-600 mt-1">High Priority</p>

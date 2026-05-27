@@ -13,34 +13,34 @@ export default function Navbar() {
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold">
-                            <span className="text-[#4a3428]">THINK</span>
-                            <span className="text-[#E67E3C]"> WELL+</span>
+                            <span className="text-foreground">THINK</span>
+                            <span className="text-primary"> WELL+</span>
                         </div>
                     </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link href="/" className="text-gray-700 hover:text-[#E67E3C] transition-colors">
+                        <Link href="/" className="text-gray-700 hover:text-primary transition-colors">
                             Home
                         </Link>
-                        <Link href="/about" className="text-gray-700 hover:text-[#E67E3C] transition-colors">
+                        <Link href="/about" className="text-gray-700 hover:text-primary transition-colors">
                             About
                         </Link>
-                        <Link href="/pricing" className="text-gray-700 hover:text-[#E67E3C] transition-colors">
+                        <Link href="/pricing" className="text-gray-700 hover:text-primary transition-colors">
                             Pricing
                         </Link>
-                        <Link href="/contact" className="text-gray-700 hover:text-[#E67E3C] transition-colors">
+                        <Link href="/contact" className="text-gray-700 hover:text-primary transition-colors">
                             Contact
                         </Link>
                         <Link
                             href="/auth/login"
-                            className="text-[#E67E3C] hover:text-[#d16b2a] font-medium transition-colors"
+                            className="text-primary hover:text-primary-dark font-medium transition-colors"
                         >
                             Login
                         </Link>
                         <Link
                             href="/auth/signup"
-                            className="bg-[#E67E3C] text-white px-6 py-2 rounded-full hover:bg-[#d16b2a] transition-colors"
+                            className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-dark transition-colors"
                         >
                             Sign Up
                         </Link>
@@ -49,7 +49,7 @@ export default function Navbar() {
                     {/* Mobile menu button */}
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="md:hidden p-2 rounded-md text-gray-700 hover:text-[#E67E3C]"
+                        className="md:hidden p-2 rounded-md text-gray-700 hover:text-primary"
                     >
                         <svg
                             className="h-6 w-6"
@@ -74,42 +74,42 @@ export default function Navbar() {
                     <div className="md:hidden pb-4 space-y-2">
                         <Link
                             href="/"
-                            className="block px-4 py-2 text-gray-700 hover:bg-[#fef3e8] rounded-md"
+                            className="block px-4 py-2 text-gray-700 hover:bg-accent rounded-md"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Home
                         </Link>
                         <Link
                             href="/about"
-                            className="block px-4 py-2 text-gray-700 hover:bg-[#fef3e8] rounded-md"
+                            className="block px-4 py-2 text-gray-700 hover:bg-accent rounded-md"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             About
                         </Link>
                         <Link
                             href="/pricing"
-                            className="block px-4 py-2 text-gray-700 hover:bg-[#fef3e8] rounded-md"
+                            className="block px-4 py-2 text-gray-700 hover:bg-accent rounded-md"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Pricing
                         </Link>
                         <Link
                             href="/contact"
-                            className="block px-4 py-2 text-gray-700 hover:bg-[#fef3e8] rounded-md"
+                            className="block px-4 py-2 text-gray-700 hover:bg-accent rounded-md"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Contact
                         </Link>
                         <Link
                             href="/auth/login"
-                            className="block px-4 py-2 text-[#E67E3C] font-medium hover:bg-[#fef3e8] rounded-md"
+                            className="block px-4 py-2 text-primary font-medium hover:bg-accent rounded-md"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Login
                         </Link>
                         <Link
                             href="/auth/signup"
-                            className="block px-4 py-2 bg-[#E67E3C] text-white text-center rounded-full hover:bg-[#d16b2a]"
+                            className="block px-4 py-2 bg-primary text-white text-center rounded-full hover:bg-primary-dark"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Sign Up

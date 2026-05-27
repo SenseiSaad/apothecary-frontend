@@ -141,7 +141,7 @@ function AssistantSetupForm() {
                 </Link>
 
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-[#4a3428]">Set Up {role === 'doctor' ? 'Doctor' : 'Assistant'} Access</h1>
+                    <h1 className="text-3xl font-bold text-foreground">Set Up {role === 'doctor' ? 'Doctor' : 'Assistant'} Access</h1>
                     <p className="mt-2 text-gray-600">
                         Verify your invite and create your password.
                     </p>
@@ -200,7 +200,7 @@ function AssistantSetupForm() {
                             placeholder="Confirm your password"
                         />
 
-                        <div className="rounded-lg bg-[#fef3e8] px-4 py-3 text-sm text-[#4a3428]">
+                        <div className="rounded-lg bg-accent px-4 py-3 text-sm text-foreground">
                             {passwordRules.map((rule) => (
                                 <p key={rule}>{rule}</p>
                             ))}
@@ -214,13 +214,13 @@ function AssistantSetupForm() {
                             type="button"
                             onClick={resendOtp}
                             disabled={isResending}
-                            className="w-full text-sm font-medium text-[#E67E3C] hover:text-[#d16b2a] disabled:opacity-50"
+                            className="w-full text-sm font-medium text-primary hover:text-primary-dark disabled:opacity-50"
                         >
                             {isResending ? 'Sending code...' : 'Send a new verification code'}
                         </button>
                     </form>
                 ) : (
-                    <Link href="/auth/login" className="text-center text-sm font-semibold text-[#E67E3C] hover:text-[#d16b2a]">
+                    <Link href="/auth/login" className="text-center text-sm font-semibold text-primary hover:text-primary-dark">
                         Back to sign in
                     </Link>
                 )}

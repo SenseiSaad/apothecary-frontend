@@ -253,9 +253,9 @@ export default function PatientDashboard() {
 
                 {/* Profile Completion Prompt */}
                 {profile?.patient && !profile.patient.full_name && (
-                    <div className="bg-[#fef3e8] border border-[#E67E3C]/20 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="bg-accent border border-primary/20 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div>
-                            <h3 className="text-lg font-bold text-[#4a3428]">Complete Your Profile</h3>
+                            <h3 className="text-lg font-bold text-foreground">Complete Your Profile</h3>
                             <p className="text-sm text-gray-600 mt-1">Please fill in your details to get the best experience.</p>
                         </div>
                         <Button onClick={() => router.push('/dashboard/patient/profile')}>
@@ -267,7 +267,7 @@ export default function PatientDashboard() {
                 {/* Header Welcome */}
                 <div className="bg-white rounded-2xl shadow-sm p-6 flex items-center justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">
+                        <h2 className="text-2xl font-bold text-foreground">
                             Welcome back, {profile?.patient?.full_name || profile?.user?.email?.split('@')[0]}
                         </h2>
                         <p className="text-gray-600 mt-1">
@@ -277,7 +277,7 @@ export default function PatientDashboard() {
                     {profile?.Doctor && (
                         <div className="text-right flex items-center gap-3">
                             <div>
-                                <p className="text-sm font-semibold text-[#4a3428]">Assigned Doctor</p>
+                                <p className="text-sm font-semibold text-foreground">Assigned Doctor</p>
                                 <p className="text-xs text-gray-500">{profile.Doctor.specialty}</p>
                             </div>
                             <Avatar name={profile.Doctor.email} size="md" />
@@ -289,11 +289,11 @@ export default function PatientDashboard() {
                 {profile?.patient && (
                     <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col md:flex-row items-center justify-between gap-4 border border-gray-100">
                         <div className="flex items-center gap-4">
-                            <div className="p-3 bg-[#fef3e8] rounded-xl text-[#E67E3C]">
+                            <div className="p-3 bg-accent rounded-xl text-primary">
                                 <ClipboardList className="h-6 w-6" />
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold text-[#4a3428]">
+                                <h3 className="text-lg font-bold text-foreground">
                                     Care Status: <span className="capitalize">{profile.patient.care_status?.replace(/_/g, ' ') || 'Inactive'}</span>
                                 </h3>
                                 <p className="text-sm text-gray-600 mt-1">
@@ -316,7 +316,7 @@ export default function PatientDashboard() {
                     <div className="lg:col-span-2 space-y-6">
                         {/* Avatar Viewer */}
                         <div className="bg-white rounded-2xl shadow-sm p-6 h-[400px] flex flex-col relative overflow-hidden">
-                            <h3 className="text-xl font-bold text-[#4a3428] mb-4 z-10">Your 3D Avatar</h3>
+                            <h3 className="text-xl font-bold text-foreground mb-4 z-10">Your 3D Avatar</h3>
                             {homeData?.has_avatar && avatarViewerUrl ? (
                                 <div className="flex-1 rounded-xl overflow-hidden bg-gray-100 relative">
                                     <iframe 
@@ -326,8 +326,8 @@ export default function PatientDashboard() {
                                     />
                                 </div>
                             ) : (
-                                <div className="flex-1 rounded-xl bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] flex flex-col items-center justify-center p-6 border border-[#E67E3C]/20">
-                                    <h4 className="text-lg font-bold text-[#4a3428] mb-2">Choose Your Avatar</h4>
+                                <div className="flex-1 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] flex flex-col items-center justify-center p-6 border border-primary/20">
+                                    <h4 className="text-lg font-bold text-foreground mb-2">Choose Your Avatar</h4>
                                     <p className="text-sm text-gray-600 text-center mb-6">
                                         Select a starting avatar. Apothecary will assign version 1 now and unlock newer versions as your activity grows.
                                     </p>
@@ -346,7 +346,7 @@ export default function PatientDashboard() {
                         {/* Sessions section */}
                         <div className="bg-white rounded-2xl shadow-sm p-6">
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-xl font-bold text-[#4a3428]">Upcoming Sessions</h3>
+                                <h3 className="text-xl font-bold text-foreground">Upcoming Sessions</h3>
                                 <Button size="sm">
                                     Book Session (Mock)
                                 </Button>
@@ -355,7 +355,7 @@ export default function PatientDashboard() {
                             {homeData?.next_session ? (
                                 <div className="p-4 rounded-xl border border-gray-100 bg-gray-50 flex justify-between items-center">
                                     <div>
-                                        <p className="font-semibold text-[#4a3428]">
+                                        <p className="font-semibold text-foreground">
                                             {new Date(homeData.next_session.scheduled_at).toLocaleDateString()} at {new Date(homeData.next_session.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </p>
                                         <p className="text-sm text-gray-600 capitalize">Status: {homeData.next_session.status}</p>
@@ -374,9 +374,9 @@ export default function PatientDashboard() {
                     <div className="space-y-6">
                         {/* Stats */}
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-[#fef3e8] rounded-xl p-4 border border-[#E67E3C]/20 text-center">
-                                <p className="text-3xl font-bold text-[#E67E3C]">{homeData?.current_streak || 0}</p>
-                                <p className="text-xs text-[#4a3428] font-semibold mt-1 uppercase tracking-wider">Day Streak</p>
+                            <div className="bg-accent rounded-xl p-4 border border-primary/20 text-center">
+                                <p className="text-3xl font-bold text-primary">{homeData?.current_streak || 0}</p>
+                                <p className="text-xs text-foreground font-semibold mt-1 uppercase tracking-wider">Day Streak</p>
                             </div>
                             <div className="bg-blue-50 rounded-xl p-4 border border-blue-100 text-center">
                                 <p className="text-3xl font-bold text-blue-600">{homeData?.activity_score || 0}</p>
@@ -386,15 +386,15 @@ export default function PatientDashboard() {
 
                         {/* Real AI Chat System */}
                         <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col h-[400px]">
-                            <h3 className="text-xl font-bold text-[#4a3428] mb-4 flex-shrink-0">AI Assistant Chat</h3>
+                            <h3 className="text-xl font-bold text-foreground mb-4 flex-shrink-0">AI Assistant Chat</h3>
                             
                             <div ref={chatContainerRef} className="flex-1 bg-gray-50 rounded-xl border border-gray-100 p-4 overflow-y-auto mb-4 space-y-3">
                                 {messages.map((msg, idx) => (
                                     <div key={idx} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ${msg.role === 'user' ? 'bg-[#4a3428] text-white' : 'bg-[#E67E3C] text-white'}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 ${msg.role === 'user' ? 'bg-foreground text-white' : 'bg-primary text-white'}`}>
                                             {msg.role === 'user' ? 'You' : 'AI'}
                                         </div>
-                                        <div className={`p-3 rounded-xl shadow-sm text-sm ${msg.role === 'user' ? 'bg-[#E67E3C] text-white' : 'bg-white border border-gray-100 text-gray-700 whitespace-pre-wrap'}`}>
+                                        <div className={`p-3 rounded-xl shadow-sm text-sm ${msg.role === 'user' ? 'bg-primary text-white' : 'bg-white border border-gray-100 text-gray-700 whitespace-pre-wrap'}`}>
                                             {msg.content}
                                         </div>
                                     </div>
@@ -407,7 +407,7 @@ export default function PatientDashboard() {
                                     value={chatInput}
                                     onChange={(e) => setChatInput(e.target.value)}
                                     disabled={isTyping}
-                                    className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                                     placeholder="Type a message..."
                                 />
                                 <Button type="submit" size="sm" className="px-4" disabled={isTyping || !chatInput.trim()}>Send</Button>

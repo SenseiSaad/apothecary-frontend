@@ -85,7 +85,7 @@ export default function NotificationBell({ role }: NotificationBellProps) {
             {/* Notification Bell Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-gray-600 hover:text-[#E67E3C] transition-colors rounded-full hover:bg-gray-100"
+                className="relative p-2 text-gray-600 hover:text-primary transition-colors rounded-full hover:bg-gray-100"
             >
                 <Bell className="w-6 h-6" />
                 {unreadCount > 0 && (
@@ -101,11 +101,11 @@ export default function NotificationBell({ role }: NotificationBellProps) {
                     {/* Header */}
                     <div className="p-3 border-b border-gray-200">
                         <div className="flex items-center justify-between">
-                            <h3 className="text-base font-bold text-[#4a3428]">Notifications</h3>
+                            <h3 className="text-base font-bold text-foreground">Notifications</h3>
                             {unreadCount > 0 && (
                                 <button
                                     onClick={handleMarkAllAsRead}
-                                    className="text-xs text-[#E67E3C] hover:text-[#d16b2a] font-medium"
+                                    className="text-xs text-primary hover:text-primary-dark font-medium"
                                 >
                                     Mark all as read
                                 </button>
@@ -125,7 +125,7 @@ export default function NotificationBell({ role }: NotificationBellProps) {
                                 {filteredNotifications.map((notification) => (
                                     <div
                                         key={notification.id}
-                                        className={`p-3 hover:bg-gray-50 transition-colors cursor-pointer ${!notification.isRead ? 'bg-[#fef3e8]' : ''
+                                        className={`p-3 hover:bg-gray-50 transition-colors cursor-pointer ${!notification.isRead ? 'bg-accent' : ''
                                             }`}
                                         onClick={() => handleNotificationClick(notification)}
                                     >
@@ -142,11 +142,11 @@ export default function NotificationBell({ role }: NotificationBellProps) {
                                             {/* Content */}
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-start justify-between mb-1">
-                                                    <h4 className="text-xs font-semibold text-[#4a3428] line-clamp-1">
+                                                    <h4 className="text-xs font-semibold text-foreground line-clamp-1">
                                                         {notification.title}
                                                     </h4>
                                                     {!notification.isRead && (
-                                                        <span className="w-2 h-2 bg-[#E67E3C] rounded-full flex-shrink-0 ml-2 mt-0.5"></span>
+                                                        <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 ml-2 mt-0.5"></span>
                                                     )}
                                                 </div>
                                                 <p className="text-xs text-gray-600 line-clamp-1 mb-1">
@@ -167,7 +167,7 @@ export default function NotificationBell({ role }: NotificationBellProps) {
                     <div className="p-3 border-t border-gray-200">
                         <Link
                             href={`/dashboard/${role}/notifications`}
-                            className="block text-center text-sm text-[#E67E3C] hover:text-[#d16b2a] font-medium"
+                            className="block text-center text-sm text-primary hover:text-primary-dark font-medium"
                             onClick={() => setIsOpen(false)}
                         >
                             View All Notifications

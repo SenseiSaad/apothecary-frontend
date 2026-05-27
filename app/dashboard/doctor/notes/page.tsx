@@ -63,7 +63,7 @@ export default function SessionNotes() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Session Notes</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Session Notes</h2>
                         <p className="text-gray-600">Manage clinical documentation and session records</p>
                     </div>
                     <Button onClick={handleCreateNote} className="rounded-full">
@@ -81,7 +81,7 @@ export default function SessionNotes() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         }
-                        color="from-[#E67E3C] to-[#d16b2a]"
+                        color="from-primary to-primary-dark"
                         bgColor="bg-orange-50"
                         showProgress
                         progressValue={75}
@@ -165,13 +165,13 @@ export default function SessionNotes() {
                             <div
                                 key={note.id}
                                 onClick={() => handleViewNote(note)}
-                                className="border-2 border-gray-200 rounded-xl p-6 hover:shadow-lg hover:border-[#E67E3C] transition-all duration-300 cursor-pointer"
+                                className="border-2 border-gray-200 rounded-xl p-6 hover:shadow-lg hover:border-primary transition-all duration-300 cursor-pointer"
                             >
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                                     <div className="flex items-center space-x-4">
                                         <Avatar name={note.patientName} size="lg" />
                                         <div>
-                                            <h3 className="font-bold text-[#4a3428] text-lg">{note.patientName}</h3>
+                                            <h3 className="font-bold text-foreground text-lg">{note.patientName}</h3>
                                             <p className="text-sm text-gray-600">
                                                 📅 {note.date} • 🕐 {note.startTime} - {note.endTime} ({note.duration} min)
                                             </p>
@@ -181,7 +181,7 @@ export default function SessionNotes() {
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getMoodColor(note.mood)}`}>
                                             {note.mood}
                                         </span>
-                                        <Badge variant="default" className="bg-[#fef3e8] text-[#E67E3C] border-[#E67E3C]/20">
+                                        <Badge variant="default" className="bg-accent text-primary border-primary/20">
                                             {note.sessionType}
                                         </Badge>
                                     </div>
@@ -275,12 +275,12 @@ export default function SessionNotes() {
                 {selectedNote && (
                     <div className="p-6 space-y-6">
                         {/* Patient & Session Info */}
-                        <div className="bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] rounded-2xl p-6 border border-[#E67E3C]/20">
+                        <div className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] rounded-2xl p-6 border border-primary/20">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                                 <div className="flex items-center space-x-4">
                                     <Avatar name={selectedNote.patientName} size="xl" />
                                     <div>
-                                        <h4 className="text-xl font-bold text-[#4a3428]">{selectedNote.patientName}</h4>
+                                        <h4 className="text-xl font-bold text-foreground">{selectedNote.patientName}</h4>
                                         <p className="text-gray-600">
                                             📅 {selectedNote.date} • 🕐 {selectedNote.startTime} - {selectedNote.endTime}
                                         </p>
@@ -297,12 +297,12 @@ export default function SessionNotes() {
 
                         {/* Presenting Issues */}
                         <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                            <h5 className="font-semibold text-[#4a3428] mb-3 flex items-center gap-2">
+                            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                                 <span>🎯</span> Presenting Issues
                             </h5>
                             <div className="flex flex-wrap gap-2">
                                 {selectedNote.presentingIssues.map((issue, index) => (
-                                    <Badge key={index} variant="default" className="bg-[#E67E3C] text-white">
+                                    <Badge key={index} variant="default" className="bg-primary text-white">
                                         {issue}
                                     </Badge>
                                 ))}
@@ -342,12 +342,12 @@ export default function SessionNotes() {
 
                         {/* Interventions */}
                         <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                            <h5 className="font-semibold text-[#4a3428] mb-3 flex items-center gap-2">
+                            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                                 <span>💡</span> Interventions Used
                             </h5>
                             <div className="flex flex-wrap gap-2">
                                 {selectedNote.interventionsUsed.map((intervention, index) => (
-                                    <Badge key={index} variant="default" className="bg-[#fef3e8] text-[#6b4423] border-[#E67E3C]/20">
+                                    <Badge key={index} variant="default" className="bg-accent text-[#6b4423] border-primary/20">
                                         {intervention}
                                     </Badge>
                                 ))}
@@ -356,7 +356,7 @@ export default function SessionNotes() {
 
                         {/* Homework */}
                         <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                            <h5 className="font-semibold text-[#4a3428] mb-3 flex items-center gap-2">
+                            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                                 <span>📚</span> Homework Assigned
                             </h5>
                             <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{selectedNote.homework}</p>
@@ -398,13 +398,13 @@ export default function SessionNotes() {
 
                         {/* Next Session Goals */}
                         <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                            <h5 className="font-semibold text-[#4a3428] mb-3 flex items-center gap-2">
+                            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                                 <span>🎯</span> Next Session Goals
                             </h5>
                             <ul className="space-y-2">
                                 {selectedNote.nextSessionGoals.map((goal, index) => (
                                     <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
-                                        <span className="text-[#E67E3C] font-bold">•</span>
+                                        <span className="text-primary font-bold">•</span>
                                         <span>{goal}</span>
                                     </li>
                                 ))}
@@ -424,7 +424,7 @@ export default function SessionNotes() {
                         {/* Attachments */}
                         {selectedNote.attachments.length > 0 && (
                             <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                                <h5 className="font-semibold text-[#4a3428] mb-3 flex items-center gap-2">
+                                <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                                     <span>📎</span> Attachments
                                 </h5>
                                 <div className="space-y-2">
@@ -445,7 +445,7 @@ export default function SessionNotes() {
                             <Button className="flex-1 min-w-[150px] rounded-full">
                                 ✏️ Edit Note
                             </Button>
-                            <Button variant="outline" className="flex-1 min-w-[150px] rounded-full border-2 border-[#E67E3C] text-[#E67E3C] hover:bg-[#E67E3C] hover:text-white">
+                            <Button variant="outline" className="flex-1 min-w-[150px] rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-white">
                                 📥 Export PDF
                             </Button>
                             <Button variant="secondary" className="rounded-full">
@@ -469,16 +469,16 @@ export default function SessionNotes() {
                             <div
                                 key={template.id}
                                 onClick={() => handleSelectTemplate(template)}
-                                className="border-2 border-gray-200 rounded-2xl p-6 hover:border-[#E67E3C] hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                                className="border-2 border-gray-200 rounded-2xl p-6 hover:border-primary hover:shadow-lg transition-all duration-300 cursor-pointer group"
                             >
-                                <h4 className="font-bold text-[#4a3428] text-lg mb-2 group-hover:text-[#E67E3C] transition-colors">
+                                <h4 className="font-bold text-foreground text-lg mb-2 group-hover:text-primary transition-colors">
                                     {template.name}
                                 </h4>
                                 <p className="text-sm text-gray-600 mb-4 leading-relaxed">{template.description}</p>
                                 <div className="space-y-1">
                                     {template.sections.map((section, index) => (
                                         <p key={index} className="text-xs text-gray-500 flex items-center gap-2">
-                                            <span className="text-[#E67E3C]">✓</span> {section.name}
+                                            <span className="text-primary">✓</span> {section.name}
                                         </p>
                                     ))}
                                 </div>

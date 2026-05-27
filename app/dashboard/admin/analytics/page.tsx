@@ -55,7 +55,7 @@ export default function AdminAnalytics() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">📊 Analytics Dashboard</h2>
+                        <h2 className="text-2xl font-bold text-foreground">📊 Analytics Dashboard</h2>
                         <p className="text-gray-600">Comprehensive platform insights and metrics</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -110,7 +110,7 @@ export default function AdminAnalytics() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
                         }
-                        color="from-[#E67E3C] to-[#d16b2a]"
+                        color="from-primary to-primary-dark"
                         bgColor="bg-orange-50"
                         showProgress
                         progressValue={65}
@@ -135,7 +135,7 @@ export default function AdminAnalytics() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Revenue Chart */}
                     <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h3 className="text-xl font-bold text-[#4a3428] mb-4">Revenue Trend (Last 30 Days)</h3>
+                        <h3 className="text-xl font-bold text-foreground mb-4">Revenue Trend (Last 30 Days)</h3>
                         <div className="h-64 flex items-end justify-between space-x-1">
                             {revenueData.slice(-15).map((day, index) => {
                                 const maxRevenue = Math.max(...revenueData.map(d => d.amount));
@@ -144,7 +144,7 @@ export default function AdminAnalytics() {
                                     <div key={index} className="flex-1 flex flex-col items-center group">
                                         <div className="relative w-full">
                                             <div
-                                                className="w-full bg-[#E67E3C] rounded-t-lg transition-all hover:bg-[#d16b2a] cursor-pointer"
+                                                className="w-full bg-primary rounded-t-lg transition-all hover:bg-primary-dark cursor-pointer"
                                                 style={{ height: `${height * 2}px` }}
                                                 title={`$${day.amount} - ${day.sessions} sessions`}
                                             ></div>
@@ -164,7 +164,7 @@ export default function AdminAnalytics() {
 
                     {/* Patient Growth Chart */}
                     <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h3 className="text-xl font-bold text-[#4a3428] mb-4">Patient Growth (6 Months)</h3>
+                        <h3 className="text-xl font-bold text-foreground mb-4">Patient Growth (6 Months)</h3>
                         <div className="h-64 flex items-end justify-between space-x-2">
                             {patientGrowth.map((month, index) => {
                                 const maxPatients = Math.max(...patientGrowth.map(m => m.activePatients));
@@ -206,7 +206,7 @@ export default function AdminAnalytics() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Session Time Distribution */}
                     <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h3 className="text-xl font-bold text-[#4a3428] mb-4">Session Time Distribution</h3>
+                        <h3 className="text-xl font-bold text-foreground mb-4">Session Time Distribution</h3>
                         <div className="space-y-3">
                             {sessionTimeDistribution.map((slot, index) => {
                                 const maxCount = Math.max(...sessionTimeDistribution.map(s => s.count));
@@ -216,7 +216,7 @@ export default function AdminAnalytics() {
                                         <span className="text-sm text-gray-600 w-20">{slot.time}</span>
                                         <div className="flex-1 bg-gray-200 rounded-full h-8 relative">
                                             <div
-                                                className="bg-[#E67E3C] h-8 rounded-full flex items-center justify-end pr-3"
+                                                className="bg-primary h-8 rounded-full flex items-center justify-end pr-3"
                                                 style={{ width: `${width}%` }}
                                             >
                                                 <span className="text-white text-sm font-medium">{slot.count}</span>
@@ -230,7 +230,7 @@ export default function AdminAnalytics() {
 
                     {/* Clinical Care Types */}
                     <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h3 className="text-xl font-bold text-[#4a3428] mb-4">Popular Clinical Care Types</h3>
+                        <h3 className="text-xl font-bold text-foreground mb-4">Popular Clinical Care Types</h3>
                         <div className="space-y-4">
                             {ClinicalCareTypes.map((type, index) => (
                                 <div key={index}>
@@ -240,7 +240,7 @@ export default function AdminAnalytics() {
                                     </div>
                                     <div className="bg-gray-200 rounded-full h-3 relative">
                                         <div
-                                            className="bg-gradient-to-r from-[#E67E3C] to-[#d16b2a] h-3 rounded-full"
+                                            className="bg-gradient-to-r from-primary to-primary-dark h-3 rounded-full"
                                             style={{ width: `${type.percentage}%` }}
                                         ></div>
                                     </div>
@@ -253,7 +253,7 @@ export default function AdminAnalytics() {
 
                 {/* Assistant Performance Table */}
                 <div className="bg-white rounded-2xl shadow-sm p-6">
-                    <h3 className="text-xl font-bold text-[#4a3428] mb-4">Assistant Performance</h3>
+                    <h3 className="text-xl font-bold text-foreground mb-4">Assistant Performance</h3>
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
@@ -271,10 +271,10 @@ export default function AdminAnalytics() {
                                     <tr key={Assistant.id} className="border-b border-gray-100 hover:bg-gray-50">
                                         <td className="py-4 px-4">
                                             <div className="flex items-center space-x-3">
-                                                <div className="w-10 h-10 bg-[#E67E3C] rounded-full flex items-center justify-center text-white font-bold">
+                                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
                                                     {Assistant.name.charAt(4)}
                                                 </div>
-                                                <span className="font-medium text-[#4a3428]">{Assistant.name}</span>
+                                                <span className="font-medium text-foreground">{Assistant.name}</span>
                                             </div>
                                         </td>
                                         <td className="py-4 px-4 text-gray-700">{Assistant.patients}</td>
@@ -310,7 +310,7 @@ export default function AdminAnalytics() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h4 className="font-semibold text-[#4a3428]">Completed Sessions</h4>
+                            <h4 className="font-semibold text-foreground">Completed Sessions</h4>
                             <span className="text-2xl">✅</span>
                         </div>
                         <p className="text-3xl font-bold text-green-600">{sessionStats.completed}</p>
@@ -318,7 +318,7 @@ export default function AdminAnalytics() {
                     </div>
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h4 className="font-semibold text-[#4a3428]">Cancelled Sessions</h4>
+                            <h4 className="font-semibold text-foreground">Cancelled Sessions</h4>
                             <span className="text-2xl">❌</span>
                         </div>
                         <p className="text-3xl font-bold text-red-600">{sessionStats.cancelled}</p>
@@ -326,7 +326,7 @@ export default function AdminAnalytics() {
                     </div>
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h4 className="font-semibold text-[#4a3428]">Upcoming Sessions</h4>
+                            <h4 className="font-semibold text-foreground">Upcoming Sessions</h4>
                             <span className="text-2xl">📅</span>
                         </div>
                         <p className="text-3xl font-bold text-blue-600">{sessionStats.upcoming}</p>
@@ -338,16 +338,16 @@ export default function AdminAnalytics() {
                 <div className="bg-white rounded-2xl shadow-sm p-6">
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <h3 className="text-xl font-bold text-[#4a3428]">Live Assistant Overview</h3>
+                            <h3 className="text-xl font-bold text-foreground">Live Assistant Overview</h3>
                             <p className="text-sm text-gray-500">Real-time data from backend — {isLoadingLive ? 'loading…' : `${liveAssistants.length} Assistants`}</p>
                         </div>
-                        <Link href="/dashboard/admin/admin-assistants" className="text-sm font-medium text-[#E67E3C] hover:text-[#d16b2a]">Manage All →</Link>
+                        <Link href="/dashboard/admin/admin-assistants" className="text-sm font-medium text-primary hover:text-primary-dark">Manage All →</Link>
                     </div>
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-6">
                         {[
                             { label: 'Total Patients', value: summary?.totals.patients ?? '…', cls: 'text-blue-600' },
                             { label: 'Active Doctors', value: summary?.totals.Assistants ?? '…', cls: 'text-green-600' },
-                            { label: 'Active Assistants', value: summary?.totals.staff ?? '…', cls: 'text-[#E67E3C]' },
+                            { label: 'Active Assistants', value: summary?.totals.staff ?? '…', cls: 'text-primary' },
                             { label: 'Unassigned', value: isLoadingLive ? '…' : liveAssistants.filter(c => c.assigned_doctor_count === 0).length, cls: 'text-amber-600' },
                         ].map(s => (
                             <div key={s.label} className="rounded-xl bg-gray-50 p-4">
@@ -371,9 +371,9 @@ export default function AdminAnalytics() {
                                         <tr key={c.assistant_id} className="border-b border-gray-100 hover:bg-gray-50">
                                             <td className="px-3 py-3">
                                                 <div className="flex items-center gap-2">
-                                                    <div className="h-8 w-8 rounded-full bg-[#E67E3C] flex items-center justify-center text-white text-xs font-bold">{(c.email[0] || 'C').toUpperCase()}</div>
+                                                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">{(c.email[0] || 'C').toUpperCase()}</div>
                                                     <div>
-                                                        <p className="text-sm font-medium text-[#4a3428]">{nameFromEmail(c.email)}</p>
+                                                        <p className="text-sm font-medium text-foreground">{nameFromEmail(c.email)}</p>
                                                         <p className="text-xs text-gray-400">{c.email}</p>
                                                     </div>
                                                 </div>
@@ -387,11 +387,11 @@ export default function AdminAnalytics() {
                                     ))}
                                 </tbody>
                             </table>
-                            {liveAssistants.length > 10 && <p className="mt-3 text-center text-sm text-gray-400">Showing 10 of {liveAssistants.length}. <Link href="/dashboard/admin/admin-assistants" className="text-[#E67E3C] hover:underline">View all →</Link></p>}
+                            {liveAssistants.length > 10 && <p className="mt-3 text-center text-sm text-gray-400">Showing 10 of {liveAssistants.length}. <Link href="/dashboard/admin/admin-assistants" className="text-primary hover:underline">View all →</Link></p>}
                         </div>
                     )}
                     {!isLoadingLive && liveAssistants.length === 0 && (
-                        <p className="py-6 text-center text-gray-400 text-sm">No active Assistants yet. <Link href="/dashboard/admin/admin-assistants" className="text-[#E67E3C] hover:underline">Invite one →</Link></p>
+                        <p className="py-6 text-center text-gray-400 text-sm">No active Assistants yet. <Link href="/dashboard/admin/admin-assistants" className="text-primary hover:underline">Invite one →</Link></p>
                     )}
                 </div>
             </div>

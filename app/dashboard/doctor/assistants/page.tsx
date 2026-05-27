@@ -250,7 +250,7 @@ export default function DoctorAssistants() {
                 {/* Header */}
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">My Assistants</h2>
+                        <h2 className="text-2xl font-bold text-foreground">My Assistants</h2>
                         <p className="text-gray-600">
                             {limits
                                 ? `${Assistants.length} / ${limits.max_assistants} Assistants · Invite access: ${limits.can_onboard_assistants ? 'Enabled' : 'Disabled by admin'}`
@@ -307,7 +307,7 @@ export default function DoctorAssistants() {
                                 value={search}
                                 onChange={e => setSearch(e.target.value)}
                                 placeholder="Search by email…"
-                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             />
                         </div>
                         <p className="text-sm text-gray-500">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</p>
@@ -342,7 +342,7 @@ export default function DoctorAssistants() {
                                             <div className="flex items-center gap-3">
                                                 <Avatar name={c.user.email} />
                                                 <div>
-                                                    <p className="font-medium text-[#4a3428]">{nameFromEmail(c.user.email)}</p>
+                                                    <p className="font-medium text-foreground">{nameFromEmail(c.user.email)}</p>
                                                     <p className="text-sm text-gray-500">{c.user.email}</p>
                                                     {c.user.must_change_password && (
                                                         <span className="text-xs text-amber-600">Temp password active</span>
@@ -380,7 +380,7 @@ export default function DoctorAssistants() {
             {/* ── Invite Modal ── */}
             <Modal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} title="Invite Assistant" size="lg">
                 <form onSubmit={handleInvite} className="space-y-5 p-6">
-                    <div className="rounded-xl bg-[#fef3e8] px-4 py-3 text-sm text-gray-700">
+                    <div className="rounded-xl bg-accent px-4 py-3 text-sm text-gray-700">
                         A new Assistant account will be created and a setup link will be emailed to them to create their password.
                     </div>
 
@@ -394,7 +394,7 @@ export default function DoctorAssistants() {
                             value={inviteForm.email}
                             onChange={e => setInviteForm(f => ({ ...f, email: e.target.value }))}
                             placeholder="Assistant@clinic.com"
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                         />
                     </div>
 
@@ -404,7 +404,7 @@ export default function DoctorAssistants() {
                             type="checkbox"
                             checked={inviteForm.otp_required}
                             onChange={e => setInviteForm(f => ({ ...f, otp_required: e.target.checked }))}
-                            className="h-4 w-4 rounded accent-[#E67E3C]"
+                            className="h-4 w-4 rounded accent-[var(--primary)]"
                         />
                         <div>
                             <p className="text-sm font-medium text-gray-700">Require OTP on login</p>
@@ -427,7 +427,7 @@ export default function DoctorAssistants() {
                                         type="checkbox"
                                         checked={inviteForm[key]}
                                         onChange={e => setInviteForm(f => ({ ...f, [key]: e.target.checked }))}
-                                        className="h-4 w-4 rounded accent-[#E67E3C]"
+                                        className="h-4 w-4 rounded accent-[var(--primary)]"
                                     />
                                     <span className="text-sm text-gray-700">{label}</span>
                                 </label>
@@ -460,7 +460,7 @@ export default function DoctorAssistants() {
                                 id="c-status"
                                 value={editForm.status}
                                 onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))}
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                             >
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive (deactivated)</option>
@@ -493,7 +493,7 @@ export default function DoctorAssistants() {
                                             type="checkbox"
                                             checked={editForm[key]}
                                             onChange={e => setEditForm(f => ({ ...f, [key]: e.target.checked }))}
-                                            className="h-4 w-4 rounded accent-[#E67E3C]"
+                                            className="h-4 w-4 rounded accent-[var(--primary)]"
                                         />
                                         <span className="text-sm text-gray-700">{label}</span>
                                     </label>
@@ -513,7 +513,7 @@ export default function DoctorAssistants() {
 }
 
 function StatBox({ label, value, tone = 'default' }: { label: string; value: string | number; tone?: 'default' | 'green' | 'red' }) {
-    const color = tone === 'green' ? 'text-green-600' : tone === 'red' ? 'text-red-500' : 'text-[#4a3428]';
+    const color = tone === 'green' ? 'text-green-600' : tone === 'red' ? 'text-red-500' : 'text-foreground';
     return (
         <div className="rounded-2xl bg-white p-5 shadow-sm">
             <p className="mb-1 text-sm text-gray-500">{label}</p>

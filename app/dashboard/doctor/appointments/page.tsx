@@ -75,10 +75,10 @@ export default function AppointmentsManagement() {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Appointment Requests</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Appointment Requests</h2>
                         <p className="text-gray-600">Manage patient appointment requests and scheduling</p>
                     </div>
-                    <button className="bg-[#E67E3C] text-white px-6 py-3 rounded-full font-medium hover:bg-[#d16b2a] transition-colors">
+                    <button className="bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-primary-dark transition-colors">
                         + Create Appointment
                     </button>
                 </div>
@@ -99,7 +99,7 @@ export default function AppointmentsManagement() {
                     </div>
                     <div className="bg-white rounded-2xl shadow-sm p-6">
                         <p className="text-gray-600 text-sm mb-1">This Week</p>
-                        <p className="text-3xl font-bold text-[#E67E3C]">
+                        <p className="text-3xl font-bold text-primary">
                             {appointmentsData.filter(apt => {
                                 const aptDate = new Date(apt.date);
                                 const weekStart = new Date();
@@ -121,7 +121,7 @@ export default function AppointmentsManagement() {
                                     key={status}
                                     onClick={() => setStatusFilter(status)}
                                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${statusFilter === status
-                                            ? 'bg-[#E67E3C] text-white'
+                                            ? 'bg-primary text-white'
                                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
                                 >
@@ -129,7 +129,7 @@ export default function AppointmentsManagement() {
                                 </button>
                             ))}
                         </div>
-                        <select className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none">
+                        <select className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                             <option>Sort by: Newest First</option>
                             <option>Sort by: Oldest First</option>
                             <option>Sort by: Urgency</option>
@@ -146,11 +146,11 @@ export default function AppointmentsManagement() {
                             >
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center space-x-4">
-                                        <div className="w-12 h-12 bg-[#E67E3C] rounded-full flex items-center justify-center text-white font-bold">
+                                        <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">
                                             {request.patientName.charAt(0)}
                                         </div>
                                         <div>
-                                            <h3 className="font-semibold text-[#4a3428] text-lg">{request.patientName}</h3>
+                                            <h3 className="font-semibold text-foreground text-lg">{request.patientName}</h3>
                                             <p className="text-sm text-gray-600">{request.patientEmail} • {request.patientPhone}</p>
                                         </div>
                                     </div>
@@ -165,17 +165,17 @@ export default function AppointmentsManagement() {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                    <div className="bg-[#fef3e8] rounded-lg p-4">
+                                    <div className="bg-accent rounded-lg p-4">
                                         <p className="text-xs text-gray-500 mb-1">Requested Date & Time</p>
                                         <p className="font-semibold text-gray-700">{request.requestedDate}</p>
                                         <p className="text-sm text-gray-600">{request.requestedTime} ({request.duration} min)</p>
                                     </div>
-                                    <div className="bg-[#fef3e8] rounded-lg p-4">
+                                    <div className="bg-accent rounded-lg p-4">
                                         <p className="text-xs text-gray-500 mb-1">Session Type</p>
                                         <p className="font-semibold text-gray-700">{request.sessionType}</p>
                                         <p className="text-sm text-gray-600">{request.mode}</p>
                                     </div>
-                                    <div className="bg-[#fef3e8] rounded-lg p-4">
+                                    <div className="bg-accent rounded-lg p-4">
                                         <p className="text-xs text-gray-500 mb-1">Requested</p>
                                         <p className="text-sm text-gray-700">
                                             {new Date(request.requestedAt).toLocaleDateString()} at{' '}
@@ -261,7 +261,7 @@ export default function AppointmentsManagement() {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
-                            <h3 className="text-2xl font-bold text-[#4a3428]">Appointment Request Details</h3>
+                            <h3 className="text-2xl font-bold text-foreground">Appointment Request Details</h3>
                             <button
                                 onClick={() => setShowDetailsModal(false)}
                                 className="text-gray-500 hover:text-gray-700 text-2xl"
@@ -272,13 +272,13 @@ export default function AppointmentsManagement() {
 
                         <div className="p-6 space-y-6">
                             {/* Patient Info */}
-                            <div className="bg-[#fef3e8] rounded-2xl p-6">
+                            <div className="bg-accent rounded-2xl p-6">
                                 <div className="flex items-center space-x-4 mb-4">
-                                    <div className="w-16 h-16 bg-[#E67E3C] rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold">
                                         {selectedRequest.patientName.charAt(0)}
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-[#4a3428]">{selectedRequest.patientName}</h4>
+                                        <h4 className="text-xl font-bold text-foreground">{selectedRequest.patientName}</h4>
                                         <p className="text-gray-600">{selectedRequest.patientEmail}</p>
                                         <p className="text-gray-600">{selectedRequest.patientPhone}</p>
                                     </div>
@@ -372,7 +372,7 @@ export default function AppointmentsManagement() {
             {showResponseModal && selectedRequest && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white rounded-3xl max-w-lg w-full p-8">
-                        <h3 className="text-2xl font-bold text-[#4a3428] mb-6">
+                        <h3 className="text-2xl font-bold text-foreground mb-6">
                             {responseAction === 'approve' && 'Approve Appointment'}
                             {responseAction === 'decline' && 'Decline Appointment'}
                             {responseAction === 'reschedule' && 'Suggest Alternative Time'}
@@ -387,7 +387,7 @@ export default function AppointmentsManagement() {
                                             type="date"
                                             value={suggestedDate}
                                             onChange={(e) => setSuggestedDate(e.target.value)}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none"
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                                         />
                                     </div>
                                     <div>
@@ -396,7 +396,7 @@ export default function AppointmentsManagement() {
                                             type="time"
                                             value={suggestedTime}
                                             onChange={(e) => setSuggestedTime(e.target.value)}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none"
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                                         />
                                     </div>
                                 </>
@@ -410,7 +410,7 @@ export default function AppointmentsManagement() {
                                     value={responseNotes}
                                     onChange={(e) => setResponseNotes(e.target.value)}
                                     rows={4}
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none resize-none"
+                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none"
                                     placeholder={
                                         responseAction === 'approve'
                                             ? 'Add any notes for the patient...'

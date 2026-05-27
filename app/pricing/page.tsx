@@ -55,9 +55,9 @@ export default function Pricing() {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] py-20">
+            <section className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-5xl font-bold text-[#4a3428] mb-6">
+                    <h1 className="text-5xl font-bold text-foreground mb-6">
                         Choose Your Wellness Plan
                     </h1>
                     <p className="text-xl text-[#6b4423] max-w-3xl mx-auto">
@@ -75,13 +75,13 @@ export default function Pricing() {
                             <div
                                 key={index}
                                 className={`rounded-3xl p-8 ${plan.popular
-                                        ? 'bg-[#E67E3C] text-white shadow-2xl scale-105'
-                                        : 'bg-[#fef3e8] text-[#4a3428]'
+                                        ? 'bg-primary text-white shadow-2xl scale-105'
+                                        : 'bg-accent text-foreground'
                                     } relative`}
                             >
                                 {plan.popular && (
                                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                        <span className="bg-[#4a3428] text-white px-6 py-2 rounded-full text-sm font-semibold">
+                                        <span className="bg-foreground text-white px-6 py-2 rounded-full text-sm font-semibold">
                                             MOST POPULAR
                                         </span>
                                     </div>
@@ -104,7 +104,7 @@ export default function Pricing() {
                                     {plan.features.map((feature, featureIndex) => (
                                         <li key={featureIndex} className="flex items-start">
                                             <svg
-                                                className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-[#E67E3C]'
+                                                className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-primary'
                                                     } mr-3 flex-shrink-0`}
                                                 fill="none"
                                                 strokeLinecap="round"
@@ -125,8 +125,8 @@ export default function Pricing() {
                                 <Link
                                     href="/auth/signup"
                                     className={`block w-full py-4 rounded-full text-center font-semibold transition-colors ${plan.popular
-                                            ? 'bg-white text-[#E67E3C] hover:bg-gray-100'
-                                            : 'bg-[#E67E3C] text-white hover:bg-[#d16b2a]'
+                                            ? 'bg-white text-primary hover:bg-gray-100'
+                                            : 'bg-primary text-white hover:bg-primary-dark'
                                         }`}
                                 >
                                     Get Started
@@ -138,10 +138,10 @@ export default function Pricing() {
             </section>
 
             {/* FAQ Section */}
-            <section className="py-20 bg-gradient-to-br from-[#fef3e8] to-white">
+            <section className="py-20 bg-gradient-to-br from-[var(--accent)] to-white">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-[#4a3428] mb-4">
+                        <h2 className="text-4xl font-bold text-foreground mb-4">
                             Frequently Asked Questions
                         </h2>
                     </div>
@@ -166,7 +166,7 @@ export default function Pricing() {
                             },
                         ].map((faq, index) => (
                             <div key={index} className="bg-white rounded-2xl p-6 shadow-sm">
-                                <h3 className="text-xl font-semibold text-[#4a3428] mb-3">
+                                <h3 className="text-xl font-semibold text-foreground mb-3">
                                     {faq.question}
                                 </h3>
                                 <p className="text-gray-600">{faq.answer}</p>
@@ -177,7 +177,7 @@ export default function Pricing() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-[#4a3428] text-white">
+            <section className="py-20 bg-foreground text-white">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-4xl font-bold mb-6">
                         Still Have Questions?
@@ -187,7 +187,7 @@ export default function Pricing() {
                     </p>
                     <Link
                         href="/contact"
-                        className="inline-block bg-[#E67E3C] text-white px-10 py-4 rounded-full text-lg font-medium hover:bg-[#d16b2a] transition-colors"
+                        className="inline-block bg-primary text-white px-10 py-4 rounded-full text-lg font-medium hover:bg-primary-dark transition-colors"
                     >
                         Contact Us
                     </Link>

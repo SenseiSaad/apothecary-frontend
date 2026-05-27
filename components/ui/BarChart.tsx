@@ -14,8 +14,8 @@ interface BarChartProps {
 
 export const BarChart: React.FC<BarChartProps> = ({
     data,
-    color = 'bg-[#E67E3C]',
-    hoverColor = 'hover:bg-[#d16b2a]',
+    color = 'bg-primary',
+    hoverColor = 'hover:bg-primary-dark',
     height = 'h-64',
     showLabels = true,
 }) => {

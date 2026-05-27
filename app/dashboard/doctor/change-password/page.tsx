@@ -97,21 +97,21 @@ export default function AssistantChangePassword() {
             <div className="max-w-2xl mx-auto space-y-6">
                 {/* Header */}
                 <div>
-                    <h2 className="text-2xl font-bold text-[#4a3428]">Change Password</h2>
+                    <h2 className="text-2xl font-bold text-foreground">Change Password</h2>
                     <p className="text-gray-600">Update your account password securely</p>
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-sm border-2 border-gray-200 overflow-hidden">
                     {/* Icon Header */}
-                    <div className="bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] border-b-2 border-[#E67E3C]/20 p-6">
+                    <div className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] border-b-2 border-primary/20 p-6">
                         <div className="flex items-center space-x-4">
-                            <div className="w-16 h-16 bg-gradient-to-br from-[#E67E3C] to-[#d16b2a] rounded-2xl flex items-center justify-center shadow-lg">
+                            <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-2xl flex items-center justify-center shadow-lg">
                                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                                 </svg>
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-[#4a3428]">🔐 Security Settings</h3>
+                                <h3 className="text-xl font-bold text-foreground">🔐 Security Settings</h3>
                                 <p className="text-gray-600 text-sm">Keep your account secure with a strong password</p>
                             </div>
                         </div>

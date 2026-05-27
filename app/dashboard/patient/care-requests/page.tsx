@@ -331,7 +331,7 @@ export default function PatientCareRequestsPage() {
             <div className="mx-auto max-w-6xl space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Care Request Status</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Care Request Status</h2>
                         <p className="text-gray-600">Track your care request from intake through Doctor assignment.</p>
                     </div>
                     <div className="flex flex-col gap-3 sm:flex-row">
@@ -395,7 +395,7 @@ export default function PatientCareRequestsPage() {
                         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                             <div>
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <h3 className="text-xl font-bold text-[#4a3428]">Current Request</h3>
+                                    <h3 className="text-xl font-bold text-foreground">Current Request</h3>
                                     <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${statusStyles[activeRequest.status]}`}>
                                         {formatStatus(activeRequest.status)}
                                     </span>
@@ -464,8 +464,8 @@ export default function PatientCareRequestsPage() {
                     </div>
                 ) : (
                     <div className="rounded-lg border border-dashed border-gray-200 bg-white p-10 text-center shadow-sm">
-                        <Stethoscope className="mx-auto h-10 w-10 text-[#E67E3C]" />
-                        <h3 className="mt-4 text-lg font-bold text-[#4a3428]">No Active Care Request</h3>
+                        <Stethoscope className="mx-auto h-10 w-10 text-primary" />
+                        <h3 className="mt-4 text-lg font-bold text-foreground">No Active Care Request</h3>
                         <p className="mx-auto mt-2 max-w-xl text-sm text-gray-600">
                             When you need treatment again, submit a new request. The care team will triage your concern and match you with an available Doctor.
                         </p>
@@ -478,7 +478,7 @@ export default function PatientCareRequestsPage() {
                 <div className="rounded-lg border border-gray-100 bg-white p-6 shadow-sm">
                     <div className="mb-4 flex items-center justify-between">
                         <div>
-                            <h3 className="text-lg font-bold text-[#4a3428]">Request History</h3>
+                            <h3 className="text-lg font-bold text-foreground">Request History</h3>
                             <p className="text-sm text-gray-500">Past and current care episodes.</p>
                         </div>
                     </div>
@@ -506,7 +506,7 @@ export default function PatientCareRequestsPage() {
                                                     {request.urgency}
                                                 </span>
                                             </div>
-                                            <p className="mt-2 font-semibold text-[#4a3428]">{request.reason}</p>
+                                            <p className="mt-2 font-semibold text-foreground">{request.reason}</p>
                                             <p className="mt-1 text-sm text-gray-500">{getPatientMessage(request.status)}</p>
                                         </div>
                                         <div className="text-sm text-gray-500 md:text-right">
@@ -640,7 +640,7 @@ export default function PatientCareRequestsPage() {
                 {doctorProfileRequest && (
                     <div className="space-y-4 p-6">
                         <div className="rounded-lg border border-gray-100 bg-gray-50 p-4">
-                            <p className="text-lg font-bold text-[#4a3428]">{doctorProfileRequest.doctor_name || 'Doctor assigned'}</p>
+                            <p className="text-lg font-bold text-foreground">{doctorProfileRequest.doctor_name || 'Doctor assigned'}</p>
                             <p className="mt-1 text-sm text-gray-600">{doctorProfileRequest.doctor_email || 'Contact through Apothecary messaging'}</p>
                         </div>
                         <div className="grid gap-3 text-sm">
@@ -703,7 +703,7 @@ function StatusCard({ title, value, detail, icon, tone = 'orange' }: { title: st
                 <span className={`rounded-lg p-3 ${toneClasses[tone]}`}>{icon}</span>
                 <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</p>
-                    <p className="mt-1 text-xl font-bold capitalize text-[#4a3428]">{value}</p>
+                    <p className="mt-1 text-xl font-bold capitalize text-foreground">{value}</p>
                     <p className="mt-2 text-sm text-gray-500">{detail}</p>
                 </div>
             </div>
@@ -729,9 +729,9 @@ function CareTimeline({ status, compact = false }: { status: CareRequestStatus; 
                     const active = stepNumber <= currentStep;
                     const CurrentIcon = step.icon;
                     return (
-                        <div key={step.label} className={`rounded-lg border p-3 ${active ? 'border-[#E67E3C] bg-[#fff4ec]' : 'border-gray-100 bg-gray-50'}`}>
-                            <CurrentIcon className={`h-5 w-5 ${active ? 'text-[#E67E3C]' : 'text-gray-400'}`} />
-                            <p className={`mt-2 text-sm font-semibold ${active ? 'text-[#4a3428]' : 'text-gray-500'}`}>{step.label}</p>
+                        <div key={step.label} className={`rounded-lg border p-3 ${active ? 'border-primary bg-[#fff4ec]' : 'border-gray-100 bg-gray-50'}`}>
+                            <CurrentIcon className={`h-5 w-5 ${active ? 'text-primary' : 'text-gray-400'}`} />
+                            <p className={`mt-2 text-sm font-semibold ${active ? 'text-foreground' : 'text-gray-500'}`}>{step.label}</p>
                         </div>
                     );
                 })}

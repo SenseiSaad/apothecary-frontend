@@ -440,7 +440,7 @@ export default function AdminPatientsPage() {
             <div className="space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#4a3428]">Patient Management</h2>
+                        <h2 className="text-2xl font-bold text-foreground">Patient Management</h2>
                         <p className="text-gray-600">Track patients, triage requests, assign Doctors, and resolve care episodes.</p>
                     </div>
                     <div className="flex gap-3">
@@ -471,10 +471,10 @@ export default function AdminPatientsPage() {
                                     onChange={event => setSearch(event.target.value)}
                                     onKeyDown={event => { if (event.key === 'Enter') void loadData(); }}
                                     placeholder="Search patient, email, illness..."
-                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C]"
+                                    className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                                 />
                             </div>
-                            <select value={careStatus} onChange={event => setCareStatus(event.target.value)} className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#E67E3C]">
+                            <select value={careStatus} onChange={event => setCareStatus(event.target.value)} className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-primary">
                                 <option value="all">All care</option>
                                 <option value="needs_care">Needs care</option>
                                 <option value="assigned">Assigned</option>
@@ -482,7 +482,7 @@ export default function AdminPatientsPage() {
                                 <option value="treated">Treated</option>
                                 <option value="inactive">Inactive</option>
                             </select>
-                            <select value={assigned} onChange={event => setAssigned(event.target.value)} className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#E67E3C]">
+                            <select value={assigned} onChange={event => setAssigned(event.target.value)} className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-primary">
                                 <option value="all">All assignment</option>
                                 <option value="assigned">Assigned</option>
                                 <option value="unassigned">Unassigned</option>
@@ -520,7 +520,7 @@ export default function AdminPatientsPage() {
                     </div>
 
                     <div className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-                        <h3 className="font-bold text-[#4a3428]">Request Pipeline</h3>
+                        <h3 className="font-bold text-foreground">Request Pipeline</h3>
                         <p className="mt-1 text-sm text-gray-500">Current queue breakdown.</p>
                         <div className="mt-4 space-y-3">
                             <PipelineRow label="New intake" value={requestBreakdown.new} />
@@ -537,10 +537,10 @@ export default function AdminPatientsPage() {
                 <div className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
                     <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div>
-                            <h3 className="text-lg font-bold text-[#4a3428]">Care Request Queue</h3>
+                            <h3 className="text-lg font-bold text-foreground">Care Request Queue</h3>
                             <p className="text-sm text-gray-500">Triage, assign, cancel, or resolve requests from one place.</p>
                         </div>
-                        <select value={requestStatus} onChange={event => setRequestStatus(event.target.value)} className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#E67E3C]">
+                        <select value={requestStatus} onChange={event => setRequestStatus(event.target.value)} className="rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-primary">
                             <option value="open">Open</option>
                             <option value="new_request">New</option>
                             <option value="triage_claimed">Claimed</option>
@@ -559,8 +559,8 @@ export default function AdminPatientsPage() {
                                 <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                                     <div className="min-w-0 flex-1">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <ClipboardList className="h-4 w-4 text-[#E67E3C]" />
-                                            <p className="font-semibold text-[#4a3428]">{request.patient_name}</p>
+                                            <ClipboardList className="h-4 w-4 text-primary" />
+                                            <p className="font-semibold text-foreground">{request.patient_name}</p>
                                             <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold capitalize ${requestStyles[request.status] || 'border-gray-200 bg-gray-100 text-gray-600'}`}>{label(request.status)}</span>
                                             <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold capitalize ${urgencyStyles[request.urgency]}`}>{request.urgency}</span>
                                         </div>
@@ -608,7 +608,7 @@ export default function AdminPatientsPage() {
                         <CareTimeline status={triageTarget.status} />
                         <div>
                             <label htmlFor="triageStatus" className="mb-2 block text-sm font-medium text-gray-700">Status Action</label>
-                            <select id="triageStatus" value={triageStatus} onChange={event => setTriageStatus(event.target.value as CareRequestStatus)} className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-[#E67E3C]">
+                            <select id="triageStatus" value={triageStatus} onChange={event => setTriageStatus(event.target.value as CareRequestStatus)} className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-primary">
                                 <option value="triage_in_progress">Triage in progress</option>
                                 <option value="pending_assignment">Ready for assignment</option>
                                 <option value="completed">Complete episode</option>
@@ -620,7 +620,7 @@ export default function AdminPatientsPage() {
                         </div>
                         <div>
                             <label htmlFor="triageNotes" className="mb-2 block text-sm font-medium text-gray-700">Admin / Triage Notes</label>
-                            <textarea id="triageNotes" rows={5} value={triageNotes} onChange={event => setTriageNotes(event.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-[#E67E3C]" />
+                            <textarea id="triageNotes" rows={5} value={triageNotes} onChange={event => setTriageNotes(event.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-primary" />
                         </div>
                         {['completed', 'closed_by_patient', 'referred_out', 'not_appropriate_for_platform', 'cancelled'].includes(triageStatus) && (
                             <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
@@ -639,13 +639,13 @@ export default function AdminPatientsPage() {
                 {assignTarget && (
                     <form onSubmit={assignPatient} className="space-y-5 p-6">
                         <div className="rounded-lg border border-gray-100 bg-gray-50 p-4">
-                            <p className="font-semibold text-[#4a3428]">{assignTarget.patient_name}</p>
+                            <p className="font-semibold text-foreground">{assignTarget.patient_name}</p>
                             <p className="text-sm text-gray-600">{assignTarget.patient_email}</p>
                             {assignTarget.reason && <p className="mt-2 text-sm text-gray-700">{assignTarget.reason}</p>}
                         </div>
                         <div>
                             <label htmlFor="doctor_id" className="mb-2 block text-sm font-medium text-gray-700">Verified Active Doctor</label>
-                            <select id="doctor_id" required value={selectedDoctorId} onChange={event => setSelectedDoctorId(event.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-[#E67E3C]">
+                            <select id="doctor_id" required value={selectedDoctorId} onChange={event => setSelectedDoctorId(event.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select a Doctor</option>
                                 {doctors.map(doctor => (
                                     <option key={doctor.doctor_id} value={doctor.doctor_id}>
@@ -656,7 +656,7 @@ export default function AdminPatientsPage() {
                         </div>
                         {assignTarget.current_doctor_id && (
                             <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
-                                <input type="checkbox" checked={forceReassign} onChange={event => setForceReassign(event.target.checked)} className="h-4 w-4 rounded accent-[#E67E3C]" />
+                                <input type="checkbox" checked={forceReassign} onChange={event => setForceReassign(event.target.checked)} className="h-4 w-4 rounded accent-[var(--primary)]" />
                                 <span className="text-sm text-amber-800">Confirm reassignment from current Doctor</span>
                             </label>
                         )}
@@ -702,7 +702,7 @@ function PatientManagementRow({ patient, isSaving, onAssign, onUnassign, onView 
                 <div className="flex min-w-0 items-start gap-3">
                     <Avatar name={patientName || 'Patient'} />
                     <div className="min-w-0">
-                        <p className="truncate font-semibold text-[#4a3428]">{patientName}</p>
+                        <p className="truncate font-semibold text-foreground">{patientName}</p>
                         <p className="truncate text-sm text-gray-600">{patient.email || 'No email available'}</p>
                         {patient.illness_description && <p className="mt-1 line-clamp-2 text-xs text-gray-500">{patient.illness_description}</p>}
                     </div>
@@ -760,7 +760,7 @@ function PatientManagementRow({ patient, isSaving, onAssign, onUnassign, onView 
 
 function StatCard({ label, value, icon, tone = 'default' }: { label: string; value: string | number; icon: ReactNode; tone?: 'default' | 'amber' | 'blue' | 'orange' }) {
     const toneClasses = {
-        default: 'bg-gray-50 text-[#4a3428]',
+        default: 'bg-gray-50 text-foreground',
         amber: 'bg-amber-50 text-amber-700',
         blue: 'bg-blue-50 text-blue-700',
         orange: 'bg-orange-50 text-orange-700'
@@ -772,7 +772,7 @@ function StatCard({ label, value, icon, tone = 'default' }: { label: string; val
                 <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</p>
                 <span className={`rounded-lg p-2 ${toneClasses[tone]}`}>{icon}</span>
             </div>
-            <p className="mt-3 text-3xl font-bold text-[#4a3428]">{value}</p>
+            <p className="mt-3 text-3xl font-bold text-foreground">{value}</p>
         </div>
     );
 }
@@ -785,7 +785,7 @@ function PipelineRow({ label, value }: { label: string; value: number }) {
     return (
         <div className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-4 py-3">
             <span className="text-sm font-medium text-gray-700">{label}</span>
-            <span className="text-lg font-bold text-[#4a3428]">{value}</span>
+            <span className="text-lg font-bold text-foreground">{value}</span>
         </div>
     );
 }
@@ -795,7 +795,7 @@ function RequestSummary({ request }: { request: CareRequest }) {
         <div className="rounded-lg border border-gray-100 bg-gray-50 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                    <p className="font-bold text-[#4a3428]">{request.patient_name}</p>
+                    <p className="font-bold text-foreground">{request.patient_name}</p>
                     <p className="text-sm text-gray-600">{request.patient_email}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -825,9 +825,9 @@ function CareTimeline({ status }: { status: CareRequestStatus }) {
                 const StepIcon = step.icon;
                 const active = index + 1 <= current;
                 return (
-                    <div key={step.label} className={`rounded-lg border p-3 ${active ? 'border-[#E67E3C] bg-[#fff4ec]' : 'border-gray-100 bg-gray-50'}`}>
-                        <StepIcon className={`h-4 w-4 ${active ? 'text-[#E67E3C]' : 'text-gray-400'}`} />
-                        <p className={`mt-2 text-xs font-semibold ${active ? 'text-[#4a3428]' : 'text-gray-500'}`}>{step.label}</p>
+                    <div key={step.label} className={`rounded-lg border p-3 ${active ? 'border-primary bg-[#fff4ec]' : 'border-gray-100 bg-gray-50'}`}>
+                        <StepIcon className={`h-4 w-4 ${active ? 'text-primary' : 'text-gray-400'}`} />
+                        <p className={`mt-2 text-xs font-semibold ${active ? 'text-foreground' : 'text-gray-500'}`}>{step.label}</p>
                     </div>
                 );
             })}

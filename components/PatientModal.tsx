@@ -131,7 +131,7 @@ export const PatientModal: React.FC<PatientModalProps> = ({
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 {/* Basic Information */}
                 <div>
-                    <h4 className="text-lg font-semibold text-[#4a3428] mb-4">Basic Information</h4>
+                    <h4 className="text-lg font-semibold text-foreground mb-4">Basic Information</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input
                             id="name"
@@ -198,7 +198,7 @@ export const PatientModal: React.FC<PatientModalProps> = ({
 
                 {/* Medical Information */}
                 <div>
-                    <h4 className="text-lg font-semibold text-[#4a3428] mb-4">Medical Information</h4>
+                    <h4 className="text-lg font-semibold text-foreground mb-4">Medical Information</h4>
                     <div className="space-y-4">
                         <Textarea
                             id="concerns"

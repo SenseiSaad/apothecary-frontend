@@ -31,9 +31,9 @@ export default function Contact() {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="bg-gradient-to-br from-[#fef3e8] to-[#f5e6d3] py-20">
+            <section className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-5xl font-bold text-[#4a3428] mb-6">
+                    <h1 className="text-5xl font-bold text-foreground mb-6">
                         Get In Touch
                     </h1>
                     <p className="text-xl text-[#6b4423] max-w-3xl mx-auto">
@@ -49,7 +49,7 @@ export default function Contact() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Contact Form */}
                         <div>
-                            <h2 className="text-3xl font-bold text-[#4a3428] mb-6">
+                            <h2 className="text-3xl font-bold text-foreground mb-6">
                                 Send Us a Message
                             </h2>
                             <form onSubmit={handleSubmit} className="space-y-6">
@@ -64,7 +64,7 @@ export default function Contact() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none transition-all"
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                         placeholder="John Doe"
                                     />
                                 </div>
@@ -80,7 +80,7 @@ export default function Contact() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none transition-all"
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                         placeholder="john@example.com"
                                     />
                                 </div>
@@ -95,7 +95,7 @@ export default function Contact() {
                                         value={formData.subject}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none transition-all"
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                     >
                                         <option value="">Select a subject</option>
                                         <option value="general">General Inquiry</option>
@@ -117,14 +117,14 @@ export default function Contact() {
                                         onChange={handleChange}
                                         required
                                         rows={6}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#E67E3C] focus:border-transparent outline-none transition-all resize-none"
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"
                                         placeholder="Tell us how we can help you..."
                                     />
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#E67E3C] text-white py-4 rounded-full font-semibold hover:bg-[#d16b2a] transition-colors"
+                                    className="w-full bg-primary text-white py-4 rounded-full font-semibold hover:bg-primary-dark transition-colors"
                                 >
                                     Send Message
                                 </button>
@@ -133,17 +133,17 @@ export default function Contact() {
 
                         {/* Contact Information */}
                         <div>
-                            <h2 className="text-3xl font-bold text-[#4a3428] mb-6">
+                            <h2 className="text-3xl font-bold text-foreground mb-6">
                                 Contact Information
                             </h2>
 
                             <div className="space-y-6 mb-12">
                                 <div className="flex items-start space-x-4">
-                                    <div className="w-12 h-12 bg-[#E67E3C] rounded-full flex items-center justify-center text-white flex-shrink-0">
+                                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white flex-shrink-0">
                                         📧
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold text-[#4a3428] mb-1">
+                                        <h3 className="text-lg font-semibold text-foreground mb-1">
                                             Email
                                         </h3>
                                         <p className="text-gray-600">support@Apothecaryplus.com</p>
@@ -152,11 +152,11 @@ export default function Contact() {
                                 </div>
 
                                 <div className="flex items-start space-x-4">
-                                    <div className="w-12 h-12 bg-[#E67E3C] rounded-full flex items-center justify-center text-white flex-shrink-0">
+                                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white flex-shrink-0">
                                         📞
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold text-[#4a3428] mb-1">
+                                        <h3 className="text-lg font-semibold text-foreground mb-1">
                                             Phone
                                         </h3>
                                         <p className="text-gray-600">+1 (555) 123-4567</p>
@@ -165,11 +165,11 @@ export default function Contact() {
                                 </div>
 
                                 <div className="flex items-start space-x-4">
-                                    <div className="w-12 h-12 bg-[#E67E3C] rounded-full flex items-center justify-center text-white flex-shrink-0">
+                                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white flex-shrink-0">
                                         📍
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold text-[#4a3428] mb-1">
+                                        <h3 className="text-lg font-semibold text-foreground mb-1">
                                             Office
                                         </h3>
                                         <p className="text-gray-600">123 Wellness Street</p>
@@ -178,8 +178,8 @@ export default function Contact() {
                                 </div>
                             </div>
 
-                            <div className="bg-[#fef3e8] rounded-2xl p-8">
-                                <h3 className="text-xl font-semibold text-[#4a3428] mb-4">
+                            <div className="bg-accent rounded-2xl p-8">
+                                <h3 className="text-xl font-semibold text-foreground mb-4">
                                     Office Hours
                                 </h3>
                                 <div className="space-y-2 text-gray-700">

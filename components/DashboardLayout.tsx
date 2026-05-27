@@ -147,7 +147,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                             {/* Toggle Button */}
                             <button
                                 onClick={toggleSidebar}
-                                className="absolute -right-3 top-1/2 -translate-y-1/2 bg-[#E67E3C] hover:bg-[#d66d2b] text-white rounded-full p-1.5 shadow-lg transition-all duration-300 hover:scale-110"
+                                className="absolute -right-3 top-1/2 -translate-y-1/2 bg-primary hover:bg-[#d66d2b] text-white rounded-full p-1.5 shadow-lg transition-all duration-300 hover:scale-110"
                                 title={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
                             >
                                 {isSidebarOpen ? (
@@ -168,7 +168,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                                             <Link
                                                 href={item.path}
                                                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${pathname === item.path
-                                                    ? 'bg-[#E67E3C] text-white'
+                                                    ? 'bg-primary text-white'
                                                     : 'text-gray-300 hover:bg-[#6b4423]'
                                                     }`}
                                             >
@@ -200,7 +200,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                 {/* Top Bar */}
                 <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6 fixed right-0 top-0 z-30" style={{ left: isSidebarOpen ? '16rem' : '5rem' }}>
                     <div className="flex items-center space-x-4">
-                        <h1 className="text-2xl font-bold text-[#4a3428]">
+                        <h1 className="text-2xl font-bold text-foreground">
                             {menuItems.find((item) => item.path === pathname)?.name || 'Dashboard'}
                         </h1>
                     </div>
@@ -214,7 +214,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                                 className="flex items-center space-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
                             >
-                                <div className="w-10 h-10 bg-[#E67E3C] rounded-full flex items-center justify-center text-white font-bold">
+                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
                                     {role === 'admin' ? 'A' : role === 'doctor' ? 'D' : 'P'}
                                 </div>
                                 <ChevronDown className={`w-4 h-4 text-gray-600 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
@@ -225,9 +225,9 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                                 <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-2">
                                     {/* User Info */}
                                     <div className="px-4 py-3 border-b border-gray-200">
-                                        <p className="text-sm font-semibold text-[#4a3428]">{userName}</p>
+                                        <p className="text-sm font-semibold text-foreground">{userName}</p>
                                         <p className="text-xs text-gray-500">{userEmail}</p>
-                                        <p className="text-xs text-[#E67E3C] font-medium mt-1 capitalize">{backendRole.replace('_', ' ')}</p>
+                                        <p className="text-xs text-primary font-medium mt-1 capitalize">{backendRole.replace('_', ' ')}</p>
                                     </div>
 
                                     {/* Menu Items */}
