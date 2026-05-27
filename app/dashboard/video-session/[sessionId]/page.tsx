@@ -48,6 +48,10 @@ export default function VideoSessionPage() {
         }
 
         let mounted = true;
+        let localClient: IAgoraRTCClient | null = null;
+        let localAudio: IMicrophoneAudioTrack | null = null;
+        let localVideo: ICameraVideoTrack | null = null;
+        let pingInterval: NodeJS.Timeout | null = null;
 
         const join = async () => {
             try {
@@ -60,6 +64,7 @@ export default function VideoSessionPage() {
                 setStatus('Connecting to Agora...');
 
                 const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+                localClient = client;
                 clientRef.current = client;
 
                 client.on('user-published', async (user, mediaType) => {
@@ -94,16 +99,47 @@ export default function VideoSessionPage() {
                 });
 
                 await client.join(tokenResponse.data.app_id, tokenResponse.data.channel_name, tokenResponse.data.token, tokenResponse.data.uid);
+                
+                if (!mounted) {
+                    await client.leave();
+                    return;
+                }
+
                 const [audioTrack, videoTrack] = await AgoraRTC.createMicrophoneAndCameraTracks();
+                localAudio = audioTrack;
+                localVideo = videoTrack;
                 localAudioRef.current = audioTrack;
                 localVideoRef.current = videoTrack;
+                
+                if (!mounted) {
+                    audioTrack.close();
+                    videoTrack.close();
+                    await client.leave();
+                    return;
+                }
+
                 if (localVideoElRef.current) {
                     videoTrack.play(localVideoElRef.current);
                 }
                 await client.publish([audioTrack, videoTrack]);
-                setStatus('Connected');
+                
+                if (mounted) {
+                    setStatus('Connected');
+                    setIsJoining(false);
+
+                    pingInterval = setInterval(async () => {
+                        try {
+                            await apiRequest(`/video-sessions/${sessionId}/ping`, {
+                                method: 'POST',
+                                token: session.access_token
+                            });
+                        } catch (e) {
+                            console.error('Failed to ping video session:', e);
+                        }
+                    }, 30000);
+                }
             } catch (err) {
-                setError(err instanceof Error ? err.message : 'Unable to join video session.');
+                if (mounted) setError(err instanceof Error ? err.message : 'Unable to join video session.');
             } finally {
                 if (mounted) setIsJoining(false);
             }
@@ -113,7 +149,8 @@ export default function VideoSessionPage() {
 
         return () => {
             mounted = false;
-            void leaveTracks(clientRef.current, localAudioRef.current, localVideoRef.current);
+            if (pingInterval) clearInterval(pingInterval);
+            void leaveTracks(localClient, localAudio, localVideo);
         };
     }, [router, session, sessionId]);
 
@@ -131,6 +168,16 @@ export default function VideoSessionPage() {
 
     const leave = async () => {
         await leaveTracks(clientRef.current, localAudioRef.current, localVideoRef.current);
+        if (role === 'doctor') {
+            try {
+                await apiRequest(`/video-sessions/${sessionId}/end`, {
+                    method: 'POST',
+                    token: session?.access_token || ''
+                });
+            } catch (e) {
+                console.error('Failed to explicitly end video session:', e);
+            }
+        }
         router.back();
     };
 
