@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Avatar, Button } from '@/components/ui';
+import VideoSessionPanel from '@/components/VideoSessionPanel';
 import { apiRequest } from '@/lib/api';
 import { getSession, hasRole } from '@/lib/auth';
 
@@ -430,6 +431,8 @@ export default function AdminPatientCaseDetailPage() {
                                             </div>
                                         )}
                                     </section>
+
+                                    <VideoSessionPanel careRequestId={selectedCase.care_request_id} role="admin" />
                                 </main>
                             )}
                         </div>

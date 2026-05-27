@@ -25,6 +25,7 @@ import { apiRequest } from '@/lib/api';
 import { getSession } from '@/lib/auth';
 import { createTriageChatSocket, type TriageChatSocket } from '@/lib/triageChatSocket';
 import { Button } from '@/components/ui';
+import VideoSessionPanel from '@/components/VideoSessionPanel';
 
 type WorkspaceRole = 'assistant' | 'doctor' | 'patient' | 'admin';
 
@@ -1023,6 +1024,10 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                             {selectedConversation.doctor_id === selectedDoctorId ? 'Doctor Already Assigned' : 'Save Handoff + Assign Doctor'}
                                         </Button>
                                     </div>
+                                )}
+
+                                {role !== 'assistant' && (
+                                    <VideoSessionPanel careRequestId={selectedConversation.care_request_id} role={role} />
                                 )}
 
                                 <div className="rounded-lg border border-green-100 bg-green-50 p-4 text-sm text-green-800">

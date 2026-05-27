@@ -124,7 +124,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
     return (
         <div className="flex min-h-screen bg-background">
             {/* SideNavBar */}
-            <aside className="h-full w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant flex flex-col p-container-margin gap-base-unit z-50">
+            <aside className="hidden md:flex h-full w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant flex-col p-container-margin gap-base-unit z-50">
                 <div className="mb-8 flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
                         <Hospital className="w-6 h-6 text-white" />
@@ -163,9 +163,15 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-grow ml-64 flex flex-col">
+            <div className="flex-grow md:ml-64 flex flex-col pb-20 md:pb-0 w-full max-w-[100vw] overflow-x-hidden">
                 {/* TopNavBar */}
-                <header className="sticky top-0 bg-surface-bright shadow-sm h-16 w-full flex justify-end items-center px-container-margin py-base-unit z-40">
+                <header className="sticky top-0 bg-surface-bright shadow-sm h-16 w-full flex justify-between items-center px-4 md:px-container-margin py-base-unit z-40">
+                    <div className="flex items-center gap-2 md:hidden">
+                        <div className="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
+                            <Hospital className="w-5 h-5 text-white" />
+                        </div>
+                        <h1 className="font-bold text-primary text-lg">Apothecary</h1>
+                    </div>
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-4">
                             <NotificationBell role={role} />
@@ -211,6 +217,28 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                 {/* Page Content */}
                 <main className="flex-1 overflow-auto p-6">{children}</main>
             </div>
+
+            {/* Bottom Navigation Bar (Mobile & Tablet) */}
+            <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-lowest border-t border-outline-variant shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden">
+                {menuItems.map((item) => {
+                    const IconComponent = item.icon;
+                    const isActive = pathname === item.path;
+                    return (
+                        <Link
+                            key={item.path}
+                            href={item.path}
+                            className={`flex flex-col items-center justify-center w-full h-full px-1 py-1 transition-colors ${isActive 
+                                ? 'text-primary' 
+                                : 'text-on-surface-variant'}`}
+                        >
+                            <div className={`flex items-center justify-center w-12 h-8 rounded-full mb-1 ${isActive ? 'bg-secondary-container/30' : ''}`}>
+                                <IconComponent className={`w-5 h-5 ${isActive ? 'text-on-secondary-container' : ''}`} />
+                            </div>
+                            <span className="text-[10px] font-bold text-center leading-tight truncate w-full px-1">{item.name}</span>
+                        </Link>
+                    );
+                })}
+            </nav>
         </div>
     );
 }
