@@ -166,13 +166,13 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
             <div className="flex-grow md:ml-64 flex flex-col pb-20 md:pb-0 w-full max-w-[100vw] overflow-x-hidden">
                 {/* TopNavBar */}
                 <header className="sticky top-0 bg-surface-bright shadow-sm h-16 w-full flex justify-between items-center px-4 md:px-container-margin py-base-unit z-40">
-                    <div className="flex items-center gap-2 md:hidden">
-                        <div className="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
+                    <div className="flex items-center gap-2 md:hidden min-w-0 mr-2 shrink">
+                        <div className="w-8 h-8 bg-primary-container rounded flex items-center justify-center shrink-0">
                             <Hospital className="w-5 h-5 text-white" />
                         </div>
-                        <h1 className="font-bold text-primary text-lg">Apothecary</h1>
+                        <h1 className="font-bold text-primary text-lg truncate">Apothecary</h1>
                     </div>
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-3 md:gap-6 shrink-0">
                         <div className="flex items-center gap-4">
                             <NotificationBell role={role} />
                         </div>
@@ -182,10 +182,10 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                                 className="flex items-center gap-3 cursor-pointer hover:bg-surface-container-low p-1 pr-3 rounded-full transition-colors"
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                             >
-                                <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-primary font-bold text-sm">
+                                <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-primary font-bold text-sm shrink-0">
                                     {userName.charAt(0).toUpperCase()}
                                 </div>
-                                <span className="font-body-md text-body-md font-semibold text-primary">{userName}</span>
+                                <span className="hidden md:inline-block font-body-md text-body-md font-semibold text-primary truncate max-w-[150px]">{userName}</span>
                             </div>
 
                             {/* Dropdown Menu */}

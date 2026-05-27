@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AgoraRTC, { IAgoraRTCClient, ICameraVideoTrack, IMicrophoneAudioTrack, IRemoteVideoTrack } from 'agora-rtc-sdk-ng';
-import { ArrowLeft, Loader2, Mic, MicOff, PhoneOff, Video, VideoOff } from 'lucide-react';
+import { ArrowLeft, Loader2, Maximize, Mic, MicOff, Minimize, PhoneOff, Video, VideoOff } from 'lucide-react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Button } from '@/components/ui';
 import { apiRequest } from '@/lib/api';
@@ -40,6 +40,7 @@ export default function VideoSessionPage() {
     const [isJoining, setIsJoining] = useState(true);
     const [micOn, setMicOn] = useState(true);
     const [cameraOn, setCameraOn] = useState(true);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     useEffect(() => {
         if (!session || !['doctor', 'patient'].includes(session.user.role)) {
@@ -196,21 +197,42 @@ export default function VideoSessionPage() {
 
                 {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
 
-                <div className="grid flex-1 min-h-0 gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-                    <div className="relative min-h-[420px] overflow-hidden rounded-lg bg-slate-950">
-                        <div ref={remoteVideoElRef} className="h-full min-h-[420px] w-full" />
+                <div className={`grid flex-1 min-h-0 gap-4 ${isFullscreen ? 'fixed inset-0 z-50 lg:grid-cols-1 bg-slate-950 m-0' : 'lg:grid-cols-[minmax(0,1fr)_320px]'}`}>
+                    <div className={`relative overflow-hidden bg-slate-950 ${isFullscreen ? 'h-full w-full rounded-none' : 'min-h-[420px] rounded-lg'}`}>
+                        <div ref={remoteVideoElRef} className="h-full w-full" />
                         {!error && isJoining && (
                             <div className="absolute inset-0 flex items-center justify-center bg-slate-950 text-white">
                                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                                 {status}
                             </div>
                         )}
-                        <div className="absolute bottom-4 right-4 h-36 w-48 overflow-hidden rounded-lg border border-white/20 bg-slate-900 shadow-lg">
+                        <div className={`absolute right-4 overflow-hidden rounded-lg border border-white/20 bg-slate-900 shadow-lg ${isFullscreen ? 'bottom-24 h-48 w-32' : 'bottom-4 h-36 w-48'} transition-all`}>
                             <div ref={localVideoElRef} className="h-full w-full" />
                         </div>
+                        
+                        {/* Overlay Controls (Always visible on mobile/fullscreen) */}
+                        <div className={`absolute bottom-0 left-0 right-0 flex justify-center gap-6 p-6 bg-gradient-to-t from-slate-950/90 to-transparent ${!isFullscreen ? 'lg:hidden' : ''}`}>
+                            <button onClick={toggleMic} className={`flex items-center justify-center h-14 w-14 rounded-full transition-colors ${micOn ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-red-500 hover:bg-red-600 text-white'}`}>
+                                {micOn ? <Mic className="h-6 w-6" /> : <MicOff className="h-6 w-6" />}
+                            </button>
+                            <button onClick={toggleCamera} className={`flex items-center justify-center h-14 w-14 rounded-full transition-colors ${cameraOn ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-red-500 hover:bg-red-600 text-white'}`}>
+                                {cameraOn ? <Video className="h-6 w-6" /> : <VideoOff className="h-6 w-6" />}
+                            </button>
+                            <button onClick={leave} className="flex items-center justify-center h-14 w-14 rounded-full bg-red-600 hover:bg-red-700 text-white transition-colors">
+                                <PhoneOff className="h-6 w-6" />
+                            </button>
+                        </div>
+                        
+                        {/* Fullscreen Toggle */}
+                        <button 
+                            onClick={() => setIsFullscreen(!isFullscreen)} 
+                            className="absolute top-4 right-4 flex items-center justify-center h-10 w-10 bg-black/40 hover:bg-black/60 rounded text-white transition-colors"
+                        >
+                            {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
+                        </button>
                     </div>
 
-                    <aside className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
+                    <aside className={`rounded-lg border border-gray-100 bg-white p-5 shadow-sm ${isFullscreen ? 'hidden' : 'hidden lg:block'}`}>
                         <div className="flex items-center gap-2 text-[#4a3428]">
                             <Video className="h-5 w-5" />
                             <h3 className="font-bold">Call Controls</h3>
