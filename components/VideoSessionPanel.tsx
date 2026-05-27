@@ -47,6 +47,7 @@ export default function VideoSessionPanel({ careRequestId, role }: { careRequest
     const [notice, setNotice] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [isUrgentCreating, setIsUrgentCreating] = useState(false);
     const canSchedule = role === 'doctor' || role === 'admin';
 
     const [dateRange] = useState(() => {
@@ -111,6 +112,30 @@ export default function VideoSessionPanel({ careRequestId, role }: { careRequest
             setNotice(error instanceof Error ? error.message : 'Unable to schedule video session.');
         } finally {
             setIsCreating(false);
+        }
+    };
+
+    const createUrgentSession = async () => {
+        const session = getSession();
+        if (!session || !careRequestId) return;
+
+        setIsUrgentCreating(true);
+        setNotice(null);
+
+        try {
+            const res = await apiRequest<{ message: string, video_session: VideoSession }>('/video-sessions/urgent', {
+                method: 'POST',
+                token: session.access_token,
+                body: JSON.stringify({ care_request_id: careRequestId })
+            });
+            await load();
+            if (res.data?.video_session?.video_session_id) {
+                joinSession(res.data.video_session.video_session_id);
+            }
+        } catch (error) {
+            setNotice(error instanceof Error ? error.message : 'Unable to start urgent video session.');
+        } finally {
+            setIsUrgentCreating(false);
         }
     };
 
@@ -203,13 +228,27 @@ export default function VideoSessionPanel({ careRequestId, role }: { careRequest
                     <Button
                         className="mt-3"
                         fullWidth
-                        disabled={!selectedSlotId}
+                        disabled={!selectedSlotId || isUrgentCreating}
                         isLoading={isCreating}
                         onClick={createSession}
                         leftIcon={<CalendarClock className="h-4 w-4" />}
                     >
                         Schedule Video Session
                     </Button>
+                    <div className="mt-4 border-t border-blue-100 pt-4">
+                        <Button
+                            variant="secondary"
+                            fullWidth
+                            isLoading={isUrgentCreating}
+                            disabled={isCreating}
+                            onClick={createUrgentSession}
+                            leftIcon={<Video className="h-4 w-4" />}
+                            className="bg-red-50 text-red-700 hover:bg-red-100 border-red-200"
+                        >
+                            Start Urgent Video Call
+                        </Button>
+                        <p className="mt-2 text-center text-xs text-blue-800">Bypasses schedule, creates instant 15m session.</p>
+                    </div>
                 </div>
             )}
         </div>
