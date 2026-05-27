@@ -215,7 +215,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-auto p-6">{children}</main>
+                <main className="flex-1 overflow-auto flex flex-col p-0 md:p-6">{children}</main>
             </div>
 
             {/* Bottom Navigation Bar (Mobile & Tablet) */}

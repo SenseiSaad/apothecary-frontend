@@ -712,7 +712,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
     }
 
     return (
-        <div className="flex h-[calc(100dvh-12rem)] md:h-[calc(100vh-7rem)] min-h-0 md:min-h-[620px] flex-col overflow-hidden">
+        <div className="flex h-full min-h-0 flex-col overflow-hidden w-full">
             <div className="hidden lg:flex mb-3 flex-none flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h2 className="text-xl font-bold text-foreground">{title}</h2>
@@ -742,7 +742,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                 </div>
             )}
 
-            <div className={`grid min-h-0 flex-1 grid-cols-1 overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm ${
+            <div className={`grid min-h-0 flex-1 grid-cols-1 overflow-hidden border-0 bg-white shadow-none md:rounded-2xl md:border md:border-gray-200 md:shadow-sm ${
                 role === 'patient'
                     ? 'xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_340px]'
                     : isHandoffExpanded
@@ -843,35 +843,36 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                 </aside>
                 )}
 
-                <section className={`min-h-0 flex-col bg-gray-50/60 xl:flex ${activeMobilePane === 'chat' ? 'flex' : 'hidden'}`}>
+                <section className={`min-h-0 flex-1 flex-col w-full bg-gray-50/60 xl:flex ${activeMobilePane === 'chat' ? 'flex' : 'hidden'}`}>
                     {selectedConversation ? (
                         <>
-                            <div className="flex-none border-b border-gray-100 bg-white p-4">
-                                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                                    <div className="flex min-w-0 items-start gap-3">
+                            <div className="flex-none border-b border-gray-100 bg-white px-3 py-2 md:p-4">
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex min-w-0 items-center gap-2">
                                         {role !== 'patient' && (
                                             <button 
                                                 onClick={() => setActiveMobilePane('list')} 
-                                                className="xl:hidden -ml-2 p-2 text-gray-500 hover:text-foreground hover:bg-gray-100 rounded-full"
+                                                className="xl:hidden -ml-1 p-1 text-gray-500 hover:text-foreground hover:bg-gray-100 rounded-full"
                                                 title="Back to Patient Chats"
                                             >
                                                 <ChevronLeft className="h-6 w-6" />
                                             </button>
                                         )}
-                                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+                                        <div className="flex h-8 w-8 md:h-11 md:w-11 flex-shrink-0 items-center justify-center rounded-full bg-primary text-xs md:text-sm font-bold text-white">
                                             {initials(selectedConversation.patient_name)}
                                         </div>
-                                        <div className="min-w-0">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <h3 className="truncate text-lg font-bold text-foreground">{selectedConversation.patient_name}</h3>
-                                            {selectedConversation.urgency && (
-                                                <span className={`hidden md:inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${urgencyClasses[selectedConversation.urgency]}`}>
-                                                    {selectedConversation.urgency}
+                                        <div className="min-w-0 flex flex-col">
+                                            <h3 className="truncate text-[15px] md:text-lg font-bold text-foreground leading-tight">{selectedConversation.patient_name}</h3>
+                                            <span className="text-[10px] text-gray-500 md:hidden leading-tight">Online</span>
+                                            <div className="hidden md:flex flex-wrap items-center gap-2 mt-1">
+                                                {selectedConversation.urgency && (
+                                                    <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${urgencyClasses[selectedConversation.urgency]}`}>
+                                                        {selectedConversation.urgency}
+                                                    </span>
+                                                )}
+                                                <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold capitalize text-blue-700">
+                                                    {formatStatus(selectedConversation.care_request_status)}
                                                 </span>
-                                            )}
-                                            <span className="hidden md:inline-flex rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold capitalize text-blue-700">
-                                                {formatStatus(selectedConversation.care_request_status)}
-                                            </span>
                                             </div>
                                             <p className="hidden md:block mt-1 line-clamp-2 max-w-3xl text-sm text-gray-600">{selectedConversation.reason || 'No request reason recorded.'}</p>
                                         </div>
@@ -883,7 +884,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                         </div>
                                         <button 
                                             onClick={() => setActiveMobilePane('details')}
-                                            className="xl:hidden p-2 text-gray-500 hover:text-foreground hover:bg-gray-100 rounded-full border border-gray-200"
+                                            className="xl:hidden p-1.5 text-gray-500 hover:text-foreground hover:bg-gray-100 rounded-full border border-gray-200"
                                             title="View Details"
                                         >
                                             <ClipboardList className="h-5 w-5" />
