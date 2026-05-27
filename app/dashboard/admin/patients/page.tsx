@@ -825,7 +825,7 @@ function CareTimeline({ status }: { status: CareRequestStatus }) {
                 const StepIcon = step.icon;
                 const active = index + 1 <= current;
                 return (
-                    <div key={step.label} className={`rounded-lg border p-3 ${active ? 'border-primary bg-[#fff4ec]' : 'border-gray-100 bg-gray-50'}`}>
+                    <div key={step.label} className={`rounded-lg border p-3 ${active ? 'border-primary bg-accent' : 'border-gray-100 bg-gray-50'}`}>
                         <StepIcon className={`h-4 w-4 ${active ? 'text-primary' : 'text-gray-400'}`} />
                         <p className={`mt-2 text-xs font-semibold ${active ? 'text-foreground' : 'text-gray-500'}`}>{step.label}</p>
                     </div>

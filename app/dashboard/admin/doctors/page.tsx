@@ -751,7 +751,7 @@ export default function AdminAssistants() {
 
                         {!isDetailLoading && selectedDoctor && (
                             <>
-                                <div className="rounded-2xl bg-gradient-to-r from-[var(--foreground)] to-[#6b4423] p-6 text-white">
+                                <div className="rounded-2xl bg-gradient-to-r from-[var(--foreground)] to-brown p-6 text-white">
                                     <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                                         <div className="flex items-center gap-4">
                                             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold">

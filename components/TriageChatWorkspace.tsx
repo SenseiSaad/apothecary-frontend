@@ -724,7 +724,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                             <button
                                 type="button"
                                 onClick={() => setIsSearchExpanded(value => !value)}
-                                className="rounded-lg p-2 text-primary hover:bg-[#fff4ec]"
+                                className="rounded-lg p-2 text-primary hover:bg-accent"
                                 title={isSearchExpanded ? 'Collapse search' : 'Expand search'}
                             >
                                 <ChevronDown className={`h-4 w-4 transition ${isSearchExpanded ? 'rotate-180' : ''}`} />
@@ -755,7 +755,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                     key={conversation.conversation_id}
                                     type="button"
                                     onClick={() => selectConversation(conversation)}
-                                    className={`w-full border-b border-gray-100 px-4 py-3 text-left transition ${active ? 'bg-[#fff4ec]' : 'hover:bg-gray-50'}`}
+                                    className={`w-full border-b border-gray-100 px-4 py-3 text-left transition ${active ? 'bg-accent' : 'hover:bg-gray-50'}`}
                                 >
                                     <div className="flex gap-3">
                                         <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${active ? 'bg-primary text-white' : 'bg-gray-100 text-foreground'}`}>
@@ -894,7 +894,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                     <button
                         type="button"
                         onClick={() => setIsHandoffExpanded(value => !value)}
-                        className={`mb-3 flex w-full items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-sm font-semibold text-foreground hover:bg-[#fff4ec] ${!isHandoffExpanded ? 'h-full flex-col justify-center gap-3 px-2 py-4 [writing-mode:vertical-rl]' : ''}`}
+                        className={`mb-3 flex w-full items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-sm font-semibold text-foreground hover:bg-accent ${!isHandoffExpanded ? 'h-full flex-col justify-center gap-3 px-2 py-4 [writing-mode:vertical-rl]' : ''}`}
                         title={isHandoffExpanded ? 'Collapse handoff' : 'Expand handoff'}
                     >
                         <span>Care Handoff</span>
@@ -985,7 +985,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                                         onClick={() => setSelectedDoctorId(doctor.doctor_id)}
                                                         className={`w-full rounded-lg border p-3 text-left text-sm transition ${
                                                             selected
-                                                                ? 'border-primary bg-[#fff4ec]'
+                                                                ? 'border-primary bg-accent'
                                                                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                                                         } disabled:cursor-not-allowed disabled:opacity-60`}
                                                     >

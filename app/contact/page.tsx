@@ -36,7 +36,7 @@ export default function Contact() {
                     <h1 className="text-5xl font-bold text-foreground mb-6">
                         Get In Touch
                     </h1>
-                    <p className="text-xl text-[#6b4423] max-w-3xl mx-auto">
+                    <p className="text-xl text-brown max-w-3xl mx-auto">
                         Have questions? We're here to help. Reach out to our team and
                         we'll get back to you as soon as possible.
                     </p>

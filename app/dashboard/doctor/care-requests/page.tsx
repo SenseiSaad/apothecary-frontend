@@ -417,7 +417,7 @@ export default function AssistantCareRequestsPage() {
                                         onClick={() => changeQueue(tab.key)}
                                         className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold transition ${
                                             active
-                                                ? 'border-primary bg-[#fff4ec] text-[#C65F20]'
+                                                ? 'border-primary bg-accent text-primary-dark'
                                                 : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
                                         }`}
                                     >
@@ -647,7 +647,7 @@ export default function AssistantCareRequestsPage() {
                                         onClick={() => setSelectedDoctorId(doctor.doctor_id)}
                                         className={`rounded-lg border p-4 text-left transition ${
                                             selected
-                                                ? 'border-primary bg-[#fff4ec] ring-2 ring-primary/20'
+                                                ? 'border-primary bg-accent ring-2 ring-primary/20'
                                                 : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
                                         } disabled:cursor-not-allowed disabled:opacity-60`}
                                     >

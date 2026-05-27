@@ -402,7 +402,7 @@ export default function PatientDetails() {
                                         {treatmentPlan.interventions.map((intervention, index) => (
                                             <span
                                                 key={index}
-                                                className="px-4 py-2 bg-accent text-[#6b4423] rounded-full text-sm font-medium"
+                                                className="px-4 py-2 bg-accent text-brown rounded-full text-sm font-medium"
                                             >
                                                 {intervention}
                                             </span>

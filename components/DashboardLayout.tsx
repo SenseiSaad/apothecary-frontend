@@ -137,9 +137,9 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                         backgroundRepeat: 'no-repeat'
                     }}
                 >
-                    <div className='absolute inset-0 bg-gradient-to-b from-[#e67d3c91] to-[#6b4323] flex flex-col'>
+                    <div className='absolute inset-0 bg-gradient-to-b from-primary/90 to-brown flex flex-col'>
                         {/* Logo and Toggle Button */}
-                        <div className="pt-4 pb-2 border-b border-[#6b4423] relative">
+                        <div className="pt-4 pb-2 border-b border-brown relative">
                             <div className={`text-xl font-bold ${!isSidebarOpen && 'text-center'}`}>
                                 <Image src="/mini-logo.webp" height={50} width={50} alt="Apothecary Logo" className="mx-auto" />
                             </div>
@@ -147,7 +147,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                             {/* Toggle Button */}
                             <button
                                 onClick={toggleSidebar}
-                                className="absolute -right-3 top-1/2 -translate-y-1/2 bg-primary hover:bg-[#d66d2b] text-white rounded-full p-1.5 shadow-lg transition-all duration-300 hover:scale-110"
+                                className="absolute -right-3 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary-dark text-white rounded-full p-1.5 shadow-lg transition-all duration-300 hover:scale-110"
                                 title={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
                             >
                                 {isSidebarOpen ? (
@@ -169,7 +169,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                                                 href={item.path}
                                                 className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${pathname === item.path
                                                     ? 'bg-primary text-white'
-                                                    : 'text-gray-300 hover:bg-[#6b4423]'
+                                                    : 'text-gray-300 hover:bg-brown'
                                                     }`}
                                             >
                                                 <IconComponent className="w-5 h-5" />
@@ -182,7 +182,7 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
                         </nav>
 
                         {/* Logout Button */}
-                        <div className="p-4 border-t border-[#6b4423]">
+                        <div className="p-4 border-t border-brown">
                             <button
                                 onClick={handleLogout}
                                 className="w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-300 hover:bg-red-600 transition-colors"

@@ -8,7 +8,7 @@ export default function About() {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-[var(--foreground)] via-[#6b4423] to-[var(--foreground)] py-28 overflow-hidden">
+            <section className="relative bg-gradient-to-br from-[var(--foreground)] via-brown to-[var(--foreground)] py-28 overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-20 left-20 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
@@ -383,7 +383,7 @@ export default function About() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-br from-[var(--foreground)] to-[#6b4423] text-white relative overflow-hidden">
+            <section className="py-20 bg-gradient-to-br from-[var(--foreground)] to-brown text-white relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
                     <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>

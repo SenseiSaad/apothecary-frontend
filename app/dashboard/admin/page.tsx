@@ -148,7 +148,7 @@ export default function AdminDashboard() {
                             {[65, 85, 75, 90, 80, 95, 88].map((height, index) => (
                                 <div key={index} className="flex-1 flex flex-col items-center">
                                     <div
-                                        className="w-full bg-gradient-to-t from-primary to-[#f59e6c] rounded-t-lg transition-all hover:from-primary-dark hover:to-primary cursor-pointer shadow-md"
+                                        className="w-full bg-gradient-to-t from-primary to-secondary rounded-t-lg transition-all hover:from-primary-dark hover:to-primary cursor-pointer shadow-md"
                                         style={{ height: `${height}%` }}
                                         title={`${height} sessions`}
                                     ></div>

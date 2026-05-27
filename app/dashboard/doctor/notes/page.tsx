@@ -347,7 +347,7 @@ export default function SessionNotes() {
                             </h5>
                             <div className="flex flex-wrap gap-2">
                                 {selectedNote.interventionsUsed.map((intervention, index) => (
-                                    <Badge key={index} variant="default" className="bg-accent text-[#6b4423] border-primary/20">
+                                    <Badge key={index} variant="default" className="bg-accent text-brown border-primary/20">
                                         {intervention}
                                     </Badge>
                                 ))}

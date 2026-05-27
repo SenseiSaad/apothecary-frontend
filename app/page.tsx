@@ -126,7 +126,7 @@ export default function Home() {
                 Nurture Your Mind,
                 <span className="text-primary"> Transform Your Life</span>
               </h1>
-              <p className="text-xl text-[#6b4423] mb-8 leading-relaxed">
+              <p className="text-xl text-brown mb-8 leading-relaxed">
                 Connect with certified mental health professionals from the comfort of your home.
                 Start your journey to emotional wellness today with personalized Consultations.
               </p>
@@ -183,7 +183,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] rounded-2xl p-6 mb-4 border border-primary/20">
-                  <p className="text-[#6b4423]">
+                  <p className="text-brown">
                     "How are you feeling today? I'm here to help you navigate your thoughts and feelings."
                   </p>
                 </div>
@@ -421,7 +421,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-[var(--foreground)] to-[#6b4423] text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-[var(--foreground)] to-brown text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>

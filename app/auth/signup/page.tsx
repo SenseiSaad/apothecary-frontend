@@ -128,7 +128,7 @@ export default function Signup() {
     return (
         <div className="min-h-screen flex">
             {/* Left Side - Branding */}
-            <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-[var(--foreground)] via-[#6b4423] to-[var(--foreground)] relative overflow-hidden">
+            <div className="hidden lg:flex lg:flex-1 bg-gradient-to-br from-[var(--foreground)] via-brown to-[var(--foreground)] relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-20 left-20 w-64 h-64 bg-primary rounded-full blur-3xl"></div>

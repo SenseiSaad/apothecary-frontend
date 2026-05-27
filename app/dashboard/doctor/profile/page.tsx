@@ -663,7 +663,7 @@ function ProfessionalReviewNotice({ status, notes, isEditing }: {
 
     if (isEditing) {
         return (
-            <div className="rounded-2xl bg-[#fff6e8] p-5 text-sm text-gray-700">
+            <div className="rounded-2xl bg-accent p-5 text-sm text-gray-700">
                 Changing license number, specialty, credentials, years of experience, or session modalities will return your credentials to pending Super Admin review.
                 {noteBlock}
             </div>
