@@ -5,6 +5,7 @@ import type { FormEvent } from 'react';
 import {
     AlertCircle,
     Check,
+    Circle,
     ClipboardList,
     Lock,
     MessageSquare,
@@ -101,8 +102,23 @@ function formatTime(value?: string) {
     });
 }
 
+function formatShortTime(value?: string) {
+    if (!value) return '-';
+    return new Date(value).toLocaleString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+    });
+}
+
 function isOwnMessage(message: TriageMessage, role: WorkspaceRole) {
     return message.sender_role === role || (role === 'assistant' && message.sender_role === 'assistant');
+}
+
+function initials(name?: string) {
+    const parts = (name || 'Patient').trim().split(/\s+/);
+    return parts.slice(0, 2).map(part => part[0]?.toUpperCase()).join('') || 'P';
 }
 
 export default function TriageChatWorkspace({ role, initialCareRequestId }: { role: WorkspaceRole; initialCareRequestId?: string | null }) {
@@ -223,13 +239,14 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
             if (conversation) {
                 mergeConversation(conversation);
                 await selectConversation(conversation);
+                await loadConversations(true);
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Unable to open this triage chat.');
         } finally {
             setIsLoading(false);
         }
-    }, [mergeConversation, selectConversation]);
+    }, [loadConversations, mergeConversation, selectConversation]);
 
     useEffect(() => {
         const session = getSession();
@@ -415,18 +432,18 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
 
     if (isLoading) {
         return (
-            <div className="flex min-h-[360px] items-center justify-center rounded-lg border border-gray-100 bg-white shadow-sm">
+            <div className="flex h-[calc(100vh-7rem)] items-center justify-center rounded-lg border border-gray-100 bg-white shadow-sm">
                 <p className="text-gray-500">Loading triage chat...</p>
             </div>
         );
     }
 
     return (
-        <div className="space-y-4">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex h-[calc(100vh-7rem)] min-h-[620px] flex-col overflow-hidden">
+            <div className="mb-3 flex flex-none flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                    <h2 className="text-2xl font-bold text-[#4a3428]">Triage Messaging</h2>
-                    <p className="text-gray-600">
+                    <h2 className="text-xl font-bold text-[#4a3428]">Triage Messaging</h2>
+                    <p className="text-sm text-gray-600">
                         {role === 'patient'
                             ? 'Message the clinical assistant reviewing your active care request.'
                             : 'Chat with claimed triage patients and prepare notes for Doctor handoff.'}
@@ -444,21 +461,30 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
             </div>
 
             {error && (
-                <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <div className="mb-3 flex flex-none items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700">
                     <AlertCircle className="h-5 w-5 flex-shrink-0" />
                     <span>{error}</span>
                 </div>
             )}
             {success && (
-                <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                <div className="mb-3 flex flex-none items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-4 py-2 text-sm text-green-700">
                     <Check className="h-5 w-5 flex-shrink-0" />
                     <span>{success}</span>
                 </div>
             )}
 
-            <div className="grid min-h-[660px] grid-cols-1 overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm xl:grid-cols-[340px_minmax(0,1fr)_320px]">
-                <aside className="border-b border-gray-100 xl:border-b-0 xl:border-r">
-                    <div className="border-b border-gray-100 p-4">
+            <div className="grid min-h-0 flex-1 grid-cols-1 overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm xl:grid-cols-[330px_minmax(0,1fr)_320px] 2xl:grid-cols-[360px_minmax(0,1fr)_340px]">
+                <aside className="flex min-h-0 flex-col border-b border-gray-100 bg-white xl:border-b-0 xl:border-r">
+                    <div className="flex-none border-b border-gray-100 p-4">
+                        <div className="mb-3 flex items-center justify-between">
+                            <div>
+                                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                    {role === 'patient' ? 'Care Threads' : 'Patient Chats'}
+                                </p>
+                                <p className="text-sm text-gray-500">{filteredConversations.length} active</p>
+                            </div>
+                            <MessageSquare className="h-5 w-5 text-[#E67E3C]" />
+                        </div>
                         <div className="relative">
                             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                             <input
@@ -469,7 +495,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                             />
                         </div>
                     </div>
-                    <div className="max-h-[260px] overflow-y-auto xl:max-h-[600px]">
+                    <div className="min-h-0 flex-1 overflow-y-auto">
                         {filteredConversations.length === 0 ? (
                             <div className="p-6 text-center text-sm text-gray-500">
                                 <MessageSquare className="mx-auto mb-3 h-8 w-8 text-gray-300" />
@@ -484,21 +510,30 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                     onClick={() => selectConversation(conversation)}
                                     className={`w-full border-b border-gray-100 p-4 text-left transition ${active ? 'bg-[#fff4ec]' : 'hover:bg-gray-50'}`}
                                 >
-                                    <div className="flex items-start justify-between gap-3">
-                                        <div className="min-w-0">
-                                            <p className="truncate font-semibold text-[#4a3428]">{conversation.patient_name}</p>
-                                            <p className="truncate text-xs text-gray-500">{conversation.patient_email || 'Patient'}</p>
+                                    <div className="flex gap-3">
+                                        <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${active ? 'bg-[#E67E3C] text-white' : 'bg-gray-100 text-[#4a3428]'}`}>
+                                            {initials(conversation.patient_name)}
                                         </div>
-                                        {conversation.unread_count > 0 && (
-                                            <span className="rounded-full bg-[#E67E3C] px-2 py-0.5 text-xs font-bold text-white">
-                                                {conversation.unread_count}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <p className="mt-2 line-clamp-2 text-sm text-gray-600">{conversation.reason || 'No request reason recorded.'}</p>
-                                    <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
-                                        <span>{formatStatus(conversation.care_request_status)}</span>
-                                        <span>{formatTime(conversation.last_message_at || conversation.updated_at)}</span>
+                                        <div className="min-w-0 flex-1">
+                                            <div className="flex items-start justify-between gap-2">
+                                                <div className="min-w-0">
+                                                    <p className="truncate font-semibold text-[#4a3428]">{conversation.patient_name}</p>
+                                                    <p className="truncate text-xs text-gray-500">{conversation.patient_email || 'Patient'}</p>
+                                                </div>
+                                                {conversation.unread_count > 0 ? (
+                                                    <span className="rounded-full bg-[#E67E3C] px-2 py-0.5 text-xs font-bold text-white">
+                                                        {conversation.unread_count}
+                                                    </span>
+                                                ) : (
+                                                    <Circle className="mt-1 h-2.5 w-2.5 fill-green-500 text-green-500" />
+                                                )}
+                                            </div>
+                                            <p className="mt-2 line-clamp-2 text-sm leading-5 text-gray-600">{conversation.reason || 'No request reason recorded.'}</p>
+                                            <div className="mt-3 flex items-center justify-between gap-2 text-xs text-gray-400">
+                                                <span className="truncate capitalize">{formatStatus(conversation.care_request_status)}</span>
+                                                <span className="flex-shrink-0">{formatShortTime(conversation.last_message_at || conversation.updated_at)}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </button>
                             );
@@ -506,14 +541,18 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                     </div>
                 </aside>
 
-                <section className="flex min-h-[620px] flex-col">
+                <section className="flex min-h-0 flex-col bg-gray-50/60">
                     {selectedConversation ? (
                         <>
-                            <div className="border-b border-gray-100 p-4">
+                            <div className="flex-none border-b border-gray-100 bg-white p-4">
                                 <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                                    <div>
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <h3 className="text-lg font-bold text-[#4a3428]">{selectedConversation.patient_name}</h3>
+                                    <div className="flex min-w-0 items-start gap-3">
+                                        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#E67E3C] text-sm font-bold text-white">
+                                            {initials(selectedConversation.patient_name)}
+                                        </div>
+                                        <div className="min-w-0">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <h3 className="truncate text-lg font-bold text-[#4a3428]">{selectedConversation.patient_name}</h3>
                                             {selectedConversation.urgency && (
                                                 <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${urgencyClasses[selectedConversation.urgency]}`}>
                                                     {selectedConversation.urgency}
@@ -522,8 +561,9 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                             <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-semibold capitalize text-blue-700">
                                                 {formatStatus(selectedConversation.care_request_status)}
                                             </span>
+                                            </div>
+                                            <p className="mt-1 line-clamp-2 max-w-3xl text-sm text-gray-600">{selectedConversation.reason || 'No request reason recorded.'}</p>
                                         </div>
-                                        <p className="mt-1 max-w-3xl text-sm text-gray-600">{selectedConversation.reason || 'No request reason recorded.'}</p>
                                     </div>
                                     <div className="flex items-center gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-xs text-gray-600">
                                         <Lock className="h-4 w-4 text-[#E67E3C]" />
@@ -532,8 +572,8 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                 </div>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto bg-gray-50/70 p-5">
-                                <div className="space-y-4">
+                            <div className="min-h-0 flex-1 overflow-y-auto p-5">
+                                <div className="mx-auto max-w-4xl space-y-4">
                                     {messages.length === 0 ? (
                                         <div className="rounded-lg border border-dashed border-gray-200 bg-white p-8 text-center text-sm text-gray-500">
                                             Start the triage conversation here. Messages are saved for the Doctor handoff.
@@ -552,7 +592,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
 
                                         return (
                                             <div key={message.message_id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
-                                                <div className={`max-w-[78%] rounded-lg px-4 py-3 shadow-sm ${mine ? 'bg-[#E67E3C] text-white' : 'border border-gray-100 bg-white text-[#4a3428]'}`}>
+                                                <div className={`max-w-[72%] rounded-lg px-4 py-3 shadow-sm ${mine ? 'rounded-br-sm bg-[#E67E3C] text-white' : 'rounded-bl-sm border border-gray-100 bg-white text-[#4a3428]'}`}>
                                                     <p className="whitespace-pre-wrap text-sm leading-6">{message.body}</p>
                                                     <p className={`mt-2 text-right text-[11px] ${mine ? 'text-white/75' : 'text-gray-400'}`}>
                                                         {formatTime(message.created_at)}
@@ -568,13 +608,13 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                 </div>
                             </div>
 
-                            <form onSubmit={sendMessage} className="border-t border-gray-100 bg-white p-4">
+                            <form onSubmit={sendMessage} className="flex-none border-t border-gray-100 bg-white p-4">
                                 {selectedConversation.status !== 'open' && (
                                     <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
                                         This triage chat is closed and preserved for care handoff.
                                     </div>
                                 )}
-                                <div className="flex items-end gap-3">
+                                <div className="mx-auto flex max-w-4xl items-end gap-3">
                                     <textarea
                                         value={messageBody}
                                         onChange={event => handleTyping(event.target.value)}
@@ -599,7 +639,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                     )}
                 </section>
 
-                <aside className="border-t border-gray-100 bg-white p-5 xl:border-l xl:border-t-0">
+                <aside className="min-h-0 overflow-y-auto border-t border-gray-100 bg-white p-5 xl:border-l xl:border-t-0">
                     <div className="space-y-4">
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Care Handoff</p>
@@ -630,7 +670,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                         value={notesDraft}
                                         onChange={event => setNotesDraft(event.target.value)}
                                         disabled={!canWriteNotes}
-                                        rows={9}
+                                        rows={7}
                                         placeholder="Key symptoms, patient preferences, safety concerns, scheduling notes, and suggested specialty."
                                         className="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-[#E67E3C] disabled:bg-gray-100"
                                     />
