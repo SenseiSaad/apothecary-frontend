@@ -912,12 +912,12 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
 
                                         return (
                                             <div key={message.message_id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
-                                                <div className={`max-w-[72%] rounded-lg px-4 py-3 shadow-sm ${messageTone(message, role)}`}>
-                                                    <p className={`mb-1 text-[11px] font-semibold uppercase tracking-wide ${mine ? 'text-white/75' : 'text-gray-500'}`}>
+                                                <div className={`max-w-[85%] rounded-2xl px-3 py-2 shadow-sm ${mine ? 'rounded-br-sm' : 'rounded-bl-sm'} ${messageTone(message, role)}`}>
+                                                    <p className={`mb-0.5 text-[10px] font-semibold uppercase tracking-wide ${mine ? 'text-white/75' : 'text-gray-500'}`}>
                                                         {senderLabel(message.sender_role, role)}
                                                     </p>
-                                                    <p className="whitespace-pre-wrap text-sm leading-6">{message.body}</p>
-                                                    <p className={`mt-2 text-right text-[11px] ${mine ? 'text-white/75' : 'text-gray-400'}`}>
+                                                    <p className="whitespace-pre-wrap text-sm leading-snug">{message.body}</p>
+                                                    <p className={`mt-1 text-right text-[10px] ${mine ? 'text-white/75' : 'text-gray-400'}`}>
                                                         {message.delivery_status === 'sending' ? 'Sending...' : message.delivery_status === 'failed' ? 'Failed' : formatTime(message.created_at)}
                                                     </p>
                                                 </div>
@@ -931,7 +931,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                 </div>
                             </div>
 
-                            <form onSubmit={sendMessage} className="flex-none border-t border-gray-100 bg-white p-4">
+                            <form onSubmit={sendMessage} className="flex-none border-t border-gray-100 bg-white px-4 py-3">
                                 {selectedConversation.status !== 'open' && (
                                     <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
                                         This triage chat is closed and preserved for care handoff.
@@ -942,13 +942,13 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                         value={messageBody}
                                         onChange={event => handleTyping(event.target.value)}
                                         disabled={!canSend}
-                                        rows={2}
+                                        rows={1}
                                         placeholder={canSend ? 'Type a triage message...' : 'This chat is closed.'}
-                                        className="min-h-[48px] flex-1 resize-none rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-primary disabled:bg-gray-100"
+                                        className="min-h-[44px] flex-1 resize-none rounded-full border border-gray-200 bg-gray-50 px-5 py-3 text-sm outline-none focus:border-transparent focus:bg-white focus:ring-1 focus:ring-primary disabled:bg-gray-100"
                                     />
-                                    <Button type="submit" disabled={!messageBody.trim() || !canSend} isLoading={isSending} leftIcon={<Send className="h-4 w-4" />}>
-                                        Send
-                                    </Button>
+                                    <button type="submit" disabled={!messageBody.trim() || !canSend} className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-white shadow-sm transition-transform active:scale-90 ${(!messageBody.trim() || !canSend) ? 'bg-gray-300' : 'bg-primary hover:bg-primary-dark'}`}>
+                                        {isSending ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> : <Send className="h-4 w-4 translate-x-px translate-y-px" />}
+                                    </button>
                                 </div>
                             </form>
                         </>
