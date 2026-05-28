@@ -942,19 +942,17 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                                     </span>
                                                     {hasVideoLink && (
                                                         <button
+                                                            disabled={upcomingSessions.length === 0}
                                                             onClick={() => {
-                                                                const activeSession = upcomingSessions.find(s => s.status === 'active');
+                                                                const activeSession = upcomingSessions.find(s => s.status === 'active' || s.status === 'scheduled');
                                                                 if (activeSession) {
                                                                     router.push(`/dashboard/video-session/${activeSession.video_session_id}`);
-                                                                } else {
-                                                                    // Fallback if the active session hasn't loaded yet
-                                                                    router.push('/dashboard/patient/video-session'); // Adjust to generic route if needed
                                                                 }
                                                             }}
-                                                            className="flex items-center gap-2 rounded-full bg-[var(--primary)] px-4 py-2 text-xs font-bold text-white shadow-md transition-transform active:scale-95 hover:bg-[var(--primary-dark)]"
+                                                            className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold shadow-md transition-transform ${upcomingSessions.length === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[var(--primary)] text-white active:scale-95 hover:bg-[var(--primary-dark)]'}`}
                                                         >
                                                             <Video className="h-4 w-4" />
-                                                            Join Video Session
+                                                            {upcomingSessions.length === 0 ? 'Session Ended' : 'Join Video Session'}
                                                         </button>
                                                     )}
                                                 </div>
