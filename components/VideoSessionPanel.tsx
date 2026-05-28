@@ -48,7 +48,7 @@ export default function VideoSessionPanel({ careRequestId, role }: { careRequest
     const [isLoading, setIsLoading] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
     const [isUrgentCreating, setIsUrgentCreating] = useState(false);
-    const canSchedule = role === 'doctor' || role === 'admin';
+    const canSchedule = role === 'doctor' || role === 'admin' || role === 'patient';
 
     const [dateRange] = useState(() => {
         const start = new Date();
@@ -235,20 +235,22 @@ export default function VideoSessionPanel({ careRequestId, role }: { careRequest
                     >
                         Schedule Video Session
                     </Button>
-                    <div className="mt-4 border-t border-blue-100 pt-4">
-                        <Button
-                            variant="secondary"
-                            fullWidth
-                            isLoading={isUrgentCreating}
-                            disabled={isCreating}
-                            onClick={createUrgentSession}
-                            leftIcon={<Video className="h-4 w-4" />}
-                            className="bg-red-50 text-red-700 hover:bg-red-100 border-red-200"
-                        >
-                            Start Urgent Video Call
-                        </Button>
-                        <p className="mt-2 text-center text-xs text-blue-800">Bypasses schedule, creates instant 15m session.</p>
-                    </div>
+                    {role !== 'patient' && (
+                        <div className="mt-4 border-t border-blue-100 pt-4">
+                            <Button
+                                variant="secondary"
+                                fullWidth
+                                isLoading={isUrgentCreating}
+                                disabled={isCreating}
+                                onClick={createUrgentSession}
+                                leftIcon={<Video className="h-4 w-4" />}
+                                className="bg-red-50 text-red-700 hover:bg-red-100 border-red-200"
+                            >
+                                Start Urgent Video Call
+                            </Button>
+                            <p className="mt-2 text-center text-xs text-blue-800">Bypasses schedule, creates instant 15m session.</p>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

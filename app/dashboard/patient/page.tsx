@@ -8,6 +8,7 @@ import { getSession, hasRole } from '@/lib/auth';
 import { apiRequest, getApiBaseUrl } from '@/lib/api';
 import { Button, Avatar } from '@/components/ui';
 import { ClipboardList, Stethoscope } from 'lucide-react';
+import VideoSessionPanel from '@/components/VideoSessionPanel';
 
 type AssignedGender = 'girl' | 'boy';
 
@@ -456,7 +457,11 @@ export default function PatientDashboard() {
                         </Button>
                     </div>
                     
-                    {homeData?.next_session ? (
+                    {homeData?.active_care_request_id ? (
+                        <div className="mt-4">
+                            <VideoSessionPanel careRequestId={homeData.active_care_request_id} role="patient" />
+                        </div>
+                    ) : homeData?.next_session ? (
                         <div className="p-4 rounded-xl border border-gray-100 bg-gray-50 flex justify-between items-center">
                             <div>
                                 <p className="font-semibold text-foreground">
