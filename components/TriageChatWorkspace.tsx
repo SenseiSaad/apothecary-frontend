@@ -18,9 +18,11 @@ import {
     Send,
     ShieldCheck,
     Stethoscope,
+    Video,
     Wifi,
     WifiOff
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { apiRequest } from '@/lib/api';
 import { getSession } from '@/lib/auth';
 import { createTriageChatSocket, type TriageChatSocket } from '@/lib/triageChatSocket';
@@ -68,6 +70,15 @@ type TriageMessage = {
     body: string;
     created_at: string;
     delivery_status?: 'sending' | 'sent' | 'failed';
+};
+
+type InlineChatVideoSession = {
+    video_session_id: string;
+    status: 'scheduled' | 'active' | 'completed' | 'cancelled' | 'expired' | 'missed';
+    scheduled_start_at: string;
+    scheduled_end_at: string;
+    max_duration_minutes: number;
+    doctor_name?: string;
 };
 
 type StructuredHandoff = {
@@ -237,6 +248,7 @@ function handoffToSummary(handoff: StructuredHandoff) {
 }
 
 export default function TriageChatWorkspace({ role, initialCareRequestId }: { role: WorkspaceRole; initialCareRequestId?: string | null }) {
+    const router = useRouter();
     const [conversations, setConversations] = useState<TriageConversation[]>([]);
     const [selectedConversation, setSelectedConversation] = useState<TriageConversation | null>(null);
     const [messages, setMessages] = useState<TriageMessage[]>([]);
@@ -261,6 +273,7 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
     const [isResolving, setIsResolving] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
     const [typingUsers, setTypingUsers] = useState<Record<string, boolean>>({});
+    const [upcomingSessions, setUpcomingSessions] = useState<InlineChatVideoSession[]>([]);
     const socketRef = useRef<TriageChatSocket | null>(null);
     const selectedIdRef = useRef<string | null>(null);
     const messageEndRef = useRef<HTMLDivElement | null>(null);
@@ -339,6 +352,21 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
         await markRead(conversationId);
     }, [markRead]);
 
+    const fetchUpcomingSessions = useCallback(async (careRequestId: string) => {
+        const session = getSession();
+        if (!session) return;
+        try {
+            const res = await apiRequest<{ video_sessions: InlineChatVideoSession[] }>(
+                `/video-sessions/care-requests/${careRequestId}`,
+                { token: session.access_token }
+            );
+            const all = res.data?.video_sessions || [];
+            setUpcomingSessions(all.filter(s => ['scheduled', 'active'].includes(s.status)));
+        } catch {
+            setUpcomingSessions([]);
+        }
+    }, []);
+
     const selectConversation = useCallback(async (conversation: TriageConversation) => {
         const previousId = selectedIdRef.current;
         if (previousId && previousId !== conversation.conversation_id) {
@@ -351,10 +379,12 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
         setHandoffDraft(normalizeHandoff(conversation.doctor_handoff, conversation));
         setSelectedDoctorId(conversation.doctor_id || '');
         setError('');
+        setUpcomingSessions([]);
 
         socketRef.current?.emit('conversation.join', { conversation_id: conversation.conversation_id });
         await loadMessages(conversation.conversation_id);
-    }, [loadMessages]);
+        await fetchUpcomingSessions(conversation.care_request_id);
+    }, [loadMessages, fetchUpcomingSessions]);
 
     const loadConversations = useCallback(async (silent = false) => {
         const session = getSession();
@@ -928,6 +958,54 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
                                     {hasTyping && (
                                         <div className="text-xs font-medium text-gray-500">The other person is typing...</div>
                                     )}
+
+                                    {/* Inline video session join card — visible to patient and doctor */}
+                                    {upcomingSessions.length > 0 && (role === 'patient' || role === 'doctor') && upcomingSessions.map(vs => (
+                                        <div
+                                            key={vs.video_session_id}
+                                            className="mx-auto w-full max-w-sm"
+                                        >
+                                            <div className={`rounded-2xl border-2 p-4 shadow-md ${
+                                                vs.status === 'active'
+                                                    ? 'border-green-400 bg-green-50'
+                                                    : 'border-[var(--primary)] bg-[var(--accent)]'
+                                            }`}>
+                                                <div className="flex items-start gap-3">
+                                                    <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full ${
+                                                        vs.status === 'active' ? 'bg-green-500' : 'bg-[var(--primary)]'
+                                                    }`}>
+                                                        <Video className="h-5 w-5 text-white" />
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <p className={`text-xs font-bold uppercase tracking-wide ${
+                                                            vs.status === 'active' ? 'text-green-700' : 'text-[var(--primary-dark)]'
+                                                        }`}>
+                                                            {vs.status === 'active' ? '🔴 Session is Live Now' : '📅 Video Session Scheduled'}
+                                                        </p>
+                                                        <p className="mt-0.5 text-sm font-semibold text-gray-800">
+                                                            {formatInlineSessionTime(vs.scheduled_start_at)}
+                                                        </p>
+                                                        <p className="text-xs text-gray-600">
+                                                            {vs.max_duration_minutes} min
+                                                            {vs.doctor_name ? ` · with ${vs.doctor_name}` : ''}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => router.push(`/dashboard/video-session/${vs.video_session_id}`)}
+                                                    className={`mt-3 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white shadow-sm transition-all active:scale-95 hover:opacity-90 ${
+                                                        vs.status === 'active'
+                                                            ? 'bg-green-500 hover:bg-green-600'
+                                                            : 'bg-[var(--primary)] hover:bg-[var(--primary-dark)]'
+                                                    }`}
+                                                >
+                                                    <Video className="h-4 w-4" />
+                                                    {vs.status === 'active' ? 'Join Now' : 'Join Session'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+
                                     <div ref={messageEndRef} />
                                 </div>
                             </div>
@@ -1172,4 +1250,26 @@ export default function TriageChatWorkspace({ role, initialCareRequestId }: { ro
             </div>
         </div>
     );
+}
+
+function formatInlineSessionTime(value?: string) {
+    if (!value) return 'Time TBD';
+    const date = new Date(value);
+    const now = new Date();
+    const diffMs = date.getTime() - now.getTime();
+    const diffMins = Math.round(diffMs / 60000);
+
+    const formatted = date.toLocaleString(undefined, {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+    });
+
+    if (diffMins <= 0) return `${formatted} (now)`;
+    if (diffMins < 60) return `${formatted} (in ${diffMins}m)`;
+    const diffHours = Math.round(diffMins / 60);
+    if (diffHours < 24) return `${formatted} (in ${diffHours}h)`;
+    return formatted;
 }
