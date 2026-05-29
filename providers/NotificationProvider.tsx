@@ -71,7 +71,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             const isChatPage = pathnameRef.current?.includes('/chat');
             
             if (!(isChatMessage && isChatPage)) {
-                setToastMsg({ title: payload.title, body: payload.body });
+                setToastMsg({ title: payload.title, body: payload.body, link: payload.link });
                 setTimeout(() => {
                     setToastMsg(null);
                 }, 5000);
@@ -99,7 +99,15 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             
             {/* Global Toast Popup */}
             {toastMsg && (
-                <div className="fixed top-6 right-6 z-[100] bg-white text-gray-900 px-5 py-4 rounded-xl shadow-2xl border border-gray-100 animate-in slide-in-from-top-4 fade-in duration-300 w-80">
+                <div 
+                    onClick={() => {
+                        if (toastMsg.link) {
+                            window.location.href = toastMsg.link;
+                        }
+                        setToastMsg(null);
+                    }}
+                    className={`fixed top-6 right-6 z-[100] bg-white text-gray-900 px-5 py-4 rounded-xl shadow-2xl border border-gray-100 animate-in slide-in-from-top-4 fade-in duration-300 w-80 ${toastMsg.link ? 'cursor-pointer hover:bg-gray-50' : ''}`}
+                >
                     <div className="flex gap-3 items-start">
                         <div className="w-2 h-2 mt-1.5 rounded-full bg-primary flex-shrink-0" />
                         <div>
