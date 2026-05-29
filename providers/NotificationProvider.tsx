@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { createTriageChatSocket } from '@/lib/triageChatSocket';
 import { getSession } from '@/lib/auth';
 import { apiRequest } from '@/lib/api';
@@ -23,6 +24,13 @@ const NotificationContext = createContext<NotificationContextType>({
 export const useNotificationContext = () => useContext(NotificationContext);
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
+    const pathnameRef = useRef(pathname);
+    
+    useEffect(() => {
+        pathnameRef.current = pathname;
+    }, [pathname]);
+
     const [unreadCount, setUnreadCount] = useState(0);
     const [recentNotifications, setRecentNotifications] = useState<ApiNotification[]>([]);
     const [refreshTick, setRefreshTick] = useState(0);
@@ -58,11 +66,16 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         socket.on('notification:new', (payload: ApiNotification) => {
             setUnreadCount(prev => prev + 1);
             setRecentNotifications(prev => [payload, ...prev].slice(0, 5));
-            setToastMsg({ title: payload.title, body: payload.body });
             
-            setTimeout(() => {
-                setToastMsg(null);
-            }, 5000);
+            const isChatMessage = payload.type === 'triage_message' || payload.type === 'doctor_message';
+            const isChatPage = pathnameRef.current?.includes('/chat');
+            
+            if (!(isChatMessage && isChatPage)) {
+                setToastMsg({ title: payload.title, body: payload.body });
+                setTimeout(() => {
+                    setToastMsg(null);
+                }, 5000);
+            }
         });
 
         socket.on('care_request:created', () => {
