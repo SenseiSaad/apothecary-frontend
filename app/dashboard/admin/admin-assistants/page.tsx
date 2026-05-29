@@ -289,7 +289,10 @@ export default function AdminAssistantManagement() {
                                         <td className="px-4 py-4 text-sm text-gray-600">{c.assigned_doctor_count} Doctor{c.assigned_doctor_count !== 1 ? 's' : ''}</td>
                                         <td className="px-4 py-4 text-sm text-gray-600">{new Date(c.created_at).toLocaleDateString()}</td>
                                         <td className="px-4 py-4">
-                                            <Button size="sm" variant="outline" leftIcon={<Eye className="h-3.5 w-3.5" />} onClick={() => openManage(c)}>Manage</Button>
+                                            <div className="flex items-center gap-2">
+                                                <Button size="sm" variant="outline" leftIcon={<Eye className="h-3.5 w-3.5" />} onClick={() => openManage(c)}>Manage</Button>
+                                                <Button size="sm" variant="secondary" onClick={() => router.push(`/dashboard/admin/admin-assistants/${c.assistant_id}`)}>Monitor</Button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}

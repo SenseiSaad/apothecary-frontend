@@ -35,7 +35,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     const [recentNotifications, setRecentNotifications] = useState<ApiNotification[]>([]);
     const [refreshTick, setRefreshTick] = useState(0);
     const [careRequestTick, setCareRequestTick] = useState(0);
-    const [toastMsg, setToastMsg] = useState<{ title: string; body: string } | null>(null);
+    const [toastMsg, setToastMsg] = useState<{ title: string; body: string; link?: string } | null>(null);
 
     const triggerRefresh = useCallback(() => setRefreshTick(t => t + 1), []);
 

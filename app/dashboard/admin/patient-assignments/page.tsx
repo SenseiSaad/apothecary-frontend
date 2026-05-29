@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { RefreshCcw, Search, Stethoscope, UserCheck } from 'lucide-react';
+import { RefreshCcw, Search, Stethoscope, UserCheck, Eye } from 'lucide-react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Avatar, Button, Modal } from '@/components/ui';
 import { apiRequest } from '@/lib/api';
 import { getSession, hasRole } from '@/lib/auth';
+import TriageChatWorkspace from '@/components/TriageChatWorkspace';
 
 type CareStatus = 'needs_care' | 'assigned' | 'in_treatment' | 'treated' | 'inactive';
 
@@ -78,6 +79,11 @@ export default function AdminPatientAssignments() {
     const [selectedDoctorId, setSelectedDoctorId] = useState('');
     const [forceReassign, setForceReassign] = useState(false);
     const [isAssigning, setIsAssigning] = useState(false);
+
+    // Monitor State
+    const [selectedMonitorPatient, setSelectedMonitorPatient] = useState<AssignablePatient | null>(null);
+    const [monitorCareRequestId, setMonitorCareRequestId] = useState<string | null>(null);
+    const [isMonitorLoading, setIsMonitorLoading] = useState(false);
 
     useEffect(() => {
         if (!hasRole('admin')) {
@@ -186,6 +192,24 @@ export default function AdminPatientAssignments() {
             await loadData();
         } catch (error) {
             setNotice({ type: 'error', message: error instanceof Error ? error.message : 'Unable to unassign patient.' });
+        }
+    };
+
+    const handleMonitor = async (patient: AssignablePatient) => {
+        setSelectedMonitorPatient(patient);
+        setIsMonitorLoading(true);
+        try {
+            const session = getSession();
+            const res = await apiRequest<{ conversations: { care_request_id: string }[] }>(`/triage/conversations?patient_id=${patient.patient_id}&limit=1`, { token: session?.access_token });
+            if (res.success && res.data && res.data.conversations.length > 0) {
+                setMonitorCareRequestId(res.data.conversations[0].care_request_id);
+            } else {
+                setMonitorCareRequestId(null);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsMonitorLoading(false);
         }
     };
 
@@ -319,6 +343,9 @@ export default function AdminPatientAssignments() {
                                                         Unassign
                                                     </Button>
                                                 )}
+                                                <Button size="sm" variant="secondary" onClick={() => handleMonitor(patient)} leftIcon={<Eye className="h-4 w-4" />}>
+                                                    Monitor
+                                                </Button>
                                             </div>
                                         </td>
                                     </tr>
@@ -381,6 +408,30 @@ export default function AdminPatientAssignments() {
                             </Button>
                         </div>
                     </form>
+                )}
+            </Modal>
+
+            {/* Monitor Modal */}
+            <Modal isOpen={Boolean(selectedMonitorPatient)} onClose={() => { setSelectedMonitorPatient(null); setMonitorCareRequestId(null); }} title="Monitor Care Request" size="xl">
+                {selectedMonitorPatient && (
+                    <div className="h-[600px] flex flex-col bg-gray-50 rounded-b-2xl overflow-hidden">
+                        <div className="bg-white p-4 border-b border-gray-100 flex justify-between items-center">
+                            <div>
+                                <p className="font-bold text-foreground">{selectedMonitorPatient.name || nameFromEmail(selectedMonitorPatient.email)}</p>
+                                <p className="text-sm text-gray-500">Status: {careLabels[selectedMonitorPatient.care_status] || selectedMonitorPatient.care_status}</p>
+                            </div>
+                            {selectedMonitorPatient.doctor_id && (
+                                <Button size="sm" variant="outline" onClick={() => { setSelectedMonitorPatient(null); void unassignPatient(selectedMonitorPatient); }}>Unassign Doctor</Button>
+                            )}
+                        </div>
+                        {isMonitorLoading ? (
+                            <div className="flex-1 flex items-center justify-center"><p className="text-gray-500">Loading chat...</p></div>
+                        ) : monitorCareRequestId ? (
+                            <TriageChatWorkspace role="admin" initialCareRequestId={monitorCareRequestId} />
+                        ) : (
+                            <div className="flex-1 flex items-center justify-center"><p className="text-gray-500">No chat history available.</p></div>
+                        )}
+                    </div>
                 )}
             </Modal>
         </DashboardLayout>
